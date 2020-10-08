@@ -6,7 +6,7 @@ const InsertForm: React.FC = () => {
     const [value, setValue] = useState('')
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-
+        setValue(e.target.value)
     }
 
     return (
