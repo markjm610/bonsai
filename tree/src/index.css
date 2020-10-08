@@ -15,8 +15,8 @@ body {
 .leaf {
   background-color: lightgreen;
   border: 2px solid green;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
