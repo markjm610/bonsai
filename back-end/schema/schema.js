@@ -102,6 +102,16 @@ const Mutation = new GraphQLObjectType({
                 }
 
             }
+        },
+        clearTree: {
+            type: TreeNodeType,
+            async resolve(parent, args) {
+                const root = await TreeNode.findOne({ root: true })
+                root.leftId = null
+                root.rightId = null
+                await root.save()
+                await TreeNode.deleteMany({ root: false })
+            }
         }
     }
 })

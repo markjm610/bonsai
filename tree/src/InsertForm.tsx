@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { TreeNode } from './types'
 import { ADD_TREE_NODE, GET_TREENODES } from './queries'
@@ -25,13 +25,21 @@ function insertNode(value: number, node: TreeNode, tree: any): [string, Boolean]
     }
 }
 
-const InsertForm: React.FC<Props> = ({ tree, root, setTreeState }) => {
+const InsertForm: React.FC<Props> = ({ tree, root }) => {
 
     const [value, setValue] = useState('')
+    const [decimalError, setDecimalError] = useState(false)
+    const [numberError, setNumberError] = useState(false)
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
+        if (e.currentTarget.value.includes('.')) {
+            setDecimalError(true)
+        }
+        if (parseInt(e.currentTarget.value) > 100 || parseInt(e.currentTarget.value) < 0) {
+            setNumberError(true)
+        }
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -50,7 +58,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, setTreeState }) => {
             },
             refetchQueries: [{ query: GET_TREENODES }]
         })
-
+        setValue('')
     }
 
     return (

@@ -40,16 +40,21 @@ const Tree: React.FC = () => {
         <>
             {(rootData && treeNodesData) &&
                 <>
-                    <InsertForm
-                        root={rootData.root}
-                        tree={treeState}
-                        setTreeState={setTreeState}
-                    />
-                    <Leaf
-                        node={rootData.root}
-                        position={{ x: 500, y: 0 }}
-                        tree={treeState}
-                    />
+                    <div className='form-container'>
+                        <InsertForm
+                            root={rootData.root}
+                            tree={treeState}
+                            setTreeState={setTreeState}
+                        />
+                    </div>
+                    <div className='leaves-container'>
+                        <Leaf
+                            node={rootData.root}
+                            position={{ x: 48, y: 120 }}
+                            tree={treeState}
+                            level={0}
+                        />
+                    </div>
                 </>
             }
         </>

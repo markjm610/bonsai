@@ -32,3 +32,11 @@ export const GET_TREENODES = gql`
         }
     }
 `
+
+export const CLEAR_TREE = gql`
+    mutation {
+        clearTree {
+            id
+        }
+    }
+`
