@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Leaf from './Leaf'
 import { TreeNode } from './types'
 import { GET_ROOT, GET_TREENODES } from './queries'
@@ -54,7 +54,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                     <div className='leaves-container'>
                         <Leaf
                             node={rootData.root}
-                            position={{ x: 48, y: 120 }}
+                            position={{ x: 48, y: 15 }}
                             tree={treeState}
                             level={0}
                         />
