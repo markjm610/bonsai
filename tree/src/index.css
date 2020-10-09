@@ -14,11 +14,15 @@ body {
 
 .leaf {
   background-color: lightgreen;
-  border: 2px solid green;
+  /* border: 2px solid green; */
+  /* outline: 2px solid green; */
   height: 50px;
   width: 50px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  margin: none;
+  padding: none;
 }

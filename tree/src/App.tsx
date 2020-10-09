@@ -1,12 +1,12 @@
 import React from 'react';
 import InsertForm from './InsertForm';
-import Leaf from './Leaf';
+import Tree from './Tree';
 
 function App() {
   return (
     <div className="App">
       <InsertForm />
-      <Leaf value={100} />
+      <Tree />
     </div>
   );
 }

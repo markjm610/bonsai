@@ -1,12 +1,42 @@
 import React from 'react'
+import { nodeModuleNameResolver } from 'typescript'
 
-type Props = {
-    value: number;
+type Position = {
+    x: number;
+    y: number;
 }
 
-const Leaf: React.FC<Props> = ({ value }) => {
+// type Props = {
+//     value: number;
+//     position: Position;
+//     left: {
+
+//     };
+//     right: number;
+// }
+
+type Props = {
+    // value: any;
+    position: any;
+    // left: any;
+    // right: any;
+    node: any;
+}
+
+const Leaf: React.FC<Props> = ({ position, node }) => {
+
+    // const position: Position = {
+    //     x: parentPosition ? parentPosition.x + 50 : 0,
+    //     y: parentPosition ? parentPosition.y + 50 : 0
+    // }
+
+
     return (
-        <div className='leaf'>{value}</div>
+        <div className='leaf' style={{ top: position.y, left: position.x }}>
+            {node.value}
+            {node.left && <Leaf position={{ x: -100, y: 50 }} node={node.left} />}
+            {node.right && <Leaf position={{ x: 100, y: 50 }} node={node.right} />}
+        </div>
     )
 }
 

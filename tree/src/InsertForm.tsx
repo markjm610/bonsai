@@ -6,14 +6,14 @@ const InsertForm: React.FC = () => {
     const [value, setValue] = useState('')
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
+        setValue(e.currentTarget.value)
     }
 
     return (
         <form>
             <label>Enter number to add to tree:</label>
             <input onChange={handleInputChange} value={value} />
-            <button></button>
+            <button>Add</button>
         </form>
     )
 }
