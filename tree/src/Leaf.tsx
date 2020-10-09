@@ -10,10 +10,6 @@ type Props = {
 
 const Leaf: React.FC<Props> = ({ position, node, tree, level }) => {
 
-    if (level > 3) {
-
-    }
-
     return (
         <div className='leaf' style={{
             top: position.y,
@@ -22,8 +18,20 @@ const Leaf: React.FC<Props> = ({ position, node, tree, level }) => {
             {node &&
                 <>
                     {node.value}
-                    {node.leftId && <Leaf position={{ x: -25 + level * 10, y: 100 }} node={tree[node.leftId]} tree={tree} level={level + 1} />}
-                    {node.rightId && <Leaf position={{ x: 25 - level * 10, y: 100 }} node={tree[node.rightId]} tree={tree} level={level + 1} />}
+                    {node.leftId &&
+                        <Leaf
+                            position={{ x: -25 + level * 10, y: 100 }}
+                            node={tree[node.leftId]}
+                            tree={tree}
+                            level={level + 1}
+                        />}
+                    {node.rightId &&
+                        <Leaf
+                            position={{ x: 25 - level * 10, y: 100 }}
+                            node={tree[node.rightId]}
+                            tree={tree}
+                            level={level + 1}
+                        />}
                 </>
             }
             {/* {node.value}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import ApolloClient from 'apollo-boost'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import InsertForm from './InsertForm';
@@ -12,11 +12,14 @@ const client = new ApolloClient({
 
 
 function App() {
+
+  const [numberOfNodes, setNumberOfNodes] = useState(0)
+
   return (
     <ApolloProvider client={client}>
       <div className="App">
-        <FillTree />
-        <Tree />
+        <FillTree numberOfNodes={numberOfNodes} />
+        <Tree numberOfNodes={numberOfNodes} setNumberOfNodes={setNumberOfNodes} />
       </div>
     </ApolloProvider>
   );

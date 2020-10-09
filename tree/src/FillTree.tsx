@@ -2,9 +2,12 @@ import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { CLEAR_TREE, GET_TREENODES } from './queries'
 
-const FillTree: React.FC = () => {
+type Props = {
+    numberOfNodes: number;
+}
 
-    const [full, setFull] = useState(false)
+const FillTree: React.FC<Props> = ({ numberOfNodes }) => {
+
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -15,13 +18,11 @@ const FillTree: React.FC = () => {
 
     return (
         <div className='dialogue-container'>
-            {!full &&
-                <>
-                    <div>Can you fill all 4 levels of the binary search tree?</div>
-                    <button onClick={startOver}>Start Over</button>
-                </>
+            {numberOfNodes < 15 &&
+                <div>Can you fill all 4 levels of the binary search tree?</div>
             }
-            {full && <div>Congratulations! The tree is full!</div>}
+            {numberOfNodes === 15 && <div>Congratulations! The tree is full!</div>}
+            <button onClick={startOver}>Start Over</button>
         </div>
     )
 }

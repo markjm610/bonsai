@@ -5,12 +5,15 @@ import { TreeNode } from './types'
 import { GET_ROOT, GET_TREENODES } from './queries'
 import InsertForm from './InsertForm'
 
+type Props = {
+    numberOfNodes: number;
+    setNumberOfNodes: any;
+}
 
-const Tree: React.FC = () => {
+const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     const { data: rootData } = useQuery(GET_ROOT);
     const { data: treeNodesData } = useQuery(GET_TREENODES)
     const [treeState, setTreeState] = useState({})
-
 
     useEffect(() => {
 
@@ -30,6 +33,7 @@ const Tree: React.FC = () => {
             })
 
             setTreeState(treeNodesObj)
+            setNumberOfNodes(treeNodesData.treeNodes.length)
 
         }
 
@@ -44,7 +48,7 @@ const Tree: React.FC = () => {
                         <InsertForm
                             root={rootData.root}
                             tree={treeState}
-                            setTreeState={setTreeState}
+                            numberOfNodes={numberOfNodes}
                         />
                     </div>
                     <div className='leaves-container'>

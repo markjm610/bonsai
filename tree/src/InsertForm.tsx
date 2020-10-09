@@ -6,33 +6,40 @@ import { ADD_TREE_NODE, GET_TREENODES } from './queries'
 type Props = {
     tree: any;
     root: TreeNode;
-    setTreeState: any;
+    numberOfNodes: number;
 }
 
-function insertNode(value: number, node: TreeNode, tree: any): [string, Boolean] {
+function insertNode(value: number, node: TreeNode, tree: any, level: number): [string, Boolean | string] {
+    if (level > 3) {
+        return ['invalid move', 'invalid move']
+    }
     if (value > node.value) {
         if (node.rightId) {
-            return insertNode(value, tree[node.rightId], tree)
+            return insertNode(value, tree[node.rightId], tree, level + 1)
         } else {
             return [node.id, false]
         }
     } else {
         if (node.leftId) {
-            return insertNode(value, tree[node.leftId], tree)
+            return insertNode(value, tree[node.leftId], tree, level + 1)
         } else {
             return [node.id, true]
         }
     }
 }
 
-const InsertForm: React.FC<Props> = ({ tree, root }) => {
+const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes }) => {
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
     const [numberError, setNumberError] = useState(false)
+    const [validMove, setValidMove] = useState(true)
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+        if (!validMove) {
+            setValidMove(true)
+        }
         setValue(e.currentTarget.value)
         if (e.currentTarget.value.includes('.')) {
             setDecimalError(true)
@@ -46,9 +53,14 @@ const InsertForm: React.FC<Props> = ({ tree, root }) => {
         e.preventDefault()
 
         // insertNode needs to find the parent and whether it will be left or right child
-        const [parentNode, isLeftChild] = insertNode(parseInt(value), root, tree)
+        const [parentNode, isLeftChild] = insertNode(parseInt(value), root, tree, 1)
         // Send mutation to graphql
 
+        if (parentNode === 'invalid move' && isLeftChild === 'invalid move') {
+            console.log('asdf')
+            setValidMove(false)
+            return
+        }
         addTreeNode({
             variables: {
                 value: parseInt(value),
@@ -62,11 +74,17 @@ const InsertForm: React.FC<Props> = ({ tree, root }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>Enter number to add to tree:</label>
-            <input type='number' onChange={handleInputChange} value={value} />
-            <button>Add</button>
-        </form>
+        <>
+            {!validMove && <div>Invalid Move</div>}
+            {numberOfNodes < 15 &&
+                <form onSubmit={handleSubmit}>
+                    <label>Enter number to add to tree:</label>
+                    <input type='number' onChange={handleInputChange} value={value} />
+                    <button>Add</button>
+                </form>
+            }
+
+        </>
     )
 }
 
