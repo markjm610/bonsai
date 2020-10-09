@@ -40,24 +40,35 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes }) => {
         if (!validMove) {
             setValidMove(true)
         }
+
         setValue(e.currentTarget.value)
+
         if (e.currentTarget.value.includes('.')) {
             setDecimalError(true)
+        } else if (decimalError && e.currentTarget.value) {
+            setDecimalError(false)
         }
+
         if (parseInt(e.currentTarget.value) > 100 || parseInt(e.currentTarget.value) < 0) {
             setNumberError(true)
+        } else if (numberError && e.currentTarget.value) {
+            setNumberError(false)
         }
     }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
+        if (decimalError || numberError) {
+            return
+        }
+
         // insertNode needs to find the parent and whether it will be left or right child
         const [parentNode, isLeftChild] = insertNode(parseInt(value), root, tree, 1)
         // Send mutation to graphql
 
         if (parentNode === 'invalid move' && isLeftChild === 'invalid move') {
-            console.log('asdf')
+
             setValidMove(false)
             return
         }
@@ -76,6 +87,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes }) => {
     return (
         <>
             {!validMove && <div>Invalid Move</div>}
+            {(decimalError || numberError) && <div>Must be whole number between 0 and 100</div>}
             {numberOfNodes < 15 &&
                 <form onSubmit={handleSubmit}>
                     <label>Enter number to add to tree:</label>
