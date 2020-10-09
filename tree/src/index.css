@@ -46,3 +46,39 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.tree-enter {
+  opacity: 0;
+}
+
+.tree-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+.tree-exit {
+  opacity: 1;
+}
+
+.tree-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+.tree-appear {
+  opacity: 0;
+}
+
+.tree-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+/* .tree-appear-exit {
+  opacity: 1;
+}
+
+.tree-appear-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms, transform 1000ms;
+} */
