@@ -1,67 +1,80 @@
 import React, { useEffect, useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
+import { graphql } from 'react-apollo'
 import { idText } from 'typescript'
 import Leaf from './Leaf'
+import { TreeNode } from './types'
 
-type LeafData = {
-    id: number;
-    value: number;
-    leftId: number | null;
-    rightId: number | null;
-}
+
+// type LeafData = {
+//     id: number;
+//     value: number;
+//     leftId: number | null;
+//     rightId: number | null;
+// }
 
 // type TreeData = {
 //     [id: string]: LeafData
 // }
 
-const fakeTreeData: LeafData[] = [
-    {
-        id: 1,
-        value: 1,
-        leftId: 2,
-        rightId: 3
-    },
-    {
-        id: 2,
-        value: 2,
-        leftId: null,
-        rightId: null
-    },
-    {
-        id: 3,
-        value: 3,
-        leftId: null,
-        rightId: null
-    }
-]
+// type TreeNode = {
+//     id: string;
+//     value: number;
+//     leftId: number | null;
+//     rightId: number | null;
+// }
 
+const GET_ROOT = gql`
+    {
+        root {
+            id
+            value
+            leftId
+            rightId
+        }
+    }
+`
+
+const GET_TREENODES = gql`
+    {
+        treeNodes {
+            id
+            value
+            leftId
+            rightId
+        }
+    }
+`
 
 const Tree: React.FC = () => {
-
+    const { data: rootData } = useQuery(GET_ROOT);
+    const { data: treeNodesData } = useQuery(GET_TREENODES)
+    const [treeState, setTreeState] = useState({})
     // const [treeData, setTreeData] = useState([])
     // type Node = {
     //     next: any;
     //     value: any;
     // }
-    class Node {
-        value: any;
-        left: any;
-        right: any;
-        constructor(value: any) {
-            this.value = value;
-            this.left = null;
-            this.right = null;
-        }
-    }
+    // class Node {
+    //     value: any;
+    //     left: any;
+    //     right: any;
+    //     constructor(value: any) {
+    //         this.value = value;
+    //         this.left = null;
+    //         this.right = null;
+    //     }
+    // }
 
-    const a = new Node(1)
-    const b = new Node(2)
-    const c = new Node(3)
-    const d = new Node(4)
-    const e = new Node(5)
-    a.left = b
-    a.right = c
-    c.right = d
-    d.left = e
+    // const a = new Node(1)
+    // const b = new Node(2)
+    // const c = new Node(3)
+    // const d = new Node(4)
+    // const e = new Node(5)
+    // a.left = b
+    // a.right = c
+    // c.right = d
+    // d.left = e
 
     useEffect(() => {
 
@@ -109,12 +122,29 @@ const Tree: React.FC = () => {
 
         // Might as well just do array method instead of doing a request over and over
 
-    }, [])
+        if (rootData && treeNodesData) {
+            // Type?
 
+            const treeNodesObj: any = {}
+            treeNodesData.treeNodes.forEach((treeNode: TreeNode) => {
+                treeNodesObj[treeNode.id] = {
+                    value: treeNode.value,
+                    leftId: treeNode.leftId,
+                    rightId: treeNode.rightId
+                }
+            })
+
+            setTreeState(treeNodesObj)
+
+        }
+
+
+    }, [rootData, treeNodesData])
 
     return (
-        <Leaf node={a} position={{ x: 500, y: 0 }} />
-
+        <>
+            {(rootData && treeNodesData) && <Leaf node={rootData.root} position={{ x: 500, y: 0 }} tree={treeState} />}
+        </>
     )
 }
 

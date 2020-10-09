@@ -7,7 +7,7 @@ const TreeNodeType = new GraphQLObjectType({
         id: { type: GraphQLID },
         value: { type: GraphQLInt },
         leftId: { type: GraphQLID },
-        rightID: { type: GraphQLID },
+        rightId: { type: GraphQLID },
         // left: {
         //     type: TreeNodeType,
         //     async resolve(parent, args) {
