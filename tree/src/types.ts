@@ -1,8 +1,8 @@
 export type TreeNode = {
     id: string;
     value: number;
-    leftId: number | null;
-    rightId: number | null;
+    leftId: string | null;
+    rightId: string | null;
 }
 
 export type Position = {

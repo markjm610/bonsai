@@ -8,21 +8,6 @@ const TreeNodeType = new GraphQLObjectType({
         value: { type: GraphQLInt },
         leftId: { type: GraphQLID },
         rightId: { type: GraphQLID },
-        // left: {
-        //     type: TreeNodeType,
-        //     async resolve(parent, args) {
-        //         // find node with id equal to parent.leftId
-
-        //         return await TreeNode.findById(parent.leftId)
-        //     }
-        // },
-        // right: {
-        //     type: TreeNodeType,
-        //     async resolve(parent, args) {
-        //         // find node with id equal to parent.rightId
-        //         return await TreeNode.findById(parent.rightId)
-        //     }
-        // },
         root: { type: GraphQLBoolean }
     })
 })

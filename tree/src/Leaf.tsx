@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { nodeModuleNameResolver } from 'typescript'
-import { Position } from './types'
+import { Position, TreeNode } from './types'
 
 type Props = {
     position: Position;
-    node: any;
+    node: TreeNode;
     tree: any;
 }
 
@@ -19,6 +19,9 @@ const Leaf: React.FC<Props> = ({ position, node, tree }) => {
                     {node.rightId && <Leaf position={{ x: 100, y: 50 }} node={tree[node.rightId]} tree={tree} />}
                 </>
             }
+            {/* {node.value}
+            {node.leftId !== null && <Leaf position={{ x: -100, y: 50 }} node={tree[node.leftId]} tree={tree} />}
+            {node.rightId !== null && <Leaf position={{ x: 100, y: 50 }} node={tree[node.rightId]} tree={tree} />} */}
         </div>
     )
 }
