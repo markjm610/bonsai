@@ -71,30 +71,36 @@ const Mutation = new GraphQLObjectType({
                 isLeftChild: { type: GraphQLBoolean }
             },
             async resolve(parent, args) {
-                const treeNode = new TreeNode({
-                    value: args.value,
-                    leftId: args.leftId,
-                    rightId: args.rightId,
-                    root: args.root
-                })
 
-                await treeNode.save()
+                try {
+                    const treeNode = new TreeNode({
+                        value: args.value,
+                        leftId: args.leftId,
+                        rightId: args.rightId,
+                        root: args.root
+                    })
 
-                if (args.root) {
+                    await treeNode.save()
+
+                    if (args.root) {
+                        return treeNode
+                    }
+
+                    const parentNode = await TreeNode.findById(args.parentId)
+
+                    if (args.isLeftChild) {
+                        parentNode.leftId = treeNode.id
+                        await parentNode.save()
+                    } else {
+                        parentNode.rightId = treeNode.id
+                        await parentNode.save()
+                    }
+
                     return treeNode
+                } catch (e) {
+                    console.error(e)
                 }
 
-                const parentNode = await TreeNode.findById(args.parentId)
-
-                if (args.isLeftChild) {
-                    parentNode.leftId = treeNode.id
-                    await parentNode.save()
-                } else {
-                    parentNode.rightId = treeNode.id
-                    await parentNode.save()
-                }
-
-                return treeNode
             }
         }
     }
