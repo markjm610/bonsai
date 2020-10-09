@@ -103,6 +103,12 @@ const Tree: React.FC = () => {
         // up object of objects for constant time lookup unless graphql can give you a nested object instead of 
         // array of objects
 
+        // Request for each node: get root, if left get left and add left to nested obj, if right get right
+        // and add right to nested obj, keep going until null, then use final nested obj to display 
+        // nodes
+
+        // Might as well just do array method instead of doing a request over and over
+
     }, [])
 
 

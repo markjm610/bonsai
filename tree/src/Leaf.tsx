@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { nodeModuleNameResolver } from 'typescript'
 
 type Position = {
@@ -29,6 +29,10 @@ const Leaf: React.FC<Props> = ({ position, node }) => {
     //     x: parentPosition ? parentPosition.x + 50 : 0,
     //     y: parentPosition ? parentPosition.y + 50 : 0
     // }
+    useEffect(() => {
+        // get info for node with node.id
+        // set state to node info
+    }, [])
 
 
     return (
