@@ -15,14 +15,17 @@ const Leaf: React.FC<Props> = ({ position, node, tree, level }) => {
     return (
         <CSSTransition
             in={true}
-            timeout={1000}
+            timeout={300}
             classNames='tree'
             appear
         >
-            <div className='leaf' style={{
-                top: `${position.y}vh`,
-                left: `${position.x}vw`,
-            }}>
+            <div
+                className='leaf'
+                style={{
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                }}
+            >
                 {node &&
                     <>
                         {node.value}
