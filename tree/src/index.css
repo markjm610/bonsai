@@ -54,7 +54,6 @@ body {
 .tree-enter-active {
   opacity: 1;
   transition: opacity 1000ms;
-
 }
 
 .tree-exit {

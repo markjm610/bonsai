@@ -4,7 +4,6 @@ import Leaf from './Leaf'
 import { TreeNode } from './types'
 import { GET_ROOT, GET_TREENODES } from './queries'
 import InsertForm from './InsertForm'
-import { CSSTransition } from 'react-transition-group'
 
 
 type Props = {
@@ -16,7 +15,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     const { data: rootData } = useQuery(GET_ROOT);
     const { data: treeNodesData } = useQuery(GET_TREENODES)
     const [treeState, setTreeState] = useState({})
-    const [test, setTest] = useState(false)
+
     useEffect(() => {
 
 
@@ -44,7 +43,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
 
     return (
         <>
-            {/* <button onClick={() => setTest(!test)}>Test</button> */}
             {(rootData && treeNodesData) &&
                 <>
                     <div className='form-container'>
@@ -54,12 +52,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                             numberOfNodes={numberOfNodes}
                         />
                     </div>
-                    {/* <CSSTransition
-                        in={true}
-                        timeout={1000}
-                        classNames='tree'
-                        appear
-                    > */}
                     <div className='leaves-container'>
                         <Leaf
                             node={rootData.root}
@@ -68,8 +60,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                             level={0}
                         />
                     </div>
-
-                    {/* </CSSTransition> */}
                 </>
             }
         </>
