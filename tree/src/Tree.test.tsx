@@ -14,21 +14,3 @@ it('renders without crashing', () => {
 
     mount(<ApolloProvider client={client}><Tree numberOfNodes={10} setNumberOfNodes={() => { }} /></ApolloProvider>)
 })
-
-// it('renders InsertForm and Leaf components as children', () => {
-
-//     const client = new ApolloClient({
-//         uri: apolloUri,
-//         cache: new InMemoryCache()
-//     })
-
-//     const wrapper = mount(<ApolloProvider client={client}><Tree numberOfNodes={10} setNumberOfNodes={() => { }} /></ApolloProvider>)
-
-//     // expect(wrapper.contains(
-//     // <InsertForm 
-//     //     root={{ id: 'id', value: 50, leftId: 'leftId', rightId: 'rightId' }} 
-//     //     tree={{}}
-//     //     numberOfNodes={}
-//     //     />)).toBe(true)
-
-// })

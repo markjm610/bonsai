@@ -8,7 +8,7 @@ import InsertForm from './InsertForm'
 
 type Props = {
     numberOfNodes: number;
-    setNumberOfNodes: any;
+    setNumberOfNodes: Function;
 }
 
 const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
@@ -17,8 +17,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     const [treeState, setTreeState] = useState({})
 
     useEffect(() => {
-
-
         if (rootData && treeNodesData) {
 
             // Type?
