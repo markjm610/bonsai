@@ -31,8 +31,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/../tree/build/index.html'));
 });
 
+const port = process.env.PORT
 
-
-app.listen(4000, () => {
-    console.log('listening on 4000')
+app.listen(port, () => {
+    console.log(`listening on ${port}`)
 })
