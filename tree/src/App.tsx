@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 // import ApolloClient from 'apollo-boost'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import apolloUri from './config'
-import InsertForm from './InsertForm';
 import Tree from './Tree';
 import FillTree from './FillTree';
 
-console.log(apolloUri)
+
 const client = new ApolloClient({
   uri: apolloUri,
   cache: new InMemoryCache()

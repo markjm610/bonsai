@@ -89,10 +89,10 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes }) => {
             {!validMove && <div>Invalid Move</div>}
             {(decimalError || numberError) && <div>Must be whole number between 0 and 100</div>}
             {numberOfNodes < 15 &&
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='insert-form'>
                     <label>Enter number to add to tree:</label>
-                    <input type='number' onChange={handleInputChange} value={value} />
-                    <button>Add</button>
+                    <input type='number' onChange={handleInputChange} value={value} className='value-input' />
+                    <button className='add-node-button'>Add</button>
                 </form>
             }
 
