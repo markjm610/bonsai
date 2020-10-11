@@ -33,20 +33,9 @@ const FakeNode: React.FC<Props> = ({
 
         from: { top: inputElementTop, left: inputElementLeft, position: 'fixed', backgroundColor: 'lightgreen', opacity: 1 },
         to: async (next: Function) => {
-            // console.log(fakeNodeRef.current)
-
-            // console.log(fakeNodeRef.current)
-            // console.log(typeof fakeNodeRef.current)
-            // console.log(typeof inputElement)
 
             if (!fakeNodeRef) {
-                // console.log(fakeNodeRef)
-                // console.log(typeof fakeNodeRef)
-                // console.log(fakeNodeRef.getBoundingClientRect())
-                // console.log(inputElement)
-                // console.log(inputElement.getBoundingClientRect())
-                // console.log(inputElementLeft)
-                // console.log('!fakeNodeRef')
+
                 let i = 0
 
                 while (i < traversedNodeIds.length) {
@@ -66,7 +55,7 @@ const FakeNode: React.FC<Props> = ({
 
                     if (i === 0) {
                         await next({
-                            top: nodeLocation.top,
+                            top: nodeLocation.top + 200,
                             left: nodeLocation.left,
                             backgroundColor: 'lightgreen'
                         })
