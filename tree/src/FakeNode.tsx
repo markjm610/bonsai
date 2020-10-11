@@ -83,7 +83,7 @@ const FakeNode: React.FC<Props> = ({
 
                 setAnimationDone(true)
                 setTraversedNodeIds([])
-                cancel()
+
 
             }
 
