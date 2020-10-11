@@ -161,7 +161,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .fake-node {
-  background-color: whitesmoke;
+  background-color: rgb(245, 245, 245);
   height: 50px;
   width: 50px;
   border-radius: 100%;
