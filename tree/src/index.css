@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: burlywood;
 }
 
 /* code {
@@ -25,6 +26,7 @@ body {
   position: absolute;
   margin: none;
   padding: none;
+  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaves-container {
@@ -37,7 +39,7 @@ body {
 .form-container {
   display: flex;
   justify-content: center;
-  margin-top: 5vh;
+  margin-top: 1vh;
   flex-direction: column;
   align-items: center;
 }
@@ -45,6 +47,9 @@ body {
 .dialogue-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
 }
 
 .tree-enter {
@@ -82,3 +87,33 @@ body {
   opacity: 0;
   transition: opacity 1000ms, transform 1000ms;
 } */
+
+.value-input {
+  background-color: lightgreen;
+  height: 46px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+  z-index: 1;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.insert-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

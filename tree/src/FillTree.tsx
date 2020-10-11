@@ -18,11 +18,12 @@ const FillTree: React.FC<Props> = ({ numberOfNodes }) => {
 
     return (
         <div className='dialogue-container'>
+            <button onClick={startOver} className='start-over-button'>Start Over</button>
             {numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
             }
             {numberOfNodes === 15 && <div>Nice job! The tree is full!</div>}
-            <button onClick={startOver} className='start-over-button'>Start Over</button>
+
         </div>
     )
 }

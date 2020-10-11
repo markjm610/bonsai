@@ -15,6 +15,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     const { data: rootData } = useQuery(GET_ROOT);
     const { data: treeNodesData } = useQuery(GET_TREENODES)
     const [treeState, setTreeState] = useState({})
+    const [traversedNodeIds, setTraversedNodeIds] = useState([])
 
     useEffect(() => {
         if (rootData && treeNodesData) {
@@ -22,6 +23,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
             // Type?
             const treeNodesObj: any = {}
 
+            // This loop converts the tree from an array to a nested object for constant time lookup of nodes
             treeNodesData.treeNodes.forEach((treeNode: TreeNode) => {
                 treeNodesObj[treeNode.id] = {
                     id: treeNode.id,
@@ -32,6 +34,8 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
             })
 
             setTreeState(treeNodesObj)
+
+            // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.treeNodes.length)
 
         }
@@ -48,14 +52,18 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                             root={rootData.root}
                             tree={treeState}
                             numberOfNodes={numberOfNodes}
+                            traversedNodeIds={traversedNodeIds}
+                            setTraversedNodeIds={setTraversedNodeIds}
                         />
                     </div>
                     <div className='leaves-container'>
                         <Leaf
+                            id={rootData.root.id}
                             node={rootData.root}
-                            position={{ x: 48, y: 15 }}
+                            position={{ x: 48, y: 30 }}
                             tree={treeState}
                             level={0}
+                            leftChild={false}
                         />
                     </div>
                 </>
