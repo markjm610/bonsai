@@ -83,8 +83,6 @@ const Leaf: React.FC<Props> = ({
 
     if (node && node.value !== -1) {
         return (
-
-
             <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
@@ -189,8 +187,6 @@ const Leaf: React.FC<Props> = ({
             </animated.div>
         )
     }
-
-
 }
 
 export default Leaf

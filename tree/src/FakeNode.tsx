@@ -29,7 +29,7 @@ const FakeNode: React.FC<Props> = ({
     const newNodeStyle = useSpring({
 
         from: { top: inputElementTop, left: inputElementLeft, position: 'fixed', backgroundColor: 'lightgreen', opacity: 1 },
-        to: async (next: Function) => {
+        to: async (next: Function, cancel: Function) => {
 
             if (traversedNodeIds.length) {
 
@@ -83,6 +83,7 @@ const FakeNode: React.FC<Props> = ({
 
                 setAnimationDone(true)
                 setTraversedNodeIds([])
+                cancel()
 
             }
 

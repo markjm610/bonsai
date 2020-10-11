@@ -25,7 +25,6 @@ function insertNode(value: number, node: TreeNode, tree: TreeObject, level: numb
         return ['invalid move', false, traversedNodes]
     }
 
-
     if (value > node.value) {
         if (node.rightId) {
             return insertNode(value, tree[node.rightId], tree, level + 1, traversedNodes)
