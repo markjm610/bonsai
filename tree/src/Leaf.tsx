@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react'
-import { Position, TreeNode } from './types'
+import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 
 type Props = {
     id: string;
     position: Position;
     node: TreeNode;
-    tree: any;
+    tree: TreeObject;
     level: number;
     leftChild: boolean;
     beginInsert: boolean;
     setBeginInsert: Function;
     endInsert: boolean;
     setEndInsert: Function;
-    traversedNodeIds: any;
+    traversedNodeIds: string[];
     setTraversedNodeIds: Function;
     numberOfNodes: number;
 }
-
 
 
 const Leaf: React.FC<Props> = ({
@@ -33,8 +32,9 @@ const Leaf: React.FC<Props> = ({
     setEndInsert,
     traversedNodeIds,
     setTraversedNodeIds,
-    numberOfNodes
+    numberOfNodes,
 }) => {
+
 
     let springObj;
     if (level === 0) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import Leaf from './Leaf'
-import { TreeNode } from './types'
+import { TreeNode, TreeObject } from './types'
 import { GET_ROOT, GET_TREENODES } from './queries'
 import InsertForm from './InsertForm'
 
@@ -23,8 +23,8 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     useEffect(() => {
         if (rootData && treeNodesData) {
 
-            // Type?
-            const treeNodesObj: any = {}
+            // Object of TreeNodes
+            const treeNodesObj: TreeObject = {}
 
             // This loop converts the tree from an array to a nested object for constant time lookup of nodes
             treeNodesData.treeNodes.forEach((treeNode: TreeNode) => {
@@ -36,6 +36,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                 }
             })
 
+            // Store the nested object in the state so this and other components have access to it
             setTreeState(treeNodesObj)
 
             // Need number of nodes to keep track of whether the tree is full or not

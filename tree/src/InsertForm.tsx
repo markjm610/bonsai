@@ -1,15 +1,13 @@
-import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { TreeNode } from './types'
-import { ADD_TREE_NODE } from './queries'
+import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
 
 
 type Props = {
-    tree: any;
+    tree: TreeObject;
     root: TreeNode;
     numberOfNodes: number;
-    traversedNodeIds: any;
+    traversedNodeIds: string[];
     setTraversedNodeIds: Function;
     beginInsert: boolean;
     setBeginInsert: Function;
@@ -17,7 +15,9 @@ type Props = {
     setEndInsert: Function;
 }
 
-function insertNode(value: number, node: TreeNode, tree: any, level: number, traversedNodes: any = []): [string, boolean, any] {
+// insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
+// the FakeNode component can look up the locations of the nodes on the screen
+function insertNode(value: number, node: TreeNode, tree: TreeObject, level: number, traversedNodes: string[] = []): [string, boolean, string[]] {
 
     traversedNodes.push(node.id)
 
@@ -49,7 +49,6 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
     const [decimalError, setDecimalError] = useState(false)
     const [numberError, setNumberError] = useState(false)
     const [validMove, setValidMove] = useState(true)
-    const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [storedParentId, setStoredParentId] = useState('')
     const [isStoredLeftChild, setStoredIsLeftChild] = useState(false)
     const [fakeNodeValue, setFakeNodeValue] = useState('')
@@ -92,14 +91,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
         // insertNode needs to find the parent and whether it will be a left or right child
         const [parentNode, isLeftChild, traversedNodes] = insertNode(parseInt(value), root, tree, 1)
 
-
-
-
-
-
-        // When animation is done, send mutation to server using info in state
-
-        // If move is invalid, update the state and do not send mutation to server
+        // If move is invalid, update the state and do not continue
         if (parentNode === 'invalid move') {
             setValidMove(false)
             return
@@ -111,6 +103,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
         setStoredIsLeftChild(isLeftChild)
 
+        // Add ID of placeholder invisible node to traversedNodes array so it can be looked up for the animation
         if (isLeftChild) {
             traversedNodes.push(`left child of ${parentNode}`)
         } else {
@@ -120,6 +113,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
         setTraversedNodeIds(traversedNodes)
 
+        // Trigger the inserting node animation
         setBeginInsert(true)
 
         // Clear input

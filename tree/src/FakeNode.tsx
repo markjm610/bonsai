@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring'
 
 type Props = {
     value: string;
-    traversedNodeIds: any;
+    traversedNodeIds: string[];
     setTraversedNodeIds: Function;
     storedParentId: string;
     isStoredLeftChild: boolean;
