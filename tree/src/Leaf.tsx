@@ -14,13 +14,6 @@ type Props = {
     leftChild: boolean;
 }
 
-// const Content = Keyframes.Spring(async (next: any) => {
-//     await next({
-//         from: { opacity: 0 },
-//         opacity: 1
-//     })
-// })
-
 
 
 const Leaf: React.FC<Props> = ({ id, position, node, tree, level, leftChild }) => {
@@ -63,12 +56,9 @@ const Leaf: React.FC<Props> = ({ id, position, node, tree, level, leftChild }) =
 
     const style = useSpring(springObj)
 
-    // const element = document.getElementById(id)
-    // console.log(element?.getBoundingClientRect())
+    //    Need to stop empty children from rendering past max level
 
-    // console.log(position)
-
-    if (node.value !== -1) {
+    if (node && node.value !== -1) {
         return (
             // <CSSTransition
             //     in={true}

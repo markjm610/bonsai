@@ -102,6 +102,13 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
         setStoredIsLeftChild(isLeftChild)
 
+        if (isLeftChild) {
+            traversedNodes.push(`left child of ${parentNode}`)
+        } else {
+            traversedNodes.push(`right child of ${parentNode}`)
+        }
+
+
         setTraversedNodeIds(traversedNodes)
 
         setBeginInsert(true)
