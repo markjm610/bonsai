@@ -35,7 +35,7 @@ const FakeNode: React.FC<Props> = ({
         to: async (next: Function) => {
 
             if (!fakeNodeRef) {
-
+                console.log('!fakeNodeRef')
                 let i = 0
 
                 while (i < traversedNodeIds.length) {
@@ -55,7 +55,7 @@ const FakeNode: React.FC<Props> = ({
 
                     if (i === 0) {
                         await next({
-                            top: nodeLocation.top + 200,
+                            top: nodeLocation.top,
                             left: nodeLocation.left,
                             backgroundColor: 'lightgreen'
                         })
@@ -110,6 +110,7 @@ const FakeNode: React.FC<Props> = ({
         }
 
     }, [animationDone])
+
 
     return (
         <animated.div
