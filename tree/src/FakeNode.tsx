@@ -32,8 +32,8 @@ const FakeNode: React.FC<Props> = ({
     const newNodeStyle = useSpring({
 
         from: { top: inputElementTop, left: inputElementLeft, position: 'fixed', backgroundColor: 'lightgreen', opacity: 1 },
-        to: async (next: Function) => {
-            console.log(fakeNodeRef)
+        to: async (next: Function, cancel: any) => {
+
             if (!fakeNodeRef) {
                 console.log('!fakeNodeRef')
                 let i = 0
@@ -77,16 +77,15 @@ const FakeNode: React.FC<Props> = ({
                             left: nodeLocation.left,
                             backgroundColor: 'rgb(255, 69, 0)'
                         })
-                        setAnimationDone(true)
                     }
 
                     i++
 
                 }
 
-
+                setAnimationDone(true)
                 setTraversedNodeIds([])
-
+                await cancel()
 
             }
 
@@ -116,6 +115,7 @@ const FakeNode: React.FC<Props> = ({
     return (
         <animated.div
             // ref={fakeNodeRef}
+            key={'fake-node'}
             className='fake-node'
             style={newNodeStyle}
         >
