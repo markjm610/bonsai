@@ -120,6 +120,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
     }
 
+    const fakeNodeRef = document.querySelector('.fake-node')
 
     return (
         <>
@@ -148,6 +149,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                                 setTraversedNodeIds={setTraversedNodeIds}
                                 storedParentId={storedParentId}
                                 isStoredLeftChild={isStoredLeftChild}
+                                fakeNodeRef={fakeNodeRef}
                             />}
                     </div>
 
