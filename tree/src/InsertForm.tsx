@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { TreeNode } from './types'
-import { ADD_TREE_NODE, GET_TREENODES } from './queries'
-import { useTransition, useSpring, animated } from 'react-spring'
+import { ADD_TREE_NODE } from './queries'
+import FakeNode from './FakeNode'
 
 
 type Props = {
@@ -52,9 +52,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [storedParentId, setStoredParentId] = useState('')
     const [isStoredLeftChild, setStoredIsLeftChild] = useState(false)
-    const [test, setTest] = useState(false)
-    // const [beginInsert, setBeginInsert] = useState(false)
-
+    const [fakeNodeValue, setFakeNodeValue] = useState('')
 
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -63,6 +61,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
         }
 
         setValue(e.currentTarget.value)
+        setFakeNodeValue(e.currentTarget.value)
 
         if (e.currentTarget.value.includes('.')) {
             setDecimalError(true)
@@ -79,6 +78,12 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+
+        const input: any = document.querySelector('.value-input')
+        if (input) {
+            input.blur()
+        }
+
 
         if (decimalError || numberError) {
             return
@@ -116,213 +121,43 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
         setTraversedNodeIds(traversedNodes)
 
         setBeginInsert(true)
-        // Send mutation to GraphQL
-        // addTreeNode({
-        //     variables: {
-        //         value: parseInt(value),
-        //         root: false,
-        //         parentId: parentNode,
-        //         isLeftChild
-        //     },
-        //     refetchQueries: [{ query: GET_TREENODES }]
-        // })
-
-
-        // Set new tree node's opacity to 0 until the animation is complete
-        // How to tell leaf component that a refetch has happened instead of a first load
 
         // Clear input
-        // setValue('')
+        setValue('')
+
     }
-    // const rootRef = document.getElementById(root.id)
-    // const rootTop = rootRef?.getBoundingClientRect().top
-    // const rootLeft = rootRef?.getBoundingClientRect().left
-    // let rootLeftRef;
-    // if (root.leftId) {
-    //     rootLeftRef = document.getElementById(root.leftId)
-    // }
-    // const otherTop = rootLeftRef?.getBoundingClientRect().top
-    // const otherLeft = rootLeftRef?.getBoundingClientRect().left
-    // const view = document.getElementById('root')
-    // const viewWidth = view && view.getBoundingClientRect().width / 2
-    const newNodeStyle = useSpring({
 
-        from: { top: 0, left: 0, position: 'relative', backgroundColor: 'lightgreen', opacity: 1 },
-        to: async (next: Function) => {
-
-            if (beginInsert && traversedNodeIds.length) {
-
-                // console.log(traversedNodeIds)
-                // traversedNodeIds.forEach(async (id: string) => {
-                //     console.log(id)
-                //     const nodeRef = document.getElementById(id)
-                //     const nodeLocation = nodeRef?.getBoundingClientRect()
-                //     if (!nodeLocation) {
-                //         return
-                //     }
-                //     await next({ top: nodeLocation.top, left: nodeLocation.left })
-                //     console.log('done')
-                // })
-                const inputElement = document.querySelector('.value-input')
-                const inputElementLeft = inputElement?.getBoundingClientRect().left
-                const inputElementTop = inputElement?.getBoundingClientRect().top
-
-                let i = 0
-
-                while (i < traversedNodeIds.length) {
-
-                    // if (i === traversedNodeIds.length) {
-                    //     console.log('asd')
-                    //     const previousNode = document.getElementById(traversedNodeIds[i - 1])?.getBoundingClientRect()
-                    //     if (!previousNode) {
-                    //         return
-                    //     }
-                    //     if (value > tree[traversedNodeIds[i - 1]].value) {
-                    //         const left = previousNode.left + 100
-                    //         await next({ top: previousNode.top + 100, left })
-                    //     }
-
-                    // } else {
-
-                    const nodeRef = document.getElementById(traversedNodeIds[i])
-                    const nodeLocation = nodeRef?.getBoundingClientRect()
-                    if (!nodeLocation) {
-                        return
-                    }
-                    if (!inputElementLeft) {
-                        return
-                    }
-                    if (!inputElementTop) {
-                        return
-                    }
-
-                    if (i === 0) {
-                        await next({
-                            top: nodeLocation.top - inputElementTop,
-                            left: nodeLocation.left - inputElementLeft,
-                            backgroundColor: 'lightgreen'
-                        })
-                    } else if (i === 1) {
-                        await next({
-                            top: nodeLocation.top - inputElementTop,
-                            left: nodeLocation.left - inputElementLeft,
-                            backgroundColor: 'yellow'
-                        })
-                    } else if (i === 2) {
-                        await next({
-                            top: nodeLocation.top - inputElementTop,
-                            left: nodeLocation.left - inputElementLeft,
-                            backgroundColor: 'orange'
-                        })
-                    } else {
-                        await next({
-                            top: nodeLocation.top - inputElementTop,
-                            left: nodeLocation.left - inputElementLeft,
-                            backgroundColor: 'rgb(255, 69, 0)'
-                        })
-                    }
-
-
-
-                    // }
-                    i++
-
-                }
-
-                // Get rid of blinking thing in input when it gets submitted
-
-                // addTreeNode({
-                //     variables: {
-                //         value: parseInt(value),
-                //         root: false,
-                //         parentId: storedParentId,
-                //         isLeftChild: isStoredLeftChild
-                //     },
-                //     refetchQueries: [{ query: GET_TREENODES }]
-                // })
-
-                setTraversedNodeIds([])
-
-            }
-
-            // if (endInsert) {
-
-            //     await next({ opacity: 0 })
-            //     setValue('')
-            //     await next({ top: 0, left: 0, opacity: 0 })
-            //     await next({ opacity: 1 })
-            //     setEndInsert(false)
-            // }
-
-        }
-        // backgroundColor: (decimalError || numberError || !validMove) ? 'red' : 'lightgreen',
-        // boxShadow: test ? '2px 2px 5px black' : '0px 0px 0px black',
-        // top: test ? rootTop : 0,
-        // left: test ? rootLeft : 0
-
-    })
-
-    // const moveBack = useSpring({
-
-    // })
-
-
-
-
-    useEffect(() => {
-        if (beginInsert && !traversedNodeIds.length) {
-            addTreeNode({
-                variables: {
-                    value: parseInt(value),
-                    root: false,
-                    parentId: storedParentId,
-                    isLeftChild: isStoredLeftChild
-                },
-                refetchQueries: [{ query: GET_TREENODES }]
-            })
-
-
-        }
-    }, [beginInsert, traversedNodeIds])
-
-    // useEffect(() => {
-    //     if (endInsert) {
-    //         setEndInsert(false)
-    //     }
-    // }, [endInsert])
-
-    // insertNode builds path of refs using document.getElementById with id of each traversed node
-    // store the path in the state somewhere as array of getboundingclientrect objects
-    // traverse path using spring by looping over array and await next({position data}) for each one
-
-    // Play animation for invalid moves?
 
     return (
         <>
 
             {numberOfNodes < 15 &&
                 <form onSubmit={handleSubmit} className='insert-form'>
-                    <label>Click the middle of the blank node to enter a number:</label>
+
+                    <label className='form-label'>Click the middle of the blank node to enter a number, then press enter.</label>
+                    {/* <button className='add-node-button'>Add</button> */}
                     <div className='input-container'
-                    // style={newNodeStyle}
-                    // style={(decimalError || numberError || !validMove) ? newNodeStyle : { backgroundColor: 'lightgreen' }} 
                     >
-                        <animated.input
-                            onClick={() => setTest(!test)}
-                            // style={!endInsert ? newNodeStyle : { top: 0, left: 0, position: 'relative', backgroundColor: 'lightgreen', opacity: 1 }}
-                            style={newNodeStyle}
-                            // style={(decimalError || numberError || !validMove) ? newNodeStyle : { backgroundColor: 'lightgreen' }}
-                            // style={{
-                            //     backgroundColor: (decimalError || numberError || !validMove) ? 'red' : 'lightgreen'
-                            // }}
+                        <input
+                            style={{
+                                opacity: beginInsert ? 0 : 1
+                            }}
                             type='number'
                             onChange={handleInputChange}
                             value={value}
                             className='value-input'
                             id='input'
                         />
+                        {beginInsert &&
+                            <FakeNode
+                                value={fakeNodeValue}
+                                traversedNodeIds={traversedNodeIds}
+                                setTraversedNodeIds={setTraversedNodeIds}
+                                storedParentId={storedParentId}
+                                isStoredLeftChild={isStoredLeftChild}
+                            />}
                     </div>
-                    <button className='add-node-button'>Add</button>
+
                 </form>
             }
             {!validMove && <div>Invalid Move</div>}

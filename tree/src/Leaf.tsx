@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { Position, TreeNode } from './types'
-// import { CSSTransition } from 'react-transition-group'
-// import { Keyframes, animated, config } from 'react-spring/renderprops'
-import { useTransition, useSpring, animated } from 'react-spring'
-import { setSyntheticLeadingComments } from 'typescript'
+import { useSpring, animated } from 'react-spring'
 
 type Props = {
     id: string;
@@ -77,115 +74,20 @@ const Leaf: React.FC<Props> = ({
 
     const style = useSpring(springObj)
 
-    // const addStyle = useSpring({
-    //     // position: 'absolute',
-    //     // backgroundColor: 'lightgreen',
-    //     // from: { top: 0 },
-    //     // to: { top: 50 }
-    //     from: { top: 0, left: 0, position: 'absolute', backgroundColor: 'lightgreen' },
-    //     to: async (next: Function) => {
-    //         if (beginInsert && traversedNodeIds.length) {
-    //             // console.log(traversedNodeIds)
-    //             // traversedNodeIds.forEach(async (id: string) => {
-    //             //     console.log(id)
-    //             //     const nodeRef = document.getElementById(id)
-    //             //     const nodeLocation = nodeRef?.getBoundingClientRect()
-    //             //     if (!nodeLocation) {
-    //             //         return
-    //             //     }
-    //             //     await next({ top: nodeLocation.top, left: nodeLocation.left })
-    //             //     console.log('done')
-    //             // })
-    //             console.log('start')
-    //             let i = 0
-
-    //             while (i < traversedNodeIds.length) {
-    //                 console.log('i < ')
-    //                 // if (i === traversedNodeIds.length) {
-    //                 //     console.log('asd')
-    //                 //     const previousNode = document.getElementById(traversedNodeIds[i - 1])?.getBoundingClientRect()
-    //                 //     if (!previousNode) {
-    //                 //         return
-    //                 //     }
-    //                 //     if (value > tree[traversedNodeIds[i - 1]].value) {
-    //                 //         const left = previousNode.left + 100
-    //                 //         await next({ top: previousNode.top + 100, left })
-    //                 //     }
-
-    //                 // } else {
-
-    //                 const nodeRef = document.getElementById(traversedNodeIds[i])
-    //                 const nodeLocation = nodeRef?.getBoundingClientRect()
-    //                 if (!nodeLocation) {
-    //                     return
-    //                 }
-    //                 await next({ top: nodeLocation.top, left: nodeLocation.left })
-
-
-    //                 // }
-    //                 i++
-
-    //             }
-
-    //             console.log('done')
-
-    //             // Get rid of blinking thing in input when it gets submitted
-
-    //             // addTreeNode({
-    //             //     variables: {
-    //             //         value: parseInt(value),
-    //             //         root: false,
-    //             //         parentId: storedParentId,
-    //             //         isLeftChild: isStoredLeftChild
-    //             //     },
-    //             //     refetchQueries: [{ query: GET_TREENODES }]
-    //             // })
-
-    //             setTraversedNodeIds([])
-
-    //         }
-
-    //         // if (endInsert) {
-    //         //     setEndInsert(false)
-    //         //     await next({ opacity: 0 })
-    //         //     await next({ top: 0, left: 0 })
-    //         //     await next({ opacity: 1 })
-    //         // }
-
-    //     }
-    //     // backgroundColor: (decimalError || numberError || !validMove) ? 'red' : 'lightgreen',
-    //     // boxShadow: test ? '2px 2px 5px black' : '0px 0px 0px black',
-    //     // top: test ? rootTop : 0,
-    //     // left: test ? rootLeft : 0
-
-    // })
-
     useEffect(() => {
         if (beginInsert) {
             setBeginInsert(false)
-            setEndInsert(true)
         }
     }, [])
 
-    //    Need to stop empty children from rendering past max level
 
     if (node && node.value !== -1) {
         return (
-            // <CSSTransition
-            //     in={true}
-            //     timeout={300}
-            //     classNames='tree'
-            //     appear
-            // >
+
 
             <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-
-                // style={{
-                //     top: `${position.y}vh`,
-                //     left: `${position.x}vw`,
-                // }}
                 style={!beginInsert ? style : {
                     top: `${position.y}vh`,
                     left: `${position.x}vw`,
@@ -272,9 +174,6 @@ const Leaf: React.FC<Props> = ({
                     </>
                 }
             </animated.div >
-
-
-            // </CSSTransition>
         )
     } else {
         return (
@@ -286,7 +185,6 @@ const Leaf: React.FC<Props> = ({
                     left: `${position.x}vw`,
                     opacity: 0
                 }}
-            // style={style}
             >
             </animated.div>
         )
