@@ -8,15 +8,8 @@ body {
   background-color: burlywood;
 }
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
 .leaf-complete {
   background-color: lightgreen;
-  /* border: 2px solid green; */
-  /* outline: 2px solid green; */
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -26,13 +19,10 @@ body {
   position: absolute;
   margin: none;
   padding: none;
-  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaf-0 {
-  background-color: lightgreen;
-  /* border: 2px solid green; */
-  /* outline: 2px solid green; */
+  background-color: whitesmoke;
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -42,13 +32,10 @@ body {
   position: absolute;
   margin: none;
   padding: none;
-  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaf-1 {
   background-color: yellow;
-  /* border: 2px solid green; */
-  /* outline: 2px solid green; */
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -58,13 +45,10 @@ body {
   position: absolute;
   margin: none;
   padding: none;
-  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaf-2 {
   background-color: orange;
-  /* border: 2px solid green; */
-  /* outline: 2px solid green; */
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -74,13 +58,10 @@ body {
   position: absolute;
   margin: none;
   padding: none;
-  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaf-3 {
   background-color: rgb(255, 69, 0);
-  /* border: 2px solid green; */
-  /* outline: 2px solid green; */
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -90,7 +71,6 @@ body {
   position: absolute;
   margin: none;
   padding: none;
-  /* box-shadow: 2px 5px 5px gray; */
 }
 
 .leaves-container {
@@ -143,17 +123,8 @@ body {
   transition: opacity 1000ms;
 }
 
-/* .tree-appear-exit {
-  opacity: 1;
-}
-
-.tree-appear-exit-active {
-  opacity: 0;
-  transition: opacity 1000ms, transform 1000ms;
-} */
-
 .value-input {
-  background-color: lightgreen;
+  background-color: whitesmoke;
   height: 48px;
   width: 46px;
   border-radius: 100%;
@@ -190,7 +161,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .fake-node {
-  background-color: lightgreen;
+  background-color: whitesmoke;
   height: 50px;
   width: 50px;
   border-radius: 100%;

@@ -11,8 +11,6 @@ type Props = {
     setTraversedNodeIds: Function;
     beginInsert: boolean;
     setBeginInsert: Function;
-    endInsert: boolean;
-    setEndInsert: Function;
 }
 
 // insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
@@ -42,7 +40,7 @@ function insertNode(value: number, node: TreeNode, tree: TreeObject, level: numb
 
 }
 
-const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeIds, setTraversedNodeIds, beginInsert, setBeginInsert, endInsert, setEndInsert }) => {
+const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeIds, setTraversedNodeIds, beginInsert, setBeginInsert }) => {
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -120,11 +118,9 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
     }
 
-    const fakeNodeRef = document.querySelector('.fake-node')
 
     return (
         <>
-
             {numberOfNodes < 15 &&
                 <form onSubmit={handleSubmit} className='insert-form'>
 
@@ -149,7 +145,6 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                                 setTraversedNodeIds={setTraversedNodeIds}
                                 storedParentId={storedParentId}
                                 isStoredLeftChild={isStoredLeftChild}
-                                fakeNodeRef={fakeNodeRef}
                             />}
                     </div>
 

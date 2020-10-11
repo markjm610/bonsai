@@ -3,7 +3,6 @@ import { mount } from 'enzyme'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import apolloUri from './config'
 import Tree from './Tree'
-import InsertForm from './InsertForm'
 
 it('renders without crashing', () => {
 

@@ -8,13 +8,8 @@ type Props = {
     node: TreeNode;
     tree: TreeObject;
     level: number;
-    leftChild: boolean;
     beginInsert: boolean;
     setBeginInsert: Function;
-    endInsert: boolean;
-    setEndInsert: Function;
-    traversedNodeIds: string[];
-    setTraversedNodeIds: Function;
     numberOfNodes: number;
 }
 
@@ -25,13 +20,8 @@ const Leaf: React.FC<Props> = ({
     node,
     tree,
     level,
-    leftChild,
     beginInsert,
     setBeginInsert,
-    endInsert,
-    setEndInsert,
-    traversedNodeIds,
-    setTraversedNodeIds,
     numberOfNodes,
 }) => {
 
@@ -47,17 +37,6 @@ const Leaf: React.FC<Props> = ({
                 left: `${position.x}vw`,
                 opacity: 0.5
             }
-        }
-    } else if (leftChild) {
-        springObj = {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
-            from: {
-                top: `${0}vh`,
-                left: `${0}vw`,
-                opacity: 0.5
-            },
         }
     } else {
         springObj = {
@@ -101,13 +80,8 @@ const Leaf: React.FC<Props> = ({
                                 node={tree[node.leftId]}
                                 tree={tree}
                                 level={level + 1}
-                                leftChild={true}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                endInsert={endInsert}
-                                setEndInsert={setEndInsert}
-                                traversedNodeIds={traversedNodeIds}
-                                setTraversedNodeIds={setTraversedNodeIds}
                                 numberOfNodes={numberOfNodes}
                             /> :
                             <Leaf
@@ -121,13 +95,8 @@ const Leaf: React.FC<Props> = ({
                                 }}
                                 tree={tree}
                                 level={level + 1}
-                                leftChild={true}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                endInsert={endInsert}
-                                setEndInsert={setEndInsert}
-                                traversedNodeIds={traversedNodeIds}
-                                setTraversedNodeIds={setTraversedNodeIds}
                                 numberOfNodes={numberOfNodes}
                             />
                         }
@@ -138,13 +107,8 @@ const Leaf: React.FC<Props> = ({
                                 node={tree[node.rightId]}
                                 tree={tree}
                                 level={level + 1}
-                                leftChild={false}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                endInsert={endInsert}
-                                setEndInsert={setEndInsert}
-                                traversedNodeIds={traversedNodeIds}
-                                setTraversedNodeIds={setTraversedNodeIds}
                                 numberOfNodes={numberOfNodes}
                             />
                             :
@@ -159,13 +123,8 @@ const Leaf: React.FC<Props> = ({
                                 }}
                                 tree={tree}
                                 level={level + 1}
-                                leftChild={false}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                endInsert={endInsert}
-                                setEndInsert={setEndInsert}
-                                traversedNodeIds={traversedNodeIds}
-                                setTraversedNodeIds={setTraversedNodeIds}
                                 numberOfNodes={numberOfNodes}
                             />
                         }

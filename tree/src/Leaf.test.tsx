@@ -3,7 +3,16 @@ import { mount } from 'enzyme'
 import Leaf from './Leaf'
 
 it('renders without crashing', () => {
-    mount(<Leaf position={{ x: 48, y: 15 }} node={{ id: 'id', value: 50, leftId: 'leftId', rightId: 'rightId' }} tree={{}} level={0} />)
+    mount(<Leaf
+        id={'id'}
+        position={{ x: 48, y: 15 }}
+        node={{ id: 'id', value: 50, leftId: 'leftId', rightId: 'rightId' }}
+        tree={{}}
+        level={0}
+        beginInsert={false}
+        setBeginInsert={() => { }}
+        numberOfNodes={10}
+    />)
 })
 
 it('recursively renders a component for each node in the tree', () => {
@@ -29,6 +38,7 @@ it('recursively renders a component for each node in the tree', () => {
     }
     const wrapper = mount(
         <Leaf
+            id={'id1'}
             position={{ x: 48, y: 15 }} node={{
                 id: 'id1',
                 value: 50,
@@ -37,13 +47,27 @@ it('recursively renders a component for each node in the tree', () => {
             }}
             tree={tree}
             level={0}
+            beginInsert={false}
+            setBeginInsert={() => { }}
+            numberOfNodes={3}
         />)
 
-    expect(wrapper.find('.leaf')).toHaveLength(3)
+    expect(wrapper.contains('50')).toBe(true)
+    expect(wrapper.contains('40')).toBe(true)
+    expect(wrapper.contains('60')).toBe(true)
 })
 
 it('displays node value', () => {
-    const wrapper = mount(<Leaf position={{ x: 48, y: 15 }} node={{ id: 'id', value: 50, leftId: 'leftId', rightId: 'rightId' }} tree={{}} level={0} />)
+    const wrapper = mount(<Leaf
+        id={'id1'}
+        position={{ x: 48, y: 15 }}
+        node={{ id: 'id', value: 50, leftId: 'leftId', rightId: 'rightId' }}
+        tree={{}}
+        level={0}
+        beginInsert={false}
+        setBeginInsert={() => { }}
+        numberOfNodes={10}
+    />)
 
     expect(wrapper.contains('50')).toBe(true)
 })
