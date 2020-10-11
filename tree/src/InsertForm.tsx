@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TreeNode } from './types'
 import { ADD_TREE_NODE, GET_TREENODES } from './queries'
 import { useTransition, useSpring, animated } from 'react-spring'
@@ -11,6 +11,10 @@ type Props = {
     numberOfNodes: number;
     traversedNodeIds: any;
     setTraversedNodeIds: Function;
+    beginInsert: boolean;
+    setBeginInsert: Function;
+    endInsert: boolean;
+    setEndInsert: Function;
 }
 
 function insertNode(value: number, node: TreeNode, tree: any, level: number, traversedNodes: any = []): [string, boolean, any] {
@@ -39,7 +43,7 @@ function insertNode(value: number, node: TreeNode, tree: any, level: number, tra
 
 }
 
-const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeIds, setTraversedNodeIds }) => {
+const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeIds, setTraversedNodeIds, beginInsert, setBeginInsert, endInsert, setEndInsert }) => {
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -49,7 +53,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
     const [storedParentId, setStoredParentId] = useState('')
     const [isStoredLeftChild, setStoredIsLeftChild] = useState(false)
     const [test, setTest] = useState(false)
-    const [beginInsert, setBeginInsert] = useState(false)
+    // const [beginInsert, setBeginInsert] = useState(false)
 
 
 
@@ -139,14 +143,15 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
     // }
     // const otherTop = rootLeftRef?.getBoundingClientRect().top
     // const otherLeft = rootLeftRef?.getBoundingClientRect().left
+    // const view = document.getElementById('root')
+    // const viewWidth = view && view.getBoundingClientRect().width / 2
     const newNodeStyle = useSpring({
-        // position: 'absolute',
-        // backgroundColor: 'lightgreen',
-        // from: { top: 0 },
-        // to: { top: 50 }
-        from: { top: 0, left: 0, position: 'absolute', backgroundColor: 'lightgreen' },
+
+        from: { top: 0, left: 0, position: 'relative', backgroundColor: 'lightgreen', opacity: 1 },
         to: async (next: Function) => {
+
             if (beginInsert && traversedNodeIds.length) {
+
                 // console.log(traversedNodeIds)
                 // traversedNodeIds.forEach(async (id: string) => {
                 //     console.log(id)
@@ -158,6 +163,10 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                 //     await next({ top: nodeLocation.top, left: nodeLocation.left })
                 //     console.log('done')
                 // })
+                const inputElement = document.querySelector('.value-input')
+                const inputElementLeft = inputElement?.getBoundingClientRect().left
+                const inputElementTop = inputElement?.getBoundingClientRect().top
+
                 let i = 0
 
                 while (i < traversedNodeIds.length) {
@@ -180,7 +189,39 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                     if (!nodeLocation) {
                         return
                     }
-                    await next({ top: nodeLocation.top, left: nodeLocation.left })
+                    if (!inputElementLeft) {
+                        return
+                    }
+                    if (!inputElementTop) {
+                        return
+                    }
+
+                    if (i === 0) {
+                        await next({
+                            top: nodeLocation.top - inputElementTop,
+                            left: nodeLocation.left - inputElementLeft,
+                            backgroundColor: 'lightgreen'
+                        })
+                    } else if (i === 1) {
+                        await next({
+                            top: nodeLocation.top - inputElementTop,
+                            left: nodeLocation.left - inputElementLeft,
+                            backgroundColor: 'yellow'
+                        })
+                    } else if (i === 2) {
+                        await next({
+                            top: nodeLocation.top - inputElementTop,
+                            left: nodeLocation.left - inputElementLeft,
+                            backgroundColor: 'orange'
+                        })
+                    } else {
+                        await next({
+                            top: nodeLocation.top - inputElementTop,
+                            left: nodeLocation.left - inputElementLeft,
+                            backgroundColor: 'rgb(255, 69, 0)'
+                        })
+                    }
+
 
 
                     // }
@@ -188,29 +229,67 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
                 }
 
-                console.log('done')
                 // Get rid of blinking thing in input when it gets submitted
 
                 // addTreeNode({
                 //     variables: {
                 //         value: parseInt(value),
                 //         root: false,
-                //         parentId: parentNode,
-                //         isLeftChild
+                //         parentId: storedParentId,
+                //         isLeftChild: isStoredLeftChild
                 //     },
                 //     refetchQueries: [{ query: GET_TREENODES }]
                 // })
 
                 setTraversedNodeIds([])
-                setValue('')
+
             }
+
+            // if (endInsert) {
+
+            //     await next({ opacity: 0 })
+            //     setValue('')
+            //     await next({ top: 0, left: 0, opacity: 0 })
+            //     await next({ opacity: 1 })
+            //     setEndInsert(false)
+            // }
 
         }
         // backgroundColor: (decimalError || numberError || !validMove) ? 'red' : 'lightgreen',
         // boxShadow: test ? '2px 2px 5px black' : '0px 0px 0px black',
         // top: test ? rootTop : 0,
         // left: test ? rootLeft : 0
+
     })
+
+    // const moveBack = useSpring({
+
+    // })
+
+
+
+
+    useEffect(() => {
+        if (beginInsert && !traversedNodeIds.length) {
+            addTreeNode({
+                variables: {
+                    value: parseInt(value),
+                    root: false,
+                    parentId: storedParentId,
+                    isLeftChild: isStoredLeftChild
+                },
+                refetchQueries: [{ query: GET_TREENODES }]
+            })
+
+
+        }
+    }, [beginInsert, traversedNodeIds])
+
+    // useEffect(() => {
+    //     if (endInsert) {
+    //         setEndInsert(false)
+    //     }
+    // }, [endInsert])
 
     // insertNode builds path of refs using document.getElementById with id of each traversed node
     // store the path in the state somewhere as array of getboundingclientrect objects
@@ -230,6 +309,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                     >
                         <animated.input
                             onClick={() => setTest(!test)}
+                            // style={!endInsert ? newNodeStyle : { top: 0, left: 0, position: 'relative', backgroundColor: 'lightgreen', opacity: 1 }}
                             style={newNodeStyle}
                             // style={(decimalError || numberError || !validMove) ? newNodeStyle : { backgroundColor: 'lightgreen' }}
                             // style={{
@@ -238,7 +318,9 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                             type='number'
                             onChange={handleInputChange}
                             value={value}
-                            className='value-input' />
+                            className='value-input'
+                            id='input'
+                        />
                     </div>
                     <button className='add-node-button'>Add</button>
                 </form>

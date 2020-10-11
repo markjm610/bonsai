@@ -16,6 +16,9 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
     const { data: treeNodesData } = useQuery(GET_TREENODES)
     const [treeState, setTreeState] = useState({})
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
+    const [beginInsert, setBeginInsert] = useState(false)
+    const [endInsert, setEndInsert] = useState(false)
+
 
     useEffect(() => {
         if (rootData && treeNodesData) {
@@ -54,6 +57,10 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                             numberOfNodes={numberOfNodes}
                             traversedNodeIds={traversedNodeIds}
                             setTraversedNodeIds={setTraversedNodeIds}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            endInsert={endInsert}
+                            setEndInsert={setEndInsert}
                         />
                     </div>
                     <div className='leaves-container'>
@@ -64,6 +71,13 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
                             tree={treeState}
                             level={0}
                             leftChild={false}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            endInsert={endInsert}
+                            setEndInsert={setEndInsert}
+                            traversedNodeIds={traversedNodeIds}
+                            setTraversedNodeIds={setTraversedNodeIds}
+                            numberOfNodes={numberOfNodes}
                         />
                     </div>
                 </>

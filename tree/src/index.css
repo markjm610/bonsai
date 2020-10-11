@@ -13,8 +13,72 @@ body {
     monospace;
 } */
 
-.leaf {
+.leaf-complete {
   background-color: lightgreen;
+  /* border: 2px solid green; */
+  /* outline: 2px solid green; */
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: none;
+  padding: none;
+  /* box-shadow: 2px 5px 5px gray; */
+}
+
+.leaf-0 {
+  background-color: lightgreen;
+  /* border: 2px solid green; */
+  /* outline: 2px solid green; */
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: none;
+  padding: none;
+  /* box-shadow: 2px 5px 5px gray; */
+}
+
+.leaf-1 {
+  background-color: yellow;
+  /* border: 2px solid green; */
+  /* outline: 2px solid green; */
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: none;
+  padding: none;
+  /* box-shadow: 2px 5px 5px gray; */
+}
+
+.leaf-2 {
+  background-color: orange;
+  /* border: 2px solid green; */
+  /* outline: 2px solid green; */
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: none;
+  padding: none;
+  /* box-shadow: 2px 5px 5px gray; */
+}
+
+.leaf-3 {
+  background-color: rgb(255, 69, 0);
   /* border: 2px solid green; */
   /* outline: 2px solid green; */
   height: 50px;
@@ -49,7 +113,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 5vh;
+  margin-top: 2vh;
 }
 
 .tree-enter {
@@ -90,7 +154,7 @@ body {
 
 .value-input {
   background-color: lightgreen;
-  height: 46px;
+  height: 48px;
   width: 46px;
   border-radius: 100%;
   outline: none;
