@@ -33,7 +33,7 @@ const FakeNode: React.FC<Props> = ({
 
         from: { top: inputElementTop, left: inputElementLeft, position: 'fixed', backgroundColor: 'lightgreen', opacity: 1 },
         to: async (next: Function) => {
-
+            console.log(fakeNodeRef)
             if (!fakeNodeRef) {
                 console.log('!fakeNodeRef')
                 let i = 0
@@ -77,13 +77,14 @@ const FakeNode: React.FC<Props> = ({
                             left: nodeLocation.left,
                             backgroundColor: 'rgb(255, 69, 0)'
                         })
+                        setAnimationDone(true)
                     }
 
                     i++
 
                 }
 
-                setAnimationDone(true)
+
                 setTraversedNodeIds([])
 
 
