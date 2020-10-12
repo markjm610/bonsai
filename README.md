@@ -88,6 +88,7 @@ When a user adds a new node, the insertNode function is called to find where the
 function insertNode(value: number, node: TreeNode, tree: TreeObject, level: number, traversedNodes: string[] = []): [string, boolean, string[]] {
 
     // The IDs of the traversed nodes will be used to determine the path of the animation
+    // These IDs will later be compared to IDs of HTML elements on the screen to get locations
     traversedNodes.push(node.id)
     
     // The binary tree has a maximum size
