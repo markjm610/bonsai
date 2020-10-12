@@ -80,7 +80,7 @@ return (
                         }
                     </>
                 }
-            </animated.div >
+            </animated.div >)
 ```
 
 When a user adds a new node, the insertNode function is called to find where the node should be added and the path taken: 
