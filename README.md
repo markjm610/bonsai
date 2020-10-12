@@ -111,7 +111,7 @@ function insertNode(value: number, node: TreeNode, tree: TreeObject, level: numb
     }
 ```
 
-When a new node is added, a FakeNode component is created as the input field is hidden. The fake node animates to the new node's position, creating the illusion that a new node is working its way down the tree:
+When a new node is added, a FakeNode component is created as the input field is hidden. The fake node animates to the new node's position, creating the illusion that the new node is working its way down the tree:
 ```javascript
 
 // useSpring is from the react-spring library
