@@ -50,7 +50,7 @@ const Leaf: React.FC<Props> = ({...}) => {
 // Component body and part of return statement not shown
 
 // Component returns itself checking for left and right children
-// Positions are relative to their parent node, and are adjusted by the level (higher level nodes are closer together)
+// Positions are relative to their parent node, and are adjusted by the level (nodes further down the tree are closer together)
 return (
             <animated.div>
                 { node &&
