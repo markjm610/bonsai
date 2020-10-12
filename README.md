@@ -127,7 +127,8 @@ const newNodeStyle = useSpring({
                 let i = 0
                 while (i < traversedNodeIds.length) {
 
-                    // This step is how the fake node knows where to move to. The IDs of the traversed nodes are also id fields on the corresponding HTML elements
+                    // This step is how the fake node knows where to move to. 
+                    // The IDs of the traversed nodes are also id fields on the corresponding HTML elements
                     const nodeRef = document.getElementById(traversedNodeIds[i])
                     const nodeLocation = nodeRef?.getBoundingClientRect()
                     if (!nodeLocation) {
