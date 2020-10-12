@@ -150,8 +150,8 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
 
                 </form>
             }
-            {!validMove && <div>Invalid Move</div>}
-            {(decimalError || numberError) && <div>Must be whole number between 0 and 100</div>}
+            {!validMove && <div className='error-message'>Invalid Move</div>}
+            {(decimalError || numberError) && <div className='error-message'>Must be whole number between 0 and 100</div>}
         </>
     )
 }
