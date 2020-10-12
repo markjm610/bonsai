@@ -157,7 +157,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .start-over-button {
   margin-bottom: 2vh;
+  background-color: whitesmoke;
 }
+
+.start-over-button:hover {
+  border: 2px solid black;
+  cursor: pointer;
+  background-color: yellow;
+} 
 
 .form-label {
   margin-bottom: 2vh;
