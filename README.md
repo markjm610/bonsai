@@ -46,6 +46,7 @@ Fetch tree data and store it in the state as a nested object for constant time l
 
 The Leaf component is each node in the tree. It returns itself, rendering the tree recursively:
 ```javascript
+const Leaf: React.FC<Props> = ({...}) => {
 // Component body and part of return statement not shown
 
 // Component returns itself checking for left and right children
