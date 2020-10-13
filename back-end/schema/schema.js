@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLSchema, GraphQLBoolean, GraphQLList } = require('graphql')
 const TreeNode = require('../models/TreeNode')
+const Tree = require('../models/Tree')
 
 const TreeNodeType = new GraphQLObjectType({
     name: 'TreeNode',
@@ -8,7 +9,21 @@ const TreeNodeType = new GraphQLObjectType({
         value: { type: GraphQLInt },
         leftId: { type: GraphQLID },
         rightId: { type: GraphQLID },
-        root: { type: GraphQLBoolean }
+        root: { type: GraphQLBoolean },
+        treeId: { type: GraphQLID }
+    })
+})
+
+const TreeType = new GraphQLObjectType({
+    name: 'Tree',
+    fields: () => ({
+        id: { type: GraphQLID },
+        nodes: {
+            type: new GraphQLList(TreeNodeType),
+            async resolve(parent, args) {
+                return await TreeNodes.find({ treeId: parent.id })
+            }
+        }
     })
 })
 
@@ -25,36 +40,14 @@ const RootQuery = new GraphQLObjectType({
         root: {
             type: TreeNodeType,
             async resolve(parent, args) {
-
-                // const treeNode = await TreeNode.findOne({ root: true }).lean()
-                // const queue = [treeNode]
-                // while (queue[0]) {
-                //     const currentNode = queue[0]
-                //     const left = await TreeNode.findById(currentNode.leftId).lean()
-                //     const right = await TreeNode.findById(currentNode.rightId).lean()
-
-                //     currentNode.left = left
-                //     currentNode.right = right
-                //     if (left) {
-                //         queue.push(left)
-                //     }
-                //     if (right) {
-                //         queue.push(right)
-                //     }
-                //     queue.shift()
-                // }
-
-                // return treeNode
-
                 return await TreeNode.findOne({ root: true })
             }
         },
-        treeNodes: {
-            type: new GraphQLList(TreeNodeType),
+        tree: {
+            type: TreeType,
             async resolve(parent, args) {
-                return await TreeNode.find({})
+                return await Tree.findById(args.id)
             }
-
         }
     }
 })
@@ -68,7 +61,8 @@ const Mutation = new GraphQLObjectType({
                 value: { type: GraphQLInt },
                 root: { type: GraphQLBoolean },
                 parentId: { type: GraphQLID },
-                isLeftChild: { type: GraphQLBoolean }
+                isLeftChild: { type: GraphQLBoolean },
+                treeId: { type: GraphQLID }
             },
             async resolve(parent, args) {
 
@@ -77,7 +71,8 @@ const Mutation = new GraphQLObjectType({
                         value: args.value,
                         leftId: args.leftId,
                         rightId: args.rightId,
-                        root: args.root
+                        root: args.root,
+                        treeId: args.treeId
                     })
 
                     await treeNode.save()
@@ -106,11 +101,11 @@ const Mutation = new GraphQLObjectType({
         clearTree: {
             type: TreeNodeType,
             async resolve(parent, args) {
-                const root = await TreeNode.findOne({ root: true })
+                const root = await TreeNode.findOne({ treeId: args.treeId, root: true })
                 root.leftId = null
                 root.rightId = null
                 await root.save()
-                await TreeNode.deleteMany({ root: false })
+                await TreeNode.deleteMany({ treeId: args.treeId, root: false })
             }
         }
     }

@@ -73,7 +73,7 @@ const Leaf: React.FC<Props> = ({
                 { node &&
                     <>
                         {node.value}
-                        {node.leftId ?
+                        {node.leftId &&
                             <Leaf
                                 id={node.leftId}
                                 position={{ x: -25 + level * 10, y: 10 }}
@@ -83,24 +83,24 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
-                            /> :
-                            <Leaf
-                                id={`left child of ${node.id}`}
-                                position={{ x: -25 + level * 10, y: 10 }}
-                                node={{
-                                    id: `left child of ${node.id}`,
-                                    value: -1,
-                                    leftId: null,
-                                    rightId: null
-                                }}
-                                tree={tree}
-                                level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
-                            />
+                            />}
+                        {(!node.leftId && level <= 2) && <Leaf
+                            id={`left child of ${node.id}`}
+                            position={{ x: -25 + level * 10, y: 10 }}
+                            node={{
+                                id: `left child of ${node.id}`,
+                                value: -1,
+                                leftId: null,
+                                rightId: null
+                            }}
+                            tree={tree}
+                            level={level + 1}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            numberOfNodes={numberOfNodes}
+                        />
                         }
-                        {node.rightId ?
+                        {node.rightId &&
                             <Leaf
                                 id={node.rightId}
                                 position={{ x: 25 - level * 10, y: 10 }}
@@ -110,23 +110,22 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
-                            />
-                            :
-                            <Leaf
-                                id={`right child of ${node.id}`}
-                                position={{ x: 25 - level * 10, y: 10 }}
-                                node={{
-                                    id: `right child of ${node.id}`,
-                                    value: -1,
-                                    leftId: null,
-                                    rightId: null
-                                }}
-                                tree={tree}
-                                level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
-                            />
+                            />}
+                        {(!node.rightId && level <= 2) && <Leaf
+                            id={`right child of ${node.id}`}
+                            position={{ x: 25 - level * 10, y: 10 }}
+                            node={{
+                                id: `right child of ${node.id}`,
+                                value: -1,
+                                leftId: null,
+                                rightId: null
+                            }}
+                            tree={tree}
+                            level={level + 1}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            numberOfNodes={numberOfNodes}
+                        />
                         }
                     </>
                 }
