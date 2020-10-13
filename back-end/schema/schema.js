@@ -21,7 +21,7 @@ const TreeType = new GraphQLObjectType({
         nodes: {
             type: new GraphQLList(TreeNodeType),
             async resolve(parent, args) {
-                return await TreeNodes.find({ treeId: parent.id })
+                return await TreeNode.find({ treeId: parent.id })
             }
         }
     })
@@ -39,12 +39,14 @@ const RootQuery = new GraphQLObjectType({
         },
         root: {
             type: TreeNodeType,
+            args: { treeId: { type: GraphQLID } },
             async resolve(parent, args) {
                 return await TreeNode.findOne({ treeId: args.treeID, root: true })
             }
         },
         tree: {
             type: TreeType,
+            args: { id: { type: GraphQLID } },
             async resolve(parent, args) {
                 return await Tree.findById(args.id)
             }
@@ -111,7 +113,8 @@ const Mutation = new GraphQLObjectType({
         createTree: {
             type: TreeType,
             async resolve(parent, args) {
-                const tree = await Tree.create()
+                const tree = await Tree.create({})
+
                 const root = await TreeNode.create({
                     treeId: tree.id,
                     root: true,

@@ -12,7 +12,7 @@ export const ADD_TREE_NODE = gql`
 `
 
 export const GET_ROOT = gql`
-    query($treeId: ID) {
+    query($treeId: ID!) {
         root(treeId: $treeId) {
             id
             value
@@ -23,10 +23,15 @@ export const GET_ROOT = gql`
 `
 
 export const GET_TREE = gql`
-    {
-        tree(id: ID) {
+    query($id: ID!){
+        tree(id: $id) {
             id
-            nodes
+            nodes {
+                id
+                value
+                leftId
+                rightId
+            }
         }
     }
 `

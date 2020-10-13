@@ -28,7 +28,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
 
-
     useEffect(() => {
 
         if (rootData && treeNodesData) {
@@ -37,7 +36,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
             const treeNodesObj: TreeObject = {}
 
             // This loop converts the tree from an array to a nested object for constant time lookup of nodes
-            treeNodesData.nodes.forEach((treeNode: TreeNode) => {
+            treeNodesData.tree.nodes.forEach((treeNode: TreeNode) => {
                 treeNodesObj[treeNode.id] = {
                     id: treeNode.id,
                     value: treeNode.value,
@@ -50,7 +49,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
             setTreeState(treeNodesObj)
 
             // Need number of nodes to keep track of whether the tree is full or not
-            setNumberOfNodes(treeNodesData.treeNodes.length)
+            setNumberOfNodes(treeNodesData.tree.nodes.length)
 
         }
 

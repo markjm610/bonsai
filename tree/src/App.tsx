@@ -16,10 +16,11 @@ import { CREATE_TREE } from './queries'
 
 function App() {
 
-  const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
 
   const [numberOfNodes, setNumberOfNodes] = useState(0)
   const [treeId, setTreeId] = useState('')
+
+  const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
 
   useEffect(() => {
 
@@ -40,8 +41,8 @@ function App() {
 
   useEffect(() => {
     if (newTree) {
-      console.log(newTree)
-      // localStorage.setItem('TREE_ID', newTree.id)
+      localStorage.setItem('TREE_ID', newTree.createTree.id)
+      setTreeId(newTree.createTree.id)
     }
   }, [newTree])
 
