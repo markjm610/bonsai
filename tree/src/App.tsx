@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import ApolloClient from 'apollo-boost'
 // import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 // import apolloUri from './config'
 import Tree from './Tree';
 import FillTree from './FillTree';
+import { useMutation } from '@apollo/client'
+import { CREATE_TREE } from './queries'
 
 
 // const client = new ApolloClient({
@@ -14,13 +16,40 @@ import FillTree from './FillTree';
 
 function App() {
 
+  const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
+
   const [numberOfNodes, setNumberOfNodes] = useState(0)
+  const [treeId, setTreeId] = useState('')
+
+  useEffect(() => {
+
+    const storedTreeId: string | null = localStorage.getItem('TREE_ID')
+
+    if (storedTreeId) {
+      setTreeId(storedTreeId)
+    } else {
+      // Send mutation that creates tree
+      // setTreeId in state and setItem in local storage
+
+      createTree()
+
+
+    }
+
+  }, [])
+
+  useEffect(() => {
+    if (newTree) {
+      console.log(newTree)
+      // localStorage.setItem('TREE_ID', newTree.id)
+    }
+  }, [newTree])
 
   return (
     // <ApolloProvider client={client}>
     <div className="App">
       <FillTree numberOfNodes={numberOfNodes} />
-      <Tree numberOfNodes={numberOfNodes} setNumberOfNodes={setNumberOfNodes} />
+      {treeId && <Tree numberOfNodes={numberOfNodes} setNumberOfNodes={setNumberOfNodes} treeId={treeId} />}
     </div>
     // </ApolloProvider>
   );

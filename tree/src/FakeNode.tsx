@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { ADD_TREE_NODE, GET_TREENODES } from './queries'
+import { ADD_TREE_NODE, GET_TREE } from './queries'
 import { useSpring, animated } from 'react-spring'
 
 type Props = {
@@ -18,7 +18,6 @@ const FakeNode: React.FC<Props> = ({
     storedParentId,
     isStoredLeftChild,
 }) => {
-
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [animationDone, setAnimationDone] = useState(false)
     // const fakeNodeRef = useRef(null)
@@ -100,7 +99,7 @@ const FakeNode: React.FC<Props> = ({
                     parentId: storedParentId,
                     isLeftChild: isStoredLeftChild
                 },
-                refetchQueries: [{ query: GET_TREENODES }]
+                refetchQueries: [{ query: GET_TREE }]
             })
 
         }

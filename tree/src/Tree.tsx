@@ -2,31 +2,42 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import Leaf from './Leaf'
 import { TreeNode, TreeObject } from './types'
-import { GET_ROOT, GET_TREENODES } from './queries'
+import { GET_ROOT, GET_TREE } from './queries'
 import InsertForm from './InsertForm'
 
 
 type Props = {
     numberOfNodes: number;
     setNumberOfNodes: Function;
+    treeId: string;
 }
 
-const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes }) => {
-    const { data: rootData } = useQuery(GET_ROOT);
-    const { data: treeNodesData } = useQuery(GET_TREENODES)
+const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
+
+    const { data: rootData } = useQuery(GET_ROOT, {
+        variables: {
+            treeId: treeId
+        }
+    });
+    const { data: treeNodesData } = useQuery(GET_TREE, {
+        variables: {
+            id: treeId
+        }
+    })
     const [treeState, setTreeState] = useState({})
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
 
 
     useEffect(() => {
+
         if (rootData && treeNodesData) {
 
             // Object of TreeNodes
             const treeNodesObj: TreeObject = {}
 
             // This loop converts the tree from an array to a nested object for constant time lookup of nodes
-            treeNodesData.treeNodes.forEach((treeNode: TreeNode) => {
+            treeNodesData.nodes.forEach((treeNode: TreeNode) => {
                 treeNodesObj[treeNode.id] = {
                     id: treeNode.id,
                     value: treeNode.value,

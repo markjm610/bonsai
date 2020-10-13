@@ -12,8 +12,8 @@ export const ADD_TREE_NODE = gql`
 `
 
 export const GET_ROOT = gql`
-    {
-        root {
+    query($treeId: ID) {
+        root(treeId: $treeId) {
             id
             value
             leftId
@@ -22,13 +22,11 @@ export const GET_ROOT = gql`
     }
 `
 
-export const GET_TREENODES = gql`
+export const GET_TREE = gql`
     {
-        treeNodes {
+        tree(id: ID) {
             id
-            value
-            leftId
-            rightId
+            nodes
         }
     }
 `
@@ -36,6 +34,14 @@ export const GET_TREENODES = gql`
 export const CLEAR_TREE = gql`
     mutation {
         clearTree {
+            id
+        }
+    }
+`
+
+export const CREATE_TREE = gql`
+    mutation {
+        createTree {
             id
         }
     }

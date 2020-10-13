@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { CLEAR_TREE, GET_TREENODES } from './queries'
+import { CLEAR_TREE, GET_TREE } from './queries'
 
 type Props = {
     numberOfNodes: number;
@@ -12,7 +12,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes }) => {
 
     const startOver = () => {
         clearTree({
-            refetchQueries: [{ query: GET_TREENODES }]
+            refetchQueries: [{ query: GET_TREE }]
         })
     }
 
