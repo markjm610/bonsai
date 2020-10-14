@@ -10,6 +10,7 @@ type Props = {
     storedParentId: string;
     isStoredLeftChild: boolean;
     treeId: string;
+    setInputFade: Function;
 }
 
 const FakeNode: React.FC<Props> = ({
@@ -18,15 +19,16 @@ const FakeNode: React.FC<Props> = ({
     setTraversedNodeIds,
     storedParentId,
     isStoredLeftChild,
-    treeId
+    treeId,
+    setInputFade
 }) => {
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [animationDone, setAnimationDone] = useState(false)
-    // const fakeNodeRef = useRef(null)
+
     const inputElement = document.querySelector('.value-input')
     const inputElementLeft = inputElement?.getBoundingClientRect().left
     const inputElementTop = inputElement?.getBoundingClientRect().top
-    // const fakeNodeRef = document.querySelector('.fake-node')
+
     const newNodeStyle = useSpring({
 
         from: { top: inputElementTop, left: inputElementLeft, position: 'fixed', backgroundColor: 'rgb(245, 245, 245)', opacity: 1 },
@@ -83,6 +85,7 @@ const FakeNode: React.FC<Props> = ({
 
                 setAnimationDone(true)
                 setTraversedNodeIds([])
+                setInputFade(true)
 
             }
 
