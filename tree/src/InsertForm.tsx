@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
-import { useSpring } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 
 
 type Props = {
@@ -62,10 +62,17 @@ const InsertForm: React.FC<Props> = ({
     const [storedParentId, setStoredParentId] = useState('')
     const [isStoredLeftChild, setStoredIsLeftChild] = useState(false)
     const [fakeNodeValue, setFakeNodeValue] = useState('')
+    const [inputFade, setInputFade] = useState(false)
+
+
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         if (!validMove) {
             setValidMove(true)
+        }
+
+        if (inputFade) {
+            setInputFade(false)
         }
 
         setValue(e.currentTarget.value)
@@ -128,14 +135,16 @@ const InsertForm: React.FC<Props> = ({
         // Turn off tree loading animation so it doesn't happen when the new node is added
         setAnimationOn(false)
 
+
         // Clear input
         setValue('')
 
     }
 
-    // const inputStyle = useSpring({
-    //     opacity: beginInsert ? 0 : 1
-    // })
+    const inputAnimated = useSpring({
+        to: { opacity: beginInsert ? 0 : 1 },
+        from: { opacity: 0.5 }
+    })
 
     return (
         <>
@@ -146,10 +155,11 @@ const InsertForm: React.FC<Props> = ({
                     {/* <button className='add-node-button'>Add</button> */}
                     <div className='input-container'
                     >
-                        <input
-                            style={{
+                        <animated.input
+                            style={inputFade ? inputAnimated : {
                                 opacity: beginInsert ? 0 : 1
                             }}
+                            // style={inputStyle}
                             type='number'
                             onChange={handleInputChange}
                             value={value}
@@ -164,6 +174,7 @@ const InsertForm: React.FC<Props> = ({
                                 storedParentId={storedParentId}
                                 isStoredLeftChild={isStoredLeftChild}
                                 treeId={treeId}
+                                setInputFade={setInputFade}
                             />}
                     </div>
 
