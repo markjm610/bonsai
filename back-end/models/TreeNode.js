@@ -6,7 +6,8 @@ const treeNodeSchema = new Schema({
     value: { type: Number, required: true },
     leftId: { type: mongoose.Types.ObjectId, ref: 'TreeNode' },
     rightId: { type: mongoose.Types.ObjectId, ref: 'TreeNode' },
-    root: { type: Boolean, required: true }
+    root: { type: Boolean, required: true },
+    treeId: { type: mongoose.Types.ObjectId, ref: 'Tree' },
 })
 
 const TreeNode = mongoose.model('TreeNode', treeNodeSchema)

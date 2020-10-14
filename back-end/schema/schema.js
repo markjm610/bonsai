@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLSchema, GraphQLBoolean, GraphQLList } = require('graphql')
 const TreeNode = require('../models/TreeNode')
+const Tree = require('../models/Tree')
 
 const TreeNodeType = new GraphQLObjectType({
     name: 'TreeNode',
@@ -8,7 +9,29 @@ const TreeNodeType = new GraphQLObjectType({
         value: { type: GraphQLInt },
         leftId: { type: GraphQLID },
         rightId: { type: GraphQLID },
-        root: { type: GraphQLBoolean }
+        root: { type: GraphQLBoolean },
+        treeId: { type: GraphQLID }
+    })
+})
+
+const TreeType = new GraphQLObjectType({
+    name: 'Tree',
+    fields: () => ({
+        id: { type: GraphQLID },
+        nodes: {
+            type: GraphQLList(TreeNodeType),
+            async resolve(parent, args) {
+                return await TreeNode.find({ treeId: parent.id })
+            }
+        },
+        root: {
+            type: GraphQLList(TreeNodeType),
+            async resolve(parent, args) {
+                const root = await TreeNode.find({ treeId: parent.id, root: true })
+
+                return root
+            }
+        }
     })
 })
 
@@ -22,39 +45,22 @@ const RootQuery = new GraphQLObjectType({
                 return await TreeNode.findById(args.id)
             }
         },
-        root: {
-            type: TreeNodeType,
+        // root: {
+        //     type: TreeNodeType,
+        //     args: { treeId: { type: GraphQLID } },
+        //     async resolve(parent, args) {
+
+        //         const root = await TreeNode.findOne({ treeId: args.treeID, root: true })
+
+        //         return root
+        //     }
+        // },
+        tree: {
+            type: TreeType,
+            args: { id: { type: GraphQLID } },
             async resolve(parent, args) {
-
-                // const treeNode = await TreeNode.findOne({ root: true }).lean()
-                // const queue = [treeNode]
-                // while (queue[0]) {
-                //     const currentNode = queue[0]
-                //     const left = await TreeNode.findById(currentNode.leftId).lean()
-                //     const right = await TreeNode.findById(currentNode.rightId).lean()
-
-                //     currentNode.left = left
-                //     currentNode.right = right
-                //     if (left) {
-                //         queue.push(left)
-                //     }
-                //     if (right) {
-                //         queue.push(right)
-                //     }
-                //     queue.shift()
-                // }
-
-                // return treeNode
-
-                return await TreeNode.findOne({ root: true })
+                return await Tree.findById(args.id)
             }
-        },
-        treeNodes: {
-            type: new GraphQLList(TreeNodeType),
-            async resolve(parent, args) {
-                return await TreeNode.find({})
-            }
-
         }
     }
 })
@@ -68,7 +74,8 @@ const Mutation = new GraphQLObjectType({
                 value: { type: GraphQLInt },
                 root: { type: GraphQLBoolean },
                 parentId: { type: GraphQLID },
-                isLeftChild: { type: GraphQLBoolean }
+                isLeftChild: { type: GraphQLBoolean },
+                treeId: { type: GraphQLID }
             },
             async resolve(parent, args) {
 
@@ -77,7 +84,8 @@ const Mutation = new GraphQLObjectType({
                         value: args.value,
                         leftId: args.leftId,
                         rightId: args.rightId,
-                        root: args.root
+                        root: args.root,
+                        treeId: args.treeId
                     })
 
                     await treeNode.save()
@@ -105,12 +113,91 @@ const Mutation = new GraphQLObjectType({
         },
         clearTree: {
             type: TreeNodeType,
+            args: { id: { type: GraphQLID } },
             async resolve(parent, args) {
-                const root = await TreeNode.findOne({ root: true })
+                const root = await TreeNode.findOne({ treeId: args.id, root: true })
+
                 root.leftId = null
                 root.rightId = null
                 await root.save()
-                await TreeNode.deleteMany({ root: false })
+                await TreeNode.deleteMany({ treeId: args.id, root: false })
+                return root
+            }
+        },
+        createTree: {
+            type: TreeType,
+            async resolve(parent, args) {
+                const tree = await Tree.create({})
+
+                const root = await TreeNode.create({
+                    treeId: tree.id,
+                    root: true,
+                    value: 50,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootLeft = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 25,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootRight = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 75,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootRightLeft = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 68,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootRightRight = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 90,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootLeftLeft = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 10,
+                    leftId: null,
+                    rightId: null
+                })
+
+                const rootLeftLeftLeft = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 1,
+                    leftId: null,
+                    rightId: null
+                })
+
+                root.leftId = rootLeft.id
+                root.rightId = rootRight.id
+                rootRight.leftId = rootRightLeft.id
+                rootRight.rightId = rootRightRight.id
+                rootLeft.leftId = rootLeftLeft.id
+                rootLeftLeft.leftId = rootLeftLeftLeft.id
+
+                await root.save()
+                await rootRight.save()
+                await rootLeft.save()
+                await rootLeftLeft.save()
+
+                return tree
             }
         }
     }

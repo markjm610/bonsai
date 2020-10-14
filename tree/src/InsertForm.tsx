@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
+import { useSpring } from 'react-spring'
 
 
 type Props = {
@@ -11,12 +12,14 @@ type Props = {
     setTraversedNodeIds: Function;
     beginInsert: boolean;
     setBeginInsert: Function;
+    treeId: string;
+    setAnimationOn: Function;
 }
 
 // insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
 // the FakeNode component can look up the locations of the nodes on the screen
 function insertNode(value: number, node: TreeNode, tree: TreeObject, level: number, traversedNodes: string[] = []): [string, boolean, string[]] {
-
+    console.log(node)
     traversedNodes.push(node.id)
 
     if (level > 3) {
@@ -40,7 +43,17 @@ function insertNode(value: number, node: TreeNode, tree: TreeObject, level: numb
 
 }
 
-const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeIds, setTraversedNodeIds, beginInsert, setBeginInsert }) => {
+const InsertForm: React.FC<Props> = ({
+    treeId,
+    tree,
+    root,
+    numberOfNodes,
+    traversedNodeIds,
+    setTraversedNodeIds,
+    beginInsert,
+    setBeginInsert,
+    setAnimationOn
+}) => {
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -49,7 +62,6 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
     const [storedParentId, setStoredParentId] = useState('')
     const [isStoredLeftChild, setStoredIsLeftChild] = useState(false)
     const [fakeNodeValue, setFakeNodeValue] = useState('')
-
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         if (!validMove) {
@@ -113,11 +125,17 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
         // Trigger the inserting node animation
         setBeginInsert(true)
 
+        // Turn off tree loading animation so it doesn't happen when the new node is added
+        setAnimationOn(false)
+
         // Clear input
         setValue('')
 
     }
 
+    // const inputStyle = useSpring({
+    //     opacity: beginInsert ? 0 : 1
+    // })
 
     return (
         <>
@@ -145,6 +163,7 @@ const InsertForm: React.FC<Props> = ({ tree, root, numberOfNodes, traversedNodeI
                                 setTraversedNodeIds={setTraversedNodeIds}
                                 storedParentId={storedParentId}
                                 isStoredLeftChild={isStoredLeftChild}
+                                treeId={treeId}
                             />}
                     </div>
 

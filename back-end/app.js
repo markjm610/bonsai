@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const path = require('path')
 
-const uri = "mongodb+srv://treeUser:tree@Cluster0.rbi8l.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const uri = process.env.ATLAS_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },);
 const connection = mongoose.connection;

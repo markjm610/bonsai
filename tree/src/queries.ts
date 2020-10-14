@@ -1,41 +1,62 @@
 import { gql } from '@apollo/client'
 
 export const ADD_TREE_NODE = gql`
-    mutation($value: Int!, $root: Boolean!, $parentId: ID, $isLeftChild: Boolean!) {
-        addTreeNode(value: $value, root: $root, parentId: $parentId, isLeftChild: $isLeftChild) {
+    mutation($value: Int!, $root: Boolean!, $parentId: ID, $isLeftChild: Boolean!, $treeId: ID!) {
+        addTreeNode(value: $value, root: $root, parentId: $parentId, isLeftChild: $isLeftChild, treeId: $treeId) {
             id
             value
             leftId
             rightId
+            treeId
         }
     }
 `
 
 export const GET_ROOT = gql`
-    {
-        root {
+    query($treeId: ID!) {
+        root(treeId: $treeId) {
             id
             value
             leftId
             rightId
+            treeId
         }
     }
 `
 
-export const GET_TREENODES = gql`
-    {
-        treeNodes {
+export const GET_TREE = gql`
+    query($id: ID!){
+        tree(id: $id) {
             id
-            value
-            leftId
-            rightId
+            nodes {
+                id
+                value
+                leftId
+                rightId
+                treeId
+            }
+            root {
+                id
+                value
+                leftId
+                rightId
+                treeId
+            }
         }
     }
 `
 
 export const CLEAR_TREE = gql`
+    mutation($id: ID!){
+        clearTree(id: $id){
+            id
+        }
+    }
+`
+
+export const CREATE_TREE = gql`
     mutation {
-        clearTree {
+        createTree {
             id
         }
     }

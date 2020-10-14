@@ -11,6 +11,7 @@ type Props = {
     beginInsert: boolean;
     setBeginInsert: Function;
     numberOfNodes: number;
+    animationOn: boolean;
 }
 
 
@@ -23,8 +24,8 @@ const Leaf: React.FC<Props> = ({
     beginInsert,
     setBeginInsert,
     numberOfNodes,
+    animationOn
 }) => {
-
 
     let springObj;
     if (level === 0) {
@@ -59,21 +60,24 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
-
     if (node && node.value !== -1) {
+
         return (
-            <animated.div
+
+            < animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={!beginInsert ? style : {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                }}
+                style={
+                    animationOn ? style : {
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                    }
+                }
             >
                 { node &&
                     <>
                         {node.value}
-                        {node.leftId ?
+                        {node.leftId &&
                             <Leaf
                                 id={node.leftId}
                                 position={{ x: -25 + level * 10, y: 10 }}
@@ -83,24 +87,26 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
-                            /> :
-                            <Leaf
-                                id={`left child of ${node.id}`}
-                                position={{ x: -25 + level * 10, y: 10 }}
-                                node={{
-                                    id: `left child of ${node.id}`,
-                                    value: -1,
-                                    leftId: null,
-                                    rightId: null
-                                }}
-                                tree={tree}
-                                level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
-                            />
+                                animationOn={animationOn}
+                            />}
+                        {(!node.leftId && level <= 2) && <Leaf
+                            id={`left child of ${node.id}`}
+                            position={{ x: -25 + level * 10, y: 10 }}
+                            node={{
+                                id: `left child of ${node.id}`,
+                                value: -1,
+                                leftId: null,
+                                rightId: null
+                            }}
+                            tree={tree}
+                            level={level + 1}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            numberOfNodes={numberOfNodes}
+                            animationOn={animationOn}
+                        />
                         }
-                        {node.rightId ?
+                        {node.rightId &&
                             <Leaf
                                 id={node.rightId}
                                 position={{ x: 25 - level * 10, y: 10 }}
@@ -110,23 +116,24 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
-                            />
-                            :
-                            <Leaf
-                                id={`right child of ${node.id}`}
-                                position={{ x: 25 - level * 10, y: 10 }}
-                                node={{
-                                    id: `right child of ${node.id}`,
-                                    value: -1,
-                                    leftId: null,
-                                    rightId: null
-                                }}
-                                tree={tree}
-                                level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
-                            />
+                                animationOn={animationOn}
+                            />}
+                        {(!node.rightId && level <= 2) && <Leaf
+                            id={`right child of ${node.id}`}
+                            position={{ x: 25 - level * 10, y: 10 }}
+                            node={{
+                                id: `right child of ${node.id}`,
+                                value: -1,
+                                leftId: null,
+                                rightId: null
+                            }}
+                            tree={tree}
+                            level={level + 1}
+                            beginInsert={beginInsert}
+                            setBeginInsert={setBeginInsert}
+                            numberOfNodes={numberOfNodes}
+                            animationOn={animationOn}
+                        />
                         }
                     </>
                 }
