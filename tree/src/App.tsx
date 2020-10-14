@@ -47,12 +47,10 @@ function App() {
   }, [newTree])
 
   return (
-    // <ApolloProvider client={client}>
     <div className="App">
       <FillTree numberOfNodes={numberOfNodes} treeId={treeId} />
       {treeId && <Tree numberOfNodes={numberOfNodes} setNumberOfNodes={setNumberOfNodes} treeId={treeId} />}
     </div>
-    // </ApolloProvider>
   );
 }
 

@@ -64,7 +64,7 @@ const Leaf: React.FC<Props> = ({
 
         return (
 
-            < animated.div
+            <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
