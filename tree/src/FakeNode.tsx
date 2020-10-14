@@ -9,6 +9,7 @@ type Props = {
     setTraversedNodeIds: Function;
     storedParentId: string;
     isStoredLeftChild: boolean;
+    treeId: string;
 }
 
 const FakeNode: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const FakeNode: React.FC<Props> = ({
     setTraversedNodeIds,
     storedParentId,
     isStoredLeftChild,
+    treeId
 }) => {
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [animationDone, setAnimationDone] = useState(false)
@@ -97,9 +99,10 @@ const FakeNode: React.FC<Props> = ({
                     value: parseInt(value),
                     root: false,
                     parentId: storedParentId,
-                    isLeftChild: isStoredLeftChild
+                    isLeftChild: isStoredLeftChild,
+                    treeId: treeId
                 },
-                refetchQueries: [{ query: GET_TREE }]
+                refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
             })
 
         }

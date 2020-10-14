@@ -14,11 +14,7 @@ type Props = {
 
 const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
 
-    const { data: rootData } = useQuery(GET_ROOT, {
-        variables: {
-            treeId: treeId
-        }
-    });
+
     const { data: treeNodesData } = useQuery(GET_TREE, {
         variables: {
             id: treeId
@@ -27,10 +23,11 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
     const [treeState, setTreeState] = useState({})
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
+    const [animationOn, setAnimationOn] = useState(true)
 
     useEffect(() => {
 
-        if (rootData && treeNodesData) {
+        if (treeNodesData) {
 
             // Object of TreeNodes
             const treeNodesObj: TreeObject = {}
@@ -50,37 +47,40 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
 
             // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.tree.nodes.length)
-
+            console.log(treeNodesData)
         }
 
 
-    }, [rootData, treeNodesData])
+    }, [treeNodesData])
 
     return (
         <>
-            {(rootData && treeNodesData) &&
+            {treeNodesData &&
                 <>
                     <div className='form-container'>
                         <InsertForm
-                            root={rootData.root}
+                            root={treeNodesData.tree.root[0]}
                             tree={treeState}
                             numberOfNodes={numberOfNodes}
                             traversedNodeIds={traversedNodeIds}
                             setTraversedNodeIds={setTraversedNodeIds}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
+                            treeId={treeId}
+                            setAnimationOn={setAnimationOn}
                         />
                     </div>
                     <div className='leaves-container'>
                         <Leaf
-                            id={rootData.root.id}
-                            node={rootData.root}
+                            id={treeNodesData.tree.root[0].id}
+                            node={treeNodesData.tree.root[0]}
                             position={{ x: 48, y: 30 }}
                             tree={treeState}
                             level={0}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
+                            animationOn={animationOn}
                         />
                     </div>
                 </>

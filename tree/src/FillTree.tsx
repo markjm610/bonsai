@@ -4,15 +4,16 @@ import { CLEAR_TREE, GET_TREE } from './queries'
 
 type Props = {
     numberOfNodes: number;
+    treeId: string;
 }
 
-const FillTree: React.FC<Props> = ({ numberOfNodes }) => {
+const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
 
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
         clearTree({
-            refetchQueries: [{ query: GET_TREE }]
+            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
         })
     }
 

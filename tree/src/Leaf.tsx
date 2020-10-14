@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 
@@ -11,6 +11,7 @@ type Props = {
     beginInsert: boolean;
     setBeginInsert: Function;
     numberOfNodes: number;
+    animationOn: boolean;
 }
 
 
@@ -23,8 +24,8 @@ const Leaf: React.FC<Props> = ({
     beginInsert,
     setBeginInsert,
     numberOfNodes,
+    animationOn
 }) => {
-
 
     let springObj;
     if (level === 0) {
@@ -59,16 +60,28 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
-
     if (node && node.value !== -1) {
+        console.log(animationOn)
         return (
-            <animated.div
+
+            < animated.div
                 id={id}
-                className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={!beginInsert ? style : {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                }}
+                className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'
+                }
+                // style={(!beginInsert && animationOn) ? style : {
+                //     top: `${position.y}vh`,
+                //     left: `${position.x}vw`,
+                // }}
+                style={
+                    animationOn ? style : {
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                    }
+                }
+            // style={{
+            //     top: `${position.y}vh`,
+            //     left: `${position.x}vw`,
+            // }}
             >
                 { node &&
                     <>
@@ -83,6 +96,7 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
+                                animationOn={animationOn}
                             />}
                         {(!node.leftId && level <= 2) && <Leaf
                             id={`left child of ${node.id}`}
@@ -98,6 +112,7 @@ const Leaf: React.FC<Props> = ({
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
+                            animationOn={animationOn}
                         />
                         }
                         {node.rightId &&
@@ -110,6 +125,7 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
+                                animationOn={animationOn}
                             />}
                         {(!node.rightId && level <= 2) && <Leaf
                             id={`right child of ${node.id}`}
@@ -125,6 +141,7 @@ const Leaf: React.FC<Props> = ({
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
+                            animationOn={animationOn}
                         />
                         }
                     </>

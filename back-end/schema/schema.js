@@ -19,9 +19,17 @@ const TreeType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         nodes: {
-            type: new GraphQLList(TreeNodeType),
+            type: GraphQLList(TreeNodeType),
             async resolve(parent, args) {
                 return await TreeNode.find({ treeId: parent.id })
+            }
+        },
+        root: {
+            type: GraphQLList(TreeNodeType),
+            async resolve(parent, args) {
+                const root = await TreeNode.find({ treeId: parent.id, root: true })
+
+                return root
             }
         }
     })
@@ -37,13 +45,16 @@ const RootQuery = new GraphQLObjectType({
                 return await TreeNode.findById(args.id)
             }
         },
-        root: {
-            type: TreeNodeType,
-            args: { treeId: { type: GraphQLID } },
-            async resolve(parent, args) {
-                return await TreeNode.findOne({ treeId: args.treeID, root: true })
-            }
-        },
+        // root: {
+        //     type: TreeNodeType,
+        //     args: { treeId: { type: GraphQLID } },
+        //     async resolve(parent, args) {
+
+        //         const root = await TreeNode.findOne({ treeId: args.treeID, root: true })
+
+        //         return root
+        //     }
+        // },
         tree: {
             type: TreeType,
             args: { id: { type: GraphQLID } },
@@ -102,6 +113,7 @@ const Mutation = new GraphQLObjectType({
         },
         clearTree: {
             type: TreeNodeType,
+            args: { treeId: { type: GraphQLID } },
             async resolve(parent, args) {
                 const root = await TreeNode.findOne({ treeId: args.treeId, root: true })
                 root.leftId = null
@@ -122,6 +134,7 @@ const Mutation = new GraphQLObjectType({
                     leftId: null,
                     rightId: null
                 })
+
                 return tree
             }
         }

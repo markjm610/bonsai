@@ -1,12 +1,13 @@
 import { gql } from '@apollo/client'
 
 export const ADD_TREE_NODE = gql`
-    mutation($value: Int!, $root: Boolean!, $parentId: ID, $isLeftChild: Boolean!) {
-        addTreeNode(value: $value, root: $root, parentId: $parentId, isLeftChild: $isLeftChild) {
+    mutation($value: Int!, $root: Boolean!, $parentId: ID, $isLeftChild: Boolean!, $treeId: ID!) {
+        addTreeNode(value: $value, root: $root, parentId: $parentId, isLeftChild: $isLeftChild, treeId: $treeId) {
             id
             value
             leftId
             rightId
+            treeId
         }
     }
 `
@@ -18,6 +19,7 @@ export const GET_ROOT = gql`
             value
             leftId
             rightId
+            treeId
         }
     }
 `
@@ -31,6 +33,14 @@ export const GET_TREE = gql`
                 value
                 leftId
                 rightId
+                treeId
+            }
+            root {
+                id
+                value
+                leftId
+                rightId
+                treeId
             }
         }
     }
