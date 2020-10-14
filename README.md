@@ -8,7 +8,7 @@ A mini app that recursively renders a binary search tree and animates the nodes 
 
 - TypeScript
 - React / Hooks
-- react-spring for animations (react-spring.io)
+- [react-spring](https://react-spring.io) for animations
 - GraphQL / Apollo
 - Tests in Cypress and Enzyme/Jest
 - MongoDB / Mongoose
