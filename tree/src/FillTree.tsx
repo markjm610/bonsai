@@ -13,13 +13,14 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
 
     const startOver = () => {
         clearTree({
+            variables: { id: treeId },
             refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
         })
     }
 
     return (
         <div className='dialogue-container'>
-            <button onClick={startOver} className='start-over-button'>Start Over</button>
+            <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
             {numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
             }

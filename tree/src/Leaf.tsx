@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 
@@ -61,27 +61,18 @@ const Leaf: React.FC<Props> = ({
     }, [])
 
     if (node && node.value !== -1) {
-        console.log(animationOn)
+
         return (
 
             < animated.div
                 id={id}
-                className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'
-                }
-                // style={(!beginInsert && animationOn) ? style : {
-                //     top: `${position.y}vh`,
-                //     left: `${position.x}vw`,
-                // }}
+                className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
                     animationOn ? style : {
                         top: `${position.y}vh`,
                         left: `${position.x}vw`,
                     }
                 }
-            // style={{
-            //     top: `${position.y}vh`,
-            //     left: `${position.x}vw`,
-            // }}
             >
                 { node &&
                     <>

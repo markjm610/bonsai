@@ -47,8 +47,8 @@ export const GET_TREE = gql`
 `
 
 export const CLEAR_TREE = gql`
-    mutation {
-        clearTree {
+    mutation($id: ID!){
+        clearTree(id: $id){
             id
         }
     }

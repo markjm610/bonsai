@@ -47,7 +47,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
 
             // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.tree.nodes.length)
-            console.log(treeNodesData)
         }
 
 
