@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import './index.css';
 import App from './App';
+import ContextWrapper from './ContextWrapper'
 import * as serviceWorker from './serviceWorker';
 import apolloUri from './config'
 
@@ -14,7 +15,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <ContextWrapper />
     </ApolloProvider>
   </React.StrictMode>
   ,
