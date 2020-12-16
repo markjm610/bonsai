@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
+import Context from './Context'
 
 type Props = {
     numberOfNodes: number;
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
-
+    const { flattened, setFlattened } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -18,9 +19,16 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         })
     }
 
+    const flatten = () => {
+        setFlattened(!flattened)
+    }
+
     return (
         <div className='dialogue-container'>
-            <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
+            <div className='buttons-container'>
+                <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
+                <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
+            </div>
             {numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
             }

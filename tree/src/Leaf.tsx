@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
+import Context from './Context'
 
 type Props = {
     id: string;
@@ -27,28 +28,78 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
+    const { flattened } = useContext(Context)
+
     let springObj;
-    if (level === 0) {
+
+    if (animationOn) {
+        if (flattened) {
+            springObj = {
+                from: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                to: {
+                    top: level === 0 ? `${position.y}vh` : '0vh',
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                }
+            }
+        }
+        else if (level === 0) {
+            springObj = {
+                to: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                from: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 0.5
+                }
+            }
+        } else {
+            springObj = {
+                to: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                from: {
+                    top: `${0}vh`,
+                    left: `${0}vw`,
+                    opacity: 0.5
+                },
+            }
+        }
+
+    } else if (flattened) {
         springObj = {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
             from: {
-                top: `${position.y}vh`,
+                top: `0vh`,
                 left: `${position.x}vw`,
-                opacity: 0.5
+                opacity: 1,
+            },
+            to: {
+                top: level === 0 ? `${position.y}vh` : '0vh',
+                left: `${position.x}vw`,
+                opacity: 1,
             }
         }
     } else {
         springObj = {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
             from: {
-                top: `${0}vh`,
-                left: `${0}vw`,
-                opacity: 0.5
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: 1,
             },
+            to: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: 1,
+            }
         }
     }
 
@@ -68,13 +119,15 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
-                    animationOn ? style : {
-                        top: `${position.y}vh`,
-                        left: `${position.x}vw`,
-                    }
+                    // animationOn ?
+                    style
+                    // : {
+                    //     top: `${position.y}vh`,
+                    //     left: `${position.x}vw`,
+                    // }
                 }
             >
-                { node &&
+                {node &&
                     <>
                         {node.value}
                         {node.leftId &&
@@ -144,11 +197,19 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className='leaf-complete'
-                style={{
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 0
-                }}
+                style={!flattened
+                    ?
+                    {
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 0
+                    }
+                    :
+                    {
+                        top: `0vh`,
+                        left: `${position.x}vw`,
+                        opacity: 0
+                    }}
             >
             </animated.div>
         )
