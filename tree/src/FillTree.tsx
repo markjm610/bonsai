@@ -27,7 +27,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
-                <button onClick={flatten} className='start-over-button'>Flatten</button>
+                <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
             </div>
             {numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
