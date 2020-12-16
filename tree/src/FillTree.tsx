@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
+import Context from './Context'
 
 type Props = {
     numberOfNodes: number;
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
-
+    const { flattened, setFlattened } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -19,7 +20,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
     }
 
     const flatten = () => {
-
+        setFlattened(!flattened)
     }
 
     return (

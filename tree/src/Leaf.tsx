@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
+import Context from './Context'
 
 type Props = {
     id: string;
@@ -27,12 +28,16 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
+    const { flattened } = useContext(Context)
+
     let springObj;
     if (level === 0) {
         springObj = {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
+            to: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: 1,
+            },
             from: {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`,
@@ -41,9 +46,11 @@ const Leaf: React.FC<Props> = ({
         }
     } else {
         springObj = {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
+            to: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: 1,
+            },
             from: {
                 top: `${0}vh`,
                 left: `${0}vw`,
@@ -54,6 +61,65 @@ const Leaf: React.FC<Props> = ({
 
     const style = useSpring(springObj)
 
+    // let flattenedSpringObj;
+
+    // if (level === 0) {
+    //     flattenedSpringObj = {
+    //         from: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
+    //         },
+    //         to: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
+    //         }
+    //     }
+    // } else {
+    //     flattenedSpringObj = {
+    //         from: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
+    //         },
+    //         to: {
+    //             top: '0vh',
+    //             left: `${position.x}vw`
+    //         }
+    //     }
+    // }
+    let flattenedStyle = useSpring({
+        from: {
+            top: `${position.y}vh`,
+            left: `${position.x}vw`
+        },
+        to: async (next: Function) => {
+            if (flattened) {
+                if (level === 0) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`
+                    })
+                } else {
+                    await next({
+                        top: '0vh',
+                        left: `${position.x}vw`
+                    })
+                }
+            } else {
+                await next({
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`
+                })
+            }
+        }
+    })
+    // to: async (next: Function) => {
+    //     if (flattened) {
+    //         await next({
+    //             top: '0vh',
+    //             left: `${position.x}vw`
+    //         })
+    //     }
+    // }
     useEffect(() => {
         if (beginInsert) {
             setBeginInsert(false)
@@ -68,13 +134,13 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
-                    animationOn ? style : {
+                    flattened ? flattenedStyle : {
                         top: `${position.y}vh`,
                         left: `${position.x}vw`,
                     }
                 }
             >
-                { node &&
+                {node &&
                     <>
                         {node.value}
                         {node.leftId &&
