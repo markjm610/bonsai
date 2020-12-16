@@ -59,7 +59,7 @@ const Leaf: React.FC<Props> = ({
         }
     }
 
-    const style = useSpring(springObj)
+
 
     // let flattenedSpringObj;
 
@@ -108,10 +108,10 @@ const Leaf: React.FC<Props> = ({
     //         }
     //     }
     // })
-    let flattenedStyleObj;
+    // let flattenedStyleObj;
 
     if (flattened) {
-        flattenedStyleObj = {
+        springObj = {
             from: {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`
@@ -122,7 +122,7 @@ const Leaf: React.FC<Props> = ({
             }
         }
     } else {
-        flattenedStyleObj = {
+        springObj = {
             from: {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`
@@ -135,8 +135,8 @@ const Leaf: React.FC<Props> = ({
             }
         }
     }
-
-    const flattenedStyle = useSpring(flattenedStyleObj)
+    const style = useSpring(springObj)
+    // const flattenedStyle = useSpring(flattenedStyleObj)
 
     // to: async (next: Function) => {
     //     if (flattened) {
@@ -160,12 +160,12 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
-                    // flattened ?
-                    flattenedStyle
-                    // : {
-                    //     top: `${position.y}vh`,
-                    //     left: `${position.x}vw`,
-                    // }
+                    animationOn ?
+                        style
+                        : {
+                            top: `${position.y}vh`,
+                            left: `${position.x}vw`,
+                        }
                 }
             >
                 {node &&
