@@ -86,32 +86,58 @@ const Leaf: React.FC<Props> = ({
     //         }
     //     }
     // }
-    let flattenedStyle = useSpring({
-        from: {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`
-        },
-        to: async (next: Function) => {
-            if (flattened) {
-                if (level === 0) {
-                    await next({
-                        top: `${position.y}vh`,
-                        left: `${position.x}vw`
-                    })
-                } else {
-                    await next({
-                        top: '0vh',
-                        left: `${position.x}vw`
-                    })
-                }
-            } else {
-                await next({
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`
-                })
+    // let flattenedStyle = useSpring({
+    //     from: {
+    //         top: `${position.y}vh`,
+    //         left: `${position.x}vw`
+    //     },
+    //     to: async (next: Function) => {
+
+    //         if (flattened) {
+    //             if (level === 0) {
+    //                 await next({
+    //                     top: `${position.y}vh`,
+    //                     left: `${position.x}vw`
+    //                 })
+    //             } else {
+    //                 await next({
+    //                     top: '0vh',
+    //                     left: `${position.x}vw`
+    //                 })
+    //             }
+    //         }
+    //     }
+    // })
+    let flattenedStyleObj;
+
+    if (flattened) {
+        flattenedStyleObj = {
+            from: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`
+            },
+            to: {
+                top: level === 0 ? `${position.y}vh` : '0vh',
+                left: `${position.x}vw`
             }
         }
-    })
+    } else {
+        flattenedStyleObj = {
+            from: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`
+            },
+            to: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`
+
+
+            }
+        }
+    }
+
+    const flattenedStyle = useSpring(flattenedStyleObj)
+
     // to: async (next: Function) => {
     //     if (flattened) {
     //         await next({
@@ -134,10 +160,12 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
-                    flattened ? flattenedStyle : {
-                        top: `${position.y}vh`,
-                        left: `${position.x}vw`,
-                    }
+                    // flattened ?
+                    flattenedStyle
+                    // : {
+                    //     top: `${position.y}vh`,
+                    //     left: `${position.x}vw`,
+                    // }
                 }
             >
                 {node &&

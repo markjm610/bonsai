@@ -19,7 +19,7 @@ type Props = {
 // insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
 // the FakeNode component can look up the locations of the nodes on the screen
 function insertNode(value: number, node: TreeNode, tree: TreeObject, level: number, traversedNodes: string[] = []): [string, boolean, string[]] {
-    console.log(node)
+
     traversedNodes.push(node.id)
 
     if (level > 3) {
