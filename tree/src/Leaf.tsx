@@ -31,33 +31,80 @@ const Leaf: React.FC<Props> = ({
     const { flattened } = useContext(Context)
 
     let springObj;
-    if (level === 0) {
+
+    if (animationOn) {
+        if (flattened) {
+            springObj = {
+                from: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                to: {
+                    top: level === 0 ? `${position.y}vh` : '0vh',
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                }
+            }
+        }
+        else if (level === 0) {
+            springObj = {
+                to: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                from: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 0.5
+                }
+            }
+        } else {
+            springObj = {
+                to: {
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                    opacity: 1,
+                },
+                from: {
+                    top: `${0}vh`,
+                    left: `${0}vw`,
+                    opacity: 0.5
+                },
+            }
+        }
+
+    } else if (flattened) {
         springObj = {
-            to: {
-                top: `${position.y}vh`,
+            from: {
+                top: `0vh`,
                 left: `${position.x}vw`,
                 opacity: 1,
             },
-            from: {
-                top: `${position.y}vh`,
+            to: {
+                top: level === 0 ? `${position.y}vh` : '0vh',
                 left: `${position.x}vw`,
-                opacity: 0.5
+                opacity: 1,
             }
         }
     } else {
         springObj = {
-            to: {
+            from: {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`,
                 opacity: 1,
             },
-            from: {
-                top: `${0}vh`,
-                left: `${0}vw`,
-                opacity: 0.5
-            },
+            to: {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: 1,
+            }
         }
     }
+
+
+
 
 
 
@@ -110,31 +157,31 @@ const Leaf: React.FC<Props> = ({
     // })
     // let flattenedStyleObj;
 
-    if (flattened) {
-        springObj = {
-            from: {
-                top: `${position.y}vh`,
-                left: `${position.x}vw`
-            },
-            to: {
-                top: level === 0 ? `${position.y}vh` : '0vh',
-                left: `${position.x}vw`
-            }
-        }
-    } else {
-        springObj = {
-            from: {
-                top: `${position.y}vh`,
-                left: `${position.x}vw`
-            },
-            to: {
-                top: `${position.y}vh`,
-                left: `${position.x}vw`
+    // if (flattened) {
+    //     springObj = {
+    //         from: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
+    //         },
+    //         to: {
+    //             top: level === 0 ? `${position.y}vh` : '0vh',
+    //             left: `${position.x}vw`
+    //         }
+    //     }
+    // } else {
+    //     springObj = {
+    //         from: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
+    //         },
+    //         to: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`
 
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
     const style = useSpring(springObj)
     // const flattenedStyle = useSpring(flattenedStyleObj)
 
@@ -160,12 +207,12 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={
-                    animationOn ?
-                        style
-                        : {
-                            top: `${position.y}vh`,
-                            left: `${position.x}vw`,
-                        }
+                    // animationOn ?
+                    style
+                    // : {
+                    //     top: `${position.y}vh`,
+                    //     left: `${position.x}vw`,
+                    // }
                 }
             >
                 {node &&
@@ -238,11 +285,19 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className='leaf-complete'
-                style={{
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 0
-                }}
+                style={!flattened
+                    ?
+                    {
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 0
+                    }
+                    :
+                    {
+                        top: `0vh`,
+                        left: `${position.x}vw`,
+                        opacity: 0
+                    }}
             >
             </animated.div>
         )
