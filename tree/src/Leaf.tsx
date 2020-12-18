@@ -29,7 +29,6 @@ const Leaf: React.FC<Props> = ({
 }) => {
 
     const { flattened, test } = useContext(Context)
-    const [loaded, setLoaded] = useState(false)
 
     let springObj;
 
@@ -146,24 +145,47 @@ const Leaf: React.FC<Props> = ({
     //     }
 
     // const style = useSpring(springObj)
-    const style = useSpring({
-        from: {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-        },
-        to: async (next: Function) => {
+    function determinePosition(position: any, test: boolean): any {
+        if (flattened) {
+            return {
+                top: level === 0 ? `${position.y}vh` : '0vh',
+                left: `${position.x}vw`,
+                opacity: determineOpacity(),
+            }
+        }
+        if (test) {
+            return {
+                top: `23vh`,
+                left: `${position.x}vw`,
+                opacity: determineOpacity(),
+            }
+        }
+        if (!flattened && !test) {
+            return {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: determineOpacity(),
+            }
+        }
 
+    }
+    function determineOpacity() {
+        return (node && node.value) === -1 ? 0 : 1
+    }
+    const style = useSpring({
+        from: determinePosition(position, test),
+        to: async (next: Function) => {
+            // try putting something here
             if (flattened) {
                 await next({
                     top: level === 0 ? `${position.y}vh` : '0vh',
                     left: `${position.x}vw`,
                 })
             }
-
             if (test) {
                 await next({
-                    top: `${position.y}vh`,
-                    left: `10vw`,
+                    top: `23vh`,
+                    left: `${position.x}vw`,
                 })
             }
             if (!flattened && !test) {
@@ -220,11 +242,7 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
-    useEffect(() => {
-        if (!loaded) {
-            setLoaded(true)
-        }
-    }, [])
+
 
     if (node && node.value !== -1) {
 
@@ -313,19 +331,22 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className='leaf-complete'
-                style={!flattened
-                    ?
-                    {
-                        top: `${position.y}vh`,
-                        left: `${position.x}vw`,
-                        opacity: 0
-                    }
-                    :
-                    {
-                        top: `0vh`,
-                        left: `${position.x}vw`,
-                        opacity: 0
-                    }}
+                style={
+                    // !flattened
+                    // ?
+                    // {
+                    //     top: `${position.y}vh`,
+                    //     left: `${position.x}vw`,
+                    //     opacity: 0
+                    // }
+                    // :
+                    // {
+                    //     top: `0vh`,
+                    //     left: `${position.x}vw`,
+                    //     opacity: 0
+                    // }
+                    determinePosition(position, test)
+                }
             >
             </animated.div>
         )
