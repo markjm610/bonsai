@@ -86,6 +86,9 @@ const Leaf: React.FC<Props> = ({
                         opacity: 1,
                     })
 
+                    if (levelsOfTree === 0) {
+                        setAllowInteraction(true)
+                    }
                 }
                 if (level === 1) {
                     await next({
@@ -94,6 +97,9 @@ const Leaf: React.FC<Props> = ({
                         opacity: 1,
                     })
                     setStartLevel2(true)
+                    if (levelsOfTree === 1) {
+                        setAllowInteraction(true)
+                    }
                 } else if (level === 2 && startLevel2) {
                     await next({
                         top: `${position.y}vh`,
@@ -101,12 +107,18 @@ const Leaf: React.FC<Props> = ({
                         opacity: 1,
                     })
                     setStartLevel3(true)
+                    if (levelsOfTree === 2) {
+                        setAllowInteraction(true)
+                    }
                 } else if (level === 3 && startLevel3) {
                     await next({
                         top: `${position.y}vh`,
                         left: `${position.x}vw`,
                         opacity: 1,
                     })
+                    if (levelsOfTree === 3) {
+                        setAllowInteraction(true)
+                    }
                 }
 
             }

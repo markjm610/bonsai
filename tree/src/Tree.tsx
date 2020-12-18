@@ -37,7 +37,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
     })
     const [treeState, setTreeState] = useState({})
     const [rootId, setRootId] = useState('')
-    const [levelsOfTree, setLevelsOfTree] = useState(0)
+    const [levelsOfTree, setLevelsOfTree] = useState(-1)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
     const [animationOn, setAnimationOn] = useState(true)
@@ -79,7 +79,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
 
     return (
         <>
-            {treeNodesData &&
+            {(treeNodesData && levelsOfTree > -1) &&
                 <>
                     <div className='form-container'>
                         <InsertForm
