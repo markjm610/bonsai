@@ -11,5 +11,5 @@ export type Position = {
 }
 
 export type TreeObject = {
-    [id: string]: TreeNode
+    [id: string]: TreeNode;
 }

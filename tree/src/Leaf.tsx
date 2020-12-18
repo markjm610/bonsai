@@ -9,6 +9,7 @@ type Props = {
     position: Position;
     node: TreeNode;
     tree: TreeObject;
+    levelsOfTree: number;
     level: number;
     beginInsert: boolean;
     setBeginInsert: Function;
@@ -16,12 +17,12 @@ type Props = {
     animationOn: boolean;
 }
 
-
 const Leaf: React.FC<Props> = ({
     id,
     position,
     node,
     tree,
+    levelsOfTree,
     level,
     beginInsert,
     setBeginInsert,
@@ -29,7 +30,15 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
-    const { flattened, startLevel2, setStartLevel2, startLevel3, setStartLevel3, setAllowInteraction } = useContext(Context)
+    const {
+        flattened,
+        startLevel2,
+        setStartLevel2,
+        startLevel3,
+        setStartLevel3,
+        allowInteraction,
+        setAllowInteraction
+    } = useContext(Context)
 
     function determineOpacity() {
         return (node && node.value) === -1 ? 0 : 1
@@ -99,7 +108,7 @@ const Leaf: React.FC<Props> = ({
                         opacity: 1,
                     })
                 }
-                // setAllowInteraction(true)
+
             }
         }
     })
@@ -109,7 +118,6 @@ const Leaf: React.FC<Props> = ({
             setBeginInsert(false)
         }
     }, [])
-
 
     if (node && node.value !== -1) {
 
@@ -129,6 +137,7 @@ const Leaf: React.FC<Props> = ({
                                 position={{ x: -25 + level * 10, y: 10 }}
                                 node={tree[node.leftId]}
                                 tree={tree}
+                                levelsOfTree={levelsOfTree}
                                 level={level + 1}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
@@ -145,6 +154,7 @@ const Leaf: React.FC<Props> = ({
                                 rightId: null
                             }}
                             tree={tree}
+                            levelsOfTree={levelsOfTree}
                             level={level + 1}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
@@ -158,6 +168,7 @@ const Leaf: React.FC<Props> = ({
                                 position={{ x: 25 - level * 10, y: 10 }}
                                 node={tree[node.rightId]}
                                 tree={tree}
+                                levelsOfTree={levelsOfTree}
                                 level={level + 1}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
@@ -174,6 +185,7 @@ const Leaf: React.FC<Props> = ({
                                 rightId: null
                             }}
                             tree={tree}
+                            levelsOfTree={levelsOfTree}
                             level={level + 1}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}

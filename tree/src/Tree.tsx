@@ -12,6 +12,21 @@ type Props = {
     treeId: string;
 }
 
+function countTreeLevels(tree: TreeObject, rootId: string): number {
+    let maxLevel: number = 0
+    function traverse(node: TreeNode, level: number = 0): void {
+        maxLevel = Math.max(level, maxLevel)
+        if (node.leftId) {
+            traverse(tree[node.leftId], level + 1)
+        }
+        if (node.rightId) {
+            traverse(tree[node.rightId], level + 1)
+        }
+    }
+    traverse(tree[rootId])
+    return maxLevel
+}
+
 const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
 
 
@@ -21,6 +36,8 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
         }
     })
     const [treeState, setTreeState] = useState({})
+    const [rootId, setRootId] = useState('')
+    const [levelsOfTree, setLevelsOfTree] = useState(0)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
     const [animationOn, setAnimationOn] = useState(true)
@@ -45,12 +62,20 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
             // Store the nested object in the state so this and other components have access to it
             setTreeState(treeNodesObj)
 
+            setRootId(treeNodesData.tree.root[0].id)
+
             // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.tree.nodes.length)
         }
 
 
     }, [treeNodesData])
+
+    useEffect(() => {
+        if (Object.keys(treeState).length && rootId) {
+            setLevelsOfTree(countTreeLevels(treeState, rootId))
+        }
+    }, [treeState, rootId])
 
     return (
         <>
@@ -75,6 +100,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
                             node={treeNodesData.tree.root[0]}
                             position={{ x: 48, y: 30 }}
                             tree={treeState}
+                            levelsOfTree={levelsOfTree}
                             level={0}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
