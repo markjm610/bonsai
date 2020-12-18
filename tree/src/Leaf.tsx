@@ -29,7 +29,7 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
-    const { flattened, test, startLevel2, setStartLevel2, startLevel3, setStartLevel3, setAllowInteraction } = useContext(Context)
+    const { flattened, startLevel2, setStartLevel2, startLevel3, setStartLevel3, setAllowInteraction } = useContext(Context)
 
     function determineOpacity() {
         return (node && node.value) === -1 ? 0 : 1
@@ -51,14 +51,7 @@ const Leaf: React.FC<Props> = ({
                 opacity: determineOpacity(),
             }
         }
-        if (test) {
-            return {
-                top: `11vh`,
-                left: `23vw`,
-                opacity: determineOpacity(),
-            }
-        }
-        if (!flattened && !test) {
+        if (!flattened) {
             return {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`,
@@ -75,11 +68,6 @@ const Leaf: React.FC<Props> = ({
                 await next({
                     top: level === 0 ? `${position.y}vh` : '0vh',
                     left: `${position.x}vw`,
-                })
-            } else if (test) {
-                await next({
-                    top: `11vh`,
-                    left: `23vw`,
                 })
             } else {
                 if (level === 0) {

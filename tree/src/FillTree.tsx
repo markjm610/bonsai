@@ -32,22 +32,12 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         }
     }
 
-    function testClick(): undefined {
-        if (!allowInteraction) {
-            return
-        }
-        setTest(!test)
-        if (flattened) {
-            setFlattened(false)
-        }
-    }
-
     return (
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
                 <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
-                <button onClick={testClick} className='start-over-button'>{!test ? 'Test' : 'Untest'}</button>
+
             </div>
             {
                 numberOfNodes < 15 &&
