@@ -145,7 +145,25 @@ const Leaf: React.FC<Props> = ({
     //     }
 
     // const style = useSpring(springObj)
-    function determinePosition(position: any, test: boolean): any {
+
+    function determineOpacity() {
+        return (node && node.value) === -1 ? 0 : 1
+    }
+
+    function determinePosition(): any {
+        // return {
+        //     top: level === 0 ? `${position.y}vh` : '0vh',
+        //     left: level === 0 ? `${position.x}vw` : '0vw',
+        //     opacity: 0.5,
+        // }
+        if (animationOn) {
+            return {
+                top: level === 0 ? `${position.y}vh` : '0vh',
+                left: level === 0 ? `${position.x}vw` : '0vw',
+                opacity: determineOpacity()
+            }
+        }
+
         if (flattened) {
             return {
                 top: level === 0 ? `${position.y}vh` : '0vh',
@@ -169,13 +187,11 @@ const Leaf: React.FC<Props> = ({
         }
 
     }
-    function determineOpacity() {
-        return (node && node.value) === -1 ? 0 : 1
-    }
+
     const style = useSpring({
-        from: determinePosition(position, test),
+        from: determinePosition(),
         to: async (next: Function) => {
-            // try putting something here
+
             if (flattened) {
                 await next({
                     top: level === 0 ? `${position.y}vh` : '0vh',
@@ -196,33 +212,7 @@ const Leaf: React.FC<Props> = ({
             }
         }
     })
-    // if (level === 0) {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 0.5
-    //             }
-    //         }
-    //     } else {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${0}vh`,
-    //                 left: `${0}vw`,
-    //                 opacity: 0.5
-    //             },
-    //         }
-    //     }
+
     const loadSpring = useSpring({
         from: {
             top: level === 0 ? `${position.y}vh` : '0vh',
@@ -345,7 +335,7 @@ const Leaf: React.FC<Props> = ({
                     //     left: `${position.x}vw`,
                     //     opacity: 0
                     // }
-                    determinePosition(position, test)
+                    determinePosition()
                 }
             >
             </animated.div>
