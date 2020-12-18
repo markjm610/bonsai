@@ -53,8 +53,8 @@ const Leaf: React.FC<Props> = ({
         }
         if (test) {
             return {
-                top: `23vh`,
-                left: `${position.x}vw`,
+                top: `11vh`,
+                left: `23vw`,
                 opacity: determineOpacity(),
             }
         }
@@ -78,8 +78,8 @@ const Leaf: React.FC<Props> = ({
                 })
             } else if (test) {
                 await next({
-                    top: `23vh`,
-                    left: `${position.x}vw`,
+                    top: `11vh`,
+                    left: `23vw`,
                 })
             } else {
                 if (level === 0) {

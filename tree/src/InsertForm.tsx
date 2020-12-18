@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
 import { useSpring, animated } from 'react-spring'
+import Context from './Context'
 
 
 type Props = {
@@ -55,6 +56,8 @@ const InsertForm: React.FC<Props> = ({
     setAnimationOn
 }) => {
 
+    const { allowInteraction } = useContext(Context)
+
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
     const [numberError, setNumberError] = useState(false)
@@ -93,7 +96,9 @@ const InsertForm: React.FC<Props> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-
+        if (!allowInteraction) {
+            return
+        }
         const input: any = document.querySelector('.value-input')
         if (input) {
             input.blur()

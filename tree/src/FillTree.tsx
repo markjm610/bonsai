@@ -13,6 +13,9 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
+        if (!allowInteraction) {
+            return
+        }
         clearTree({
             variables: { id: treeId },
             refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
