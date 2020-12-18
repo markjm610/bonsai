@@ -22,7 +22,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         })
     }
 
-    function flatten(): undefined {
+    function flatten(): any {
 
         // if (!allowInteraction) {
         //     return
