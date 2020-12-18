@@ -2,8 +2,6 @@ Animation when you click on start from root
 
 Fill tree with sample tree with animation
 
-Flatten animation
-
 Some kind of manipulation of the tree
 
 Edit numbers

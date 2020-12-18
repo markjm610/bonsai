@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
@@ -28,88 +28,221 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
-    const { flattened } = useContext(Context)
+    const { flattened, test } = useContext(Context)
 
     let springObj;
 
-    if (animationOn) {
-        if (flattened) {
-            springObj = {
-                from: {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 1,
-                },
-                to: {
-                    top: level === 0 ? `${position.y}vh` : '0vh',
-                    left: `${position.x}vw`,
-                    opacity: 1,
-                }
-            }
-        }
-        else if (level === 0) {
-            springObj = {
-                to: {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 1,
-                },
-                from: {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 0.5
-                }
-            }
-        } else {
-            springObj = {
-                to: {
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                    opacity: 1,
-                },
-                from: {
-                    top: `${0}vh`,
-                    left: `${0}vw`,
-                    opacity: 0.5
-                },
-            }
-        }
+    // if (animationOn) {
+    //     if (flattened) {
+    //         springObj = {
+    //             from: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             to: {
+    //                 top: level === 0 ? `${position.y}vh` : '0vh',
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             }
+    //         }
+    //     }
+    //     else if (level === 0) {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 0.5
+    //             }
+    //         }
+    //     } else {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${0}vh`,
+    //                 left: `${0}vw`,
+    //                 opacity: 0.5
+    //             },
+    //         }
+    //     }
 
-    } else if (flattened) {
-        springObj = {
-            from: {
-                top: `0vh`,
-                left: `${position.x}vw`,
-                opacity: 1,
-            },
-            to: {
+    // } else if (flattened) {
+    //     springObj = {
+    //         from: {
+    //             top: `0vh`,
+    //             left: `${position.x}vw`,
+    //             opacity: 1,
+    //         },
+    //         to: {
+    //             top: level === 0 ? `${position.y}vh` : '0vh',
+    //             left: `${position.x}vw`,
+    //             opacity: 1,
+    //         }
+    //     }
+    // } else {
+    //     springObj = {
+    //         from: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`,
+    //             opacity: 1,
+    //         },
+    //         to: {
+    //             top: `${position.y}vh`,
+    //             left: `${position.x}vw`,
+    //             opacity: 1,
+    //         }
+    //     }
+    // }
+    // if (animationOn) {
+    //     if (flattened) {
+    //         springObj = {
+    //             from: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             to: {
+    //                 top: level === 0 ? `${position.y}vh` : '0vh',
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             }
+    //         }
+    //     } else if (level === 0) {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 0.5
+    //             }
+    //         }
+    //     } else {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${0}vh`,
+    //                 left: `${0}vw`,
+    //                 opacity: 0.5
+    //             },
+    //         }
+    //     }
+
+    // const style = useSpring(springObj)
+    function determinePosition(position: any, test: boolean): any {
+        if (flattened) {
+            return {
                 top: level === 0 ? `${position.y}vh` : '0vh',
                 left: `${position.x}vw`,
-                opacity: 1,
+                opacity: determineOpacity(),
             }
         }
-    } else {
-        springObj = {
-            from: {
-                top: `${position.y}vh`,
+        if (test) {
+            return {
+                top: `23vh`,
                 left: `${position.x}vw`,
-                opacity: 1,
-            },
-            to: {
-                top: `${position.y}vh`,
-                left: `${position.x}vw`,
-                opacity: 1,
+                opacity: determineOpacity(),
             }
         }
-    }
+        if (!flattened && !test) {
+            return {
+                top: `${position.y}vh`,
+                left: `${position.x}vw`,
+                opacity: determineOpacity(),
+            }
+        }
 
-    const style = useSpring(springObj)
+    }
+    function determineOpacity() {
+        return (node && node.value) === -1 ? 0 : 1
+    }
+    const style = useSpring({
+        from: determinePosition(position, test),
+        to: async (next: Function) => {
+            // try putting something here
+            if (flattened) {
+                await next({
+                    top: level === 0 ? `${position.y}vh` : '0vh',
+                    left: `${position.x}vw`,
+                })
+            }
+            if (test) {
+                await next({
+                    top: `23vh`,
+                    left: `${position.x}vw`,
+                })
+            }
+            if (!flattened && !test) {
+                await next({
+                    top: `${position.y}vh`,
+                    left: `${position.x}vw`,
+                })
+            }
+        }
+    })
+    // if (level === 0) {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 0.5
+    //             }
+    //         }
+    //     } else {
+    //         springObj = {
+    //             to: {
+    //                 top: `${position.y}vh`,
+    //                 left: `${position.x}vw`,
+    //                 opacity: 1,
+    //             },
+    //             from: {
+    //                 top: `${0}vh`,
+    //                 left: `${0}vw`,
+    //                 opacity: 0.5
+    //             },
+    //         }
+    //     }
+    const loadSpring = useSpring({
+        from: {
+            top: level === 0 ? `${position.y}vh` : '0vh',
+            left: level === 0 ? `${position.x}vw` : '0vw',
+            opacity: 0.5
+        },
+        to: {
+            top: `${position.y}vh`,
+            left: `${position.x}vw`,
+            opacity: 1,
+        },
+    })
 
     useEffect(() => {
         if (beginInsert) {
             setBeginInsert(false)
         }
     }, [])
+
+
 
     if (node && node.value !== -1) {
 
@@ -125,6 +258,7 @@ const Leaf: React.FC<Props> = ({
                     //     top: `${position.y}vh`,
                     //     left: `${position.x}vw`,
                     // }
+
                 }
             >
                 {node &&
@@ -197,19 +331,22 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className='leaf-complete'
-                style={!flattened
-                    ?
-                    {
-                        top: `${position.y}vh`,
-                        left: `${position.x}vw`,
-                        opacity: 0
-                    }
-                    :
-                    {
-                        top: `0vh`,
-                        left: `${position.x}vw`,
-                        opacity: 0
-                    }}
+                style={
+                    // !flattened
+                    // ?
+                    // {
+                    //     top: `${position.y}vh`,
+                    //     left: `${position.x}vw`,
+                    //     opacity: 0
+                    // }
+                    // :
+                    // {
+                    //     top: `0vh`,
+                    //     left: `${position.x}vw`,
+                    //     opacity: 0
+                    // }
+                    determinePosition(position, test)
+                }
             >
             </animated.div>
         )
