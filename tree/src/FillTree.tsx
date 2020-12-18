@@ -9,7 +9,7 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
-    const { flattened, setFlattened, test, setTest } = useContext(Context)
+    const { flattened, setFlattened, test, setTest, allowInteraction } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -19,14 +19,20 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         })
     }
 
-    const flatten = () => {
+    function flatten(): undefined {
+        if (!allowInteraction) {
+            return
+        }
         setFlattened(!flattened)
         if (test) {
             setTest(false)
         }
     }
 
-    const testClick = () => {
+    function testClick(): undefined {
+        if (!allowInteraction) {
+            return
+        }
         setTest(!test)
         if (flattened) {
             setFlattened(false)

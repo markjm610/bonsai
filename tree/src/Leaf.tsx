@@ -29,18 +29,13 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
-    const { flattened, test, startLevel2, setStartLevel2, startLevel3, setStartLevel3 } = useContext(Context)
+    const { flattened, test, startLevel2, setStartLevel2, startLevel3, setStartLevel3, setAllowInteraction } = useContext(Context)
 
     function determineOpacity() {
         return (node && node.value) === -1 ? 0 : 1
     }
 
     function determinePosition(): any {
-        // return {
-        //     top: level === 0 ? `${position.y}vh` : `${10}vh`,
-        //     left: level === 0 ? `${position.x}vw` : '0vw',
-        //     opacity: determineOpacity()
-        // }
         if (animationOn) {
             return {
                 top: level === 0 ? `${position.y}vh` : '0vh',
@@ -87,6 +82,13 @@ const Leaf: React.FC<Props> = ({
                     left: `${position.x}vw`,
                 })
             } else {
+                if (level === 0) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 1,
+                    })
+                }
                 if (level === 1) {
                     await next({
                         top: `${position.y}vh`,
@@ -107,6 +109,7 @@ const Leaf: React.FC<Props> = ({
                         left: `${position.x}vw`,
                         opacity: 1,
                     })
+                    setAllowInteraction(true)
                 }
             }
         }
@@ -126,15 +129,7 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={
-                    // animationOn ?
-                    style
-                    // : {
-                    //     top: `${position.y}vh`,
-                    //     left: `${position.x}vw`,
-                    // }
-
-                }
+                style={style}
             >
                 {node &&
                     <>
