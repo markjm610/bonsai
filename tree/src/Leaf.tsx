@@ -151,11 +151,7 @@ const Leaf: React.FC<Props> = ({
     }
 
     function determinePosition(): any {
-        // return {
-        //     top: level === 0 ? `${position.y}vh` : '0vh',
-        //     left: level === 0 ? `${position.x}vw` : '0vw',
-        //     opacity: 0.5,
-        // }
+
         if (animationOn) {
             return {
                 top: level === 0 ? `${position.y}vh` : '0vh',
@@ -320,21 +316,21 @@ const Leaf: React.FC<Props> = ({
         return (
             <animated.div
                 id={id}
-                className='leaf-complete'
+                className='leaf-0'
                 style={
-                    // !flattened
-                    // ?
-                    // {
-                    //     top: `${position.y}vh`,
-                    //     left: `${position.x}vw`,
-                    //     opacity: 0
-                    // }
-                    // :
-                    // {
-                    //     top: `0vh`,
-                    //     left: `${position.x}vw`,
-                    //     opacity: 0
-                    // }
+                    //     // !flattened
+                    //     // ?
+                    //     // {
+                    //     //     top: `${position.y}vh`,
+                    //     //     left: `${position.x}vw`,
+                    //     //     opacity: 0
+                    //     // }
+                    //     // :
+                    //     // {
+                    //     //     top: `0vh`,
+                    //     //     left: `${position.x}vw`,
+                    //     //     opacity: 0
+                    //     // }
                     determinePosition()
                 }
             >
