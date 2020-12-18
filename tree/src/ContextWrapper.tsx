@@ -6,10 +6,16 @@ const ContextWrapper: React.FC = () => {
 
     const [flattened, setFlattened] = useState(false)
     const [test, setTest] = useState(false)
+    const [startLevel2, setStartLevel2] = useState(false)
+    const [startLevel3, setStartLevel3] = useState(false)
+
+
     return (
         <Context.Provider value={{
             flattened, setFlattened,
-            test, setTest
+            test, setTest,
+            startLevel2, setStartLevel2,
+            startLevel3, setStartLevel3
         }}>
             <App />
         </Context.Provider>
