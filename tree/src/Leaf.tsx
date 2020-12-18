@@ -76,6 +76,7 @@ const Leaf: React.FC<Props> = ({
                         left: `${position.x}vw`,
                         opacity: 1,
                     })
+
                 }
                 if (level === 1) {
                     await next({
@@ -97,8 +98,8 @@ const Leaf: React.FC<Props> = ({
                         left: `${position.x}vw`,
                         opacity: 1,
                     })
-                    setAllowInteraction(true)
                 }
+                // setAllowInteraction(true)
             }
         }
     })

@@ -56,7 +56,7 @@ const InsertForm: React.FC<Props> = ({
     setAnimationOn
 }) => {
 
-    const { allowInteraction } = useContext(Context)
+    const { allowInteraction, setAllowInteraction } = useContext(Context)
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -70,6 +70,9 @@ const InsertForm: React.FC<Props> = ({
 
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+        // if (!allowInteraction) {
+        //     return
+        // }
         if (!validMove) {
             setValidMove(true)
         }
@@ -96,9 +99,9 @@ const InsertForm: React.FC<Props> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        if (!allowInteraction) {
-            return
-        }
+        // if (!allowInteraction) {
+        //     return
+        // }
         const input: any = document.querySelector('.value-input')
         if (input) {
             input.blur()
@@ -144,6 +147,8 @@ const InsertForm: React.FC<Props> = ({
         // Clear input
         setValue('')
 
+        // setAllowInteraction(false)
+
     }
 
     const inputAnimated = useSpring({
@@ -170,6 +175,7 @@ const InsertForm: React.FC<Props> = ({
                             value={value}
                             className='value-input'
                             id='input'
+                        // disabled={!allowInteraction}
                         />
                         {beginInsert &&
                             <FakeNode

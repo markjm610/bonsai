@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ADD_TREE_NODE, GET_TREE } from './queries'
 import { useSpring, animated } from 'react-spring'
+import Context from './Context'
 
 type Props = {
     value: string;
@@ -24,6 +25,8 @@ const FakeNode: React.FC<Props> = ({
 }) => {
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [animationDone, setAnimationDone] = useState(false)
+
+    const { setAllowInteraction } = useContext(Context)
 
     const inputElement = document.querySelector('.value-input')
     const inputElementLeft = inputElement?.getBoundingClientRect().left
@@ -86,7 +89,7 @@ const FakeNode: React.FC<Props> = ({
                 setAnimationDone(true)
                 setTraversedNodeIds([])
                 setInputFade(true)
-
+                // setAllowInteraction(true)
             }
 
         }
