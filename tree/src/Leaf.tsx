@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
+import { setSyntheticTrailingComments } from 'typescript'
 
 type Props = {
     id: string;
@@ -28,124 +29,21 @@ const Leaf: React.FC<Props> = ({
     animationOn
 }) => {
 
-    const { flattened, test } = useContext(Context)
+    const { flattened, startLevel2, setStartLevel2, startLevel3, setStartLevel3, setAllowInteraction } = useContext(Context)
 
-    let springObj;
+    function determineOpacity() {
+        return (node && node.value) === -1 ? 0 : 1
+    }
 
-    // if (animationOn) {
-    //     if (flattened) {
-    //         springObj = {
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             to: {
-    //                 top: level === 0 ? `${position.y}vh` : '0vh',
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             }
-    //         }
-    //     }
-    //     else if (level === 0) {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 0.5
-    //             }
-    //         }
-    //     } else {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${0}vh`,
-    //                 left: `${0}vw`,
-    //                 opacity: 0.5
-    //             },
-    //         }
-    //     }
+    function determinePosition(): any {
+        if (animationOn) {
+            return {
+                top: level === 0 ? `${position.y}vh` : '0vh',
+                left: level === 0 ? `${position.x}vw` : '0vw',
+                opacity: level === 0 ? 1 : 0,
+            }
+        }
 
-    // } else if (flattened) {
-    //     springObj = {
-    //         from: {
-    //             top: `0vh`,
-    //             left: `${position.x}vw`,
-    //             opacity: 1,
-    //         },
-    //         to: {
-    //             top: level === 0 ? `${position.y}vh` : '0vh',
-    //             left: `${position.x}vw`,
-    //             opacity: 1,
-    //         }
-    //     }
-    // } else {
-    //     springObj = {
-    //         from: {
-    //             top: `${position.y}vh`,
-    //             left: `${position.x}vw`,
-    //             opacity: 1,
-    //         },
-    //         to: {
-    //             top: `${position.y}vh`,
-    //             left: `${position.x}vw`,
-    //             opacity: 1,
-    //         }
-    //     }
-    // }
-    // if (animationOn) {
-    //     if (flattened) {
-    //         springObj = {
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             to: {
-    //                 top: level === 0 ? `${position.y}vh` : '0vh',
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             }
-    //         }
-    //     } else if (level === 0) {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 0.5
-    //             }
-    //         }
-    //     } else {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${0}vh`,
-    //                 left: `${0}vw`,
-    //                 opacity: 0.5
-    //             },
-    //         }
-    //     }
-
-    // const style = useSpring(springObj)
-    function determinePosition(position: any, test: boolean): any {
         if (flattened) {
             return {
                 top: level === 0 ? `${position.y}vh` : '0vh',
@@ -153,87 +51,56 @@ const Leaf: React.FC<Props> = ({
                 opacity: determineOpacity(),
             }
         }
-        if (test) {
-            return {
-                top: `23vh`,
-                left: `${position.x}vw`,
-                opacity: determineOpacity(),
-            }
-        }
-        if (!flattened && !test) {
+        if (!flattened) {
             return {
                 top: `${position.y}vh`,
                 left: `${position.x}vw`,
                 opacity: determineOpacity(),
             }
         }
+    }
 
-    }
-    function determineOpacity() {
-        return (node && node.value) === -1 ? 0 : 1
-    }
     const style = useSpring({
-        from: determinePosition(position, test),
+        from: determinePosition(),
         to: async (next: Function) => {
-            // try putting something here
+
             if (flattened) {
                 await next({
                     top: level === 0 ? `${position.y}vh` : '0vh',
                     left: `${position.x}vw`,
                 })
-            }
-            if (test) {
-                await next({
-                    top: `23vh`,
-                    left: `${position.x}vw`,
-                })
-            }
-            if (!flattened && !test) {
-                await next({
-                    top: `${position.y}vh`,
-                    left: `${position.x}vw`,
-                })
+            } else {
+                if (level === 0) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 1,
+                    })
+                }
+                if (level === 1) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 1,
+                    })
+                    setStartLevel2(true)
+                } else if (level === 2 && startLevel2) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 1,
+                    })
+                    setStartLevel3(true)
+                } else if (level === 3 && startLevel3) {
+                    await next({
+                        top: `${position.y}vh`,
+                        left: `${position.x}vw`,
+                        opacity: 1,
+                    })
+                    setAllowInteraction(true)
+                }
             }
         }
-    })
-    // if (level === 0) {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 0.5
-    //             }
-    //         }
-    //     } else {
-    //         springObj = {
-    //             to: {
-    //                 top: `${position.y}vh`,
-    //                 left: `${position.x}vw`,
-    //                 opacity: 1,
-    //             },
-    //             from: {
-    //                 top: `${0}vh`,
-    //                 left: `${0}vw`,
-    //                 opacity: 0.5
-    //             },
-    //         }
-    //     }
-    const loadSpring = useSpring({
-        from: {
-            top: level === 0 ? `${position.y}vh` : '0vh',
-            left: level === 0 ? `${position.x}vw` : '0vw',
-            opacity: 0.5
-        },
-        to: {
-            top: `${position.y}vh`,
-            left: `${position.x}vw`,
-            opacity: 1,
-        },
     })
 
     useEffect(() => {
@@ -243,7 +110,6 @@ const Leaf: React.FC<Props> = ({
     }, [])
 
 
-
     if (node && node.value !== -1) {
 
         return (
@@ -251,15 +117,7 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={
-                    // animationOn ?
-                    style
-                    // : {
-                    //     top: `${position.y}vh`,
-                    //     left: `${position.x}vw`,
-                    // }
-
-                }
+                style={style}
             >
                 {node &&
                     <>
@@ -330,22 +188,22 @@ const Leaf: React.FC<Props> = ({
         return (
             <animated.div
                 id={id}
-                className='leaf-complete'
+                className='leaf-0'
                 style={
-                    // !flattened
-                    // ?
-                    // {
-                    //     top: `${position.y}vh`,
-                    //     left: `${position.x}vw`,
-                    //     opacity: 0
-                    // }
-                    // :
-                    // {
-                    //     top: `0vh`,
-                    //     left: `${position.x}vw`,
-                    //     opacity: 0
-                    // }
-                    determinePosition(position, test)
+                    //     // !flattened
+                    //     // ?
+                    //     // {
+                    //     //     top: `${position.y}vh`,
+                    //     //     left: `${position.x}vw`,
+                    //     //     opacity: 0
+                    //     // }
+                    //     // :
+                    //     // {
+                    //     //     top: `0vh`,
+                    //     //     left: `${position.x}vw`,
+                    //     //     opacity: 0
+                    //     // }
+                    determinePosition()
                 }
             >
             </animated.div>

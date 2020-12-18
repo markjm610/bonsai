@@ -161,6 +161,15 @@ const Mutation = new GraphQLObjectType({
                     rightId: null
                 })
 
+                const rootRightLeftRight = await TreeNode.create({
+                    treeId: tree.id,
+                    root: false,
+                    value: 71,
+                    leftId: null,
+                    rightId: null
+                })
+
+
                 const rootRightRight = await TreeNode.create({
                     treeId: tree.id,
                     root: false,
@@ -189,6 +198,7 @@ const Mutation = new GraphQLObjectType({
                 root.rightId = rootRight.id
                 rootRight.leftId = rootRightLeft.id
                 rootRight.rightId = rootRightRight.id
+                rootRightLeft.rightId = rootRightLeftRight.id
                 rootLeft.leftId = rootLeftLeft.id
                 rootLeftLeft.leftId = rootLeftLeftLeft.id
 
@@ -196,6 +206,7 @@ const Mutation = new GraphQLObjectType({
                 await rootRight.save()
                 await rootLeft.save()
                 await rootLeftLeft.save()
+                await rootRightLeft.save()
 
                 return tree
             }
