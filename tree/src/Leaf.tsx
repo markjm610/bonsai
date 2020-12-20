@@ -31,6 +31,12 @@ const Leaf: React.FC<Props> = ({
     animationOn,
     setAllowInteraction
 }) => {
+    // console.log(node.value, document.getElementById(id)?.getBoundingClientRect())
+
+    //  left boundary: 3vw
+    //  right boundary: 92vw
+
+
 
     const {
         flattened,

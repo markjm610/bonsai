@@ -26,15 +26,15 @@ export function insertNode(value: number, node: TreeNode, tree: TreeObject, leve
 
 }
 
-export function preorderTraversal(tree: TreeObject, node: TreeNode, values: number[] = []): number[] {
-    values.push(node.value)
+export function preorderTraversal(tree: TreeObject, node: TreeNode, positions: any = {}): number[] {
+    positions[node.id] = { index: Object.keys(positions).length, value: node.value }
     if (node.leftId) {
-        preorderTraversal(tree, tree[node.leftId], values)
+        preorderTraversal(tree, tree[node.leftId], positions)
     }
     if (node.rightId) {
-        preorderTraversal(tree, tree[node.rightId], values)
+        preorderTraversal(tree, tree[node.rightId], positions)
     }
-    return values
+    return positions
 }
 
 export function countTreeLevels(tree: TreeObject, rootId: string): number {
