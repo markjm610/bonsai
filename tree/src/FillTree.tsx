@@ -11,7 +11,7 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
-    const { flattened, setFlattened, test, setTest } = useContext(Context)
+    const { flattened, setFlattened, test, setTest, rootId, treeState, setTraversalValues } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -36,7 +36,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     }
 
     function preorderClick(): any {
-        // preorderTraversal()
+        setTraversalValues(preorderTraversal(treeState, treeState[rootId]))
     }
 
     return (
@@ -44,7 +44,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
                 <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
-                <button onClick={preorderClick} className='start-over-button'>Show Preorder</button>
+                {/* <button onClick={preorderClick} className='start-over-button'>Show Preorder</button> */}
             </div>
             {
                 numberOfNodes < 15 &&

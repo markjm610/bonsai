@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useQuery } from '@apollo/client'
 import Leaf from './Leaf'
 import { TreeNode, TreeObject } from './types'
 import { GET_ROOT, GET_TREE } from './queries'
 import InsertForm from './InsertForm'
 import { countTreeLevels } from './utils'
+import Context from './Context'
 
 type Props = {
     numberOfNodes: number;
@@ -14,31 +15,17 @@ type Props = {
     setAllowInteraction: Function;
 }
 
-// function countTreeLevels(tree: TreeObject, rootId: string): number {
-//     let maxLevel: number = 0
-//     function traverse(node: TreeNode, level: number = 0): void {
-//         maxLevel = Math.max(level, maxLevel)
-//         if (node.leftId) {
-//             traverse(tree[node.leftId], level + 1)
-//         }
-//         if (node.rightId) {
-//             traverse(tree[node.rightId], level + 1)
-//         }
-//     }
-//     traverse(tree[rootId])
-//     return maxLevel
-// }
-
 const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction }) => {
 
+    const { rootId, setRootId, treeState, setTreeState } = useContext(Context)
 
     const { data: treeNodesData } = useQuery(GET_TREE, {
         variables: {
             id: treeId
         }
     })
-    const [treeState, setTreeState] = useState({})
-    const [rootId, setRootId] = useState('')
+    // const [treeState, setTreeState] = useState({})
+    // const [rootId, setRootId] = useState('')
     const [levelsOfTree, setLevelsOfTree] = useState(-1)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     const [beginInsert, setBeginInsert] = useState(false)
