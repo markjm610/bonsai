@@ -7,14 +7,14 @@ const ContextWrapper: React.FC = () => {
     const [flattened, setFlattened] = useState(false)
     const [startLevel2, setStartLevel2] = useState(false)
     const [startLevel3, setStartLevel3] = useState(false)
-    const [allowInteraction, setAllowInteraction] = useState(false)
+    // const [allowInteraction, setAllowInteraction] = useState(false)
 
     return (
         <Context.Provider value={{
             flattened, setFlattened,
             startLevel2, setStartLevel2,
             startLevel3, setStartLevel3,
-            allowInteraction, setAllowInteraction
+            // allowInteraction, setAllowInteraction
         }}>
             <App />
         </Context.Provider>

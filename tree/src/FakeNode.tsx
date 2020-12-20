@@ -26,7 +26,7 @@ const FakeNode: React.FC<Props> = ({
     const [addTreeNode, { data }] = useMutation(ADD_TREE_NODE)
     const [animationDone, setAnimationDone] = useState(false)
 
-    const { setAllowInteraction } = useContext(Context)
+    // const { setAllowInteraction } = useContext(Context)
 
     const inputElement = document.querySelector('.value-input')
     const inputElementLeft = inputElement?.getBoundingClientRect().left

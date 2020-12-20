@@ -1,7 +1,13 @@
+Don't allow interaction while node is inserting
+
 Animation when you click on start from root
 
 Fill tree with sample tree with animation
 
-Some kind of manipulation of the tree
+Some kind of manipulation of the tree:
+Drag nodes anywhere
+Make tree larger or smaller
 
 Edit numbers
+
+Preorder, inorder, postorder

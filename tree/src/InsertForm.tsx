@@ -15,6 +15,8 @@ type Props = {
     setBeginInsert: Function;
     treeId: string;
     setAnimationOn: Function;
+    allowInteraction: boolean;
+    setAllowInteraction: Function;
 }
 
 // insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
@@ -41,7 +43,6 @@ function insertNode(value: number, node: TreeNode, tree: TreeObject, level: numb
         }
     }
 
-
 }
 
 const InsertForm: React.FC<Props> = ({
@@ -53,10 +54,12 @@ const InsertForm: React.FC<Props> = ({
     setTraversedNodeIds,
     beginInsert,
     setBeginInsert,
-    setAnimationOn
+    setAnimationOn,
+    allowInteraction,
+    setAllowInteraction
 }) => {
 
-    const { allowInteraction, setAllowInteraction } = useContext(Context)
+    // const { allowInteraction, setAllowInteraction } = useContext(Context)
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -73,6 +76,9 @@ const InsertForm: React.FC<Props> = ({
         // if (!allowInteraction) {
         //     return
         // }
+
+        // setAllowInteraction(false)
+        console.log(allowInteraction)
         if (!validMove) {
             setValidMove(true)
         }
@@ -102,6 +108,7 @@ const InsertForm: React.FC<Props> = ({
         // if (!allowInteraction) {
         //     return
         // }
+        // setAllowInteraction(false)
         const input: any = document.querySelector('.value-input')
         if (input) {
             input.blur()
@@ -147,7 +154,7 @@ const InsertForm: React.FC<Props> = ({
         // Clear input
         setValue('')
 
-        // setAllowInteraction(false)
+
 
     }
 

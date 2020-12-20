@@ -15,6 +15,7 @@ type Props = {
     setBeginInsert: Function;
     numberOfNodes: number;
     animationOn: boolean;
+    setAllowInteraction: Function;
 }
 
 const Leaf: React.FC<Props> = ({
@@ -27,7 +28,8 @@ const Leaf: React.FC<Props> = ({
     beginInsert,
     setBeginInsert,
     numberOfNodes,
-    animationOn
+    animationOn,
+    setAllowInteraction
 }) => {
 
     const {
@@ -36,8 +38,8 @@ const Leaf: React.FC<Props> = ({
         setStartLevel2,
         startLevel3,
         setStartLevel3,
-        allowInteraction,
-        setAllowInteraction
+        // allowInteraction,
+        // setAllowInteraction
     } = useContext(Context)
 
     function determineOpacity() {
@@ -155,6 +157,7 @@ const Leaf: React.FC<Props> = ({
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
                                 animationOn={animationOn}
+                                setAllowInteraction={setAllowInteraction}
                             />}
                         {(!node.leftId && level <= 2) && <Leaf
                             id={`left child of ${node.id}`}
@@ -172,6 +175,7 @@ const Leaf: React.FC<Props> = ({
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
+                            setAllowInteraction={setAllowInteraction}
                         />
                         }
                         {node.rightId &&
@@ -186,6 +190,7 @@ const Leaf: React.FC<Props> = ({
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
                                 animationOn={animationOn}
+                                setAllowInteraction={setAllowInteraction}
                             />}
                         {(!node.rightId && level <= 2) && <Leaf
                             id={`right child of ${node.id}`}
@@ -203,6 +208,7 @@ const Leaf: React.FC<Props> = ({
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
+                            setAllowInteraction={setAllowInteraction}
                         />
                         }
                     </>

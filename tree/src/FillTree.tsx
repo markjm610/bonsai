@@ -2,14 +2,16 @@ import { useMutation } from '@apollo/client'
 import React, { useState, useContext } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
+import { preorderTraversal } from './utils'
 
 type Props = {
     numberOfNodes: number;
     treeId: string;
+    allowInteraction: boolean;
 }
 
-const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
-    const { flattened, setFlattened, test, setTest, allowInteraction } = useContext(Context)
+const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
+    const { flattened, setFlattened, test, setTest } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -23,7 +25,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
     }
 
     function flatten(): any {
-
+        // console.log(allowInteraction)
         if (!allowInteraction) {
             return
         }
@@ -33,12 +35,16 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId }) => {
         }
     }
 
+    function preorderClick(): any {
+        // preorderTraversal()
+    }
+
     return (
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
                 <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
-
+                <button onClick={preorderClick} className='start-over-button'>Show Preorder</button>
             </div>
             {
                 numberOfNodes < 15 &&

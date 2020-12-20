@@ -10,6 +10,8 @@ type Props = {
     numberOfNodes: number;
     setNumberOfNodes: Function;
     treeId: string;
+    allowInteraction: boolean;
+    setAllowInteraction: Function;
 }
 
 function countTreeLevels(tree: TreeObject, rootId: string): number {
@@ -27,7 +29,7 @@ function countTreeLevels(tree: TreeObject, rootId: string): number {
     return maxLevel
 }
 
-const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
+const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction }) => {
 
 
     const { data: treeNodesData } = useQuery(GET_TREE, {
@@ -92,6 +94,8 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
                             setBeginInsert={setBeginInsert}
                             treeId={treeId}
                             setAnimationOn={setAnimationOn}
+                            allowInteraction={allowInteraction}
+                            setAllowInteraction={setAllowInteraction}
                         />
                     </div>
                     <div className='leaves-container'>
@@ -106,6 +110,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId }) => {
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
+                            setAllowInteraction={setAllowInteraction}
                         />
                     </div>
                 </>
