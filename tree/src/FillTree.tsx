@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
 import { preorderTraversal } from './utils'
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
-    const { flattened, setFlattened, test, setTest, rootId, treeState, setTraversalValues } = useContext(Context)
+    const { flattened, setFlattened, test, setTest, rootId, treeState, setPreorder, showPreorder, setShowPreorder } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -36,22 +36,32 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     }
 
     function preorderClick(): any {
-        setTraversalValues(preorderTraversal(treeState, treeState[rootId]))
+        if (!allowInteraction) {
+            return
+        }
+        setShowPreorder(!showPreorder)
+
     }
+
+    useEffect(() => {
+        if (Object.keys(treeState).length && rootId) {
+            setPreorder(preorderTraversal(treeState, treeState[rootId]))
+        }
+
+    }, [treeState, rootId])
 
     return (
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
                 <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
-                <button onClick={preorderClick} className='start-over-button'>Show Preorder</button>
+                <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Show Tree'}</button>
             </div>
             {
                 numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
             }
             { numberOfNodes === 15 && <div>Nice job! The tree is full!</div>}
-
         </div >
     )
 }

@@ -10,7 +10,8 @@ const ContextWrapper: React.FC = () => {
     // const [allowInteraction, setAllowInteraction] = useState(false)
     const [treeState, setTreeState] = useState({})
     const [rootId, setRootId] = useState('')
-    const [traversalValues, setTraversalValues] = useState([])
+    const [preorder, setPreorder] = useState({})
+    const [showPreorder, setShowPreorder] = useState(false)
 
     return (
         <Context.Provider value={{
@@ -20,7 +21,8 @@ const ContextWrapper: React.FC = () => {
             // allowInteraction, setAllowInteraction
             rootId, setRootId,
             treeState, setTreeState,
-            traversalValues, setTraversalValues
+            preorder, setPreorder,
+            showPreorder, setShowPreorder
         }}>
             <App />
         </Context.Provider>

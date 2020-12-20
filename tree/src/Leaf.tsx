@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
-import { setSyntheticTrailingComments } from 'typescript'
+
 
 type Props = {
     id: string;
@@ -33,10 +33,10 @@ const Leaf: React.FC<Props> = ({
 }) => {
     // console.log(node.value, document.getElementById(id)?.getBoundingClientRect())
 
-    //  left boundary: 3vw
-    //  right boundary: 92vw
-
-
+    // left boundary: 3vw
+    // right boundary: 92vw
+    // Use traversalValues in context to figure out position to move node to
+    // Close to each other, spaced around the midpoint
 
     const {
         flattened,
@@ -46,6 +46,8 @@ const Leaf: React.FC<Props> = ({
         setStartLevel3,
         // allowInteraction,
         // setAllowInteraction
+        showPreorder,
+        preorder
     } = useContext(Context)
 
     function determineOpacity() {
@@ -86,6 +88,19 @@ const Leaf: React.FC<Props> = ({
                     top: level === 0 ? `${position.y}vh` : '0vh',
                     left: `${position.x}vw`,
                 })
+            } else if (showPreorder) {
+
+                // figure out left position value
+
+                // have index position, so how do you go from index position to left position value?
+                if (!id.includes('right child') && !id.includes('left child')) {
+
+                    await next({
+                        top: `0vh`,
+                        left: `${preorder[id].index * 5}vw`,
+                        position: 'fixed'
+                    })
+                }
             } else {
                 if (level === 0) {
                     await next({
