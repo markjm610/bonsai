@@ -4,7 +4,7 @@ import Leaf from './Leaf'
 import { TreeNode, TreeObject } from './types'
 import { GET_ROOT, GET_TREE } from './queries'
 import InsertForm from './InsertForm'
-
+import { countTreeLevels } from './utils'
 
 type Props = {
     numberOfNodes: number;
@@ -14,20 +14,20 @@ type Props = {
     setAllowInteraction: Function;
 }
 
-function countTreeLevels(tree: TreeObject, rootId: string): number {
-    let maxLevel: number = 0
-    function traverse(node: TreeNode, level: number = 0): void {
-        maxLevel = Math.max(level, maxLevel)
-        if (node.leftId) {
-            traverse(tree[node.leftId], level + 1)
-        }
-        if (node.rightId) {
-            traverse(tree[node.rightId], level + 1)
-        }
-    }
-    traverse(tree[rootId])
-    return maxLevel
-}
+// function countTreeLevels(tree: TreeObject, rootId: string): number {
+//     let maxLevel: number = 0
+//     function traverse(node: TreeNode, level: number = 0): void {
+//         maxLevel = Math.max(level, maxLevel)
+//         if (node.leftId) {
+//             traverse(tree[node.leftId], level + 1)
+//         }
+//         if (node.rightId) {
+//             traverse(tree[node.rightId], level + 1)
+//         }
+//     }
+//     traverse(tree[rootId])
+//     return maxLevel
+// }
 
 const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction }) => {
 

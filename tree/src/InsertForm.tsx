@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
 import { useSpring, animated } from 'react-spring'
-import Context from './Context'
-
+import { insertNode } from './utils'
 
 type Props = {
     tree: TreeObject;
@@ -17,32 +16,6 @@ type Props = {
     setAnimationOn: Function;
     allowInteraction: boolean;
     setAllowInteraction: Function;
-}
-
-// insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
-// the FakeNode component can look up the locations of the nodes on the screen
-function insertNode(value: number, node: TreeNode, tree: TreeObject, level: number, traversedNodes: string[] = []): [string, boolean, string[]] {
-
-    traversedNodes.push(node.id)
-
-    if (level > 3) {
-        return ['invalid move', false, traversedNodes]
-    }
-
-    if (value > node.value) {
-        if (node.rightId) {
-            return insertNode(value, tree[node.rightId], tree, level + 1, traversedNodes)
-        } else {
-            return [node.id, false, traversedNodes]
-        }
-    } else {
-        if (node.leftId) {
-            return insertNode(value, tree[node.leftId], tree, level + 1, traversedNodes)
-        } else {
-            return [node.id, true, traversedNodes]
-        }
-    }
-
 }
 
 const InsertForm: React.FC<Props> = ({
@@ -78,7 +51,7 @@ const InsertForm: React.FC<Props> = ({
         // }
 
         // setAllowInteraction(false)
-        console.log(allowInteraction)
+        // console.log(allowInteraction)
         if (!validMove) {
             setValidMove(true)
         }
