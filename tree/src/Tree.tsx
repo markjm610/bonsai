@@ -98,6 +98,8 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
                             setAllowInteraction={setAllowInteraction}
+                            isLeftChild={null}
+                            parentId={null}
                         />
                     </div>
                 </>

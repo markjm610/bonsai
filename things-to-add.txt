@@ -10,4 +10,6 @@ Make tree larger or smaller
 
 Edit numbers
 
+Delete parts of tree
+
 Preorder, inorder, postorder

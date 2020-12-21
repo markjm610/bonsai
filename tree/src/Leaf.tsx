@@ -16,6 +16,8 @@ type Props = {
     numberOfNodes: number;
     animationOn: boolean;
     setAllowInteraction: Function;
+    isLeftChild: boolean | null;
+    parentId: string | null;
 }
 
 const Leaf: React.FC<Props> = ({
@@ -29,7 +31,9 @@ const Leaf: React.FC<Props> = ({
     setBeginInsert,
     numberOfNodes,
     animationOn,
-    setAllowInteraction
+    setAllowInteraction,
+    isLeftChild,
+    parentId
 }) => {
     // console.log(node.value, document.getElementById(id)?.getBoundingClientRect())
 
@@ -70,13 +74,13 @@ const Leaf: React.FC<Props> = ({
                 opacity: determineOpacity(),
             }
         }
-        if (!flattened) {
-            return {
-                top: `${position.y}vh`,
-                left: `${position.x}vw`,
-                opacity: determineOpacity(),
-            }
+
+        return {
+            top: `${position.y}vh`,
+            left: `${position.x}vw`,
+            opacity: determineOpacity(),
         }
+
     }
 
     const style = useSpring({
@@ -90,16 +94,23 @@ const Leaf: React.FC<Props> = ({
                 })
             } else if (showPreorder) {
 
-                // figure out left position value
-
-                // have index position, so how do you go from index position to left position value?
                 if (!id.includes('right child') && !id.includes('left child')) {
+                    if (parentId) {
+                        await next({
+                            top: level === 0 ? `${position.y}vh` : `0vh`,
+                            // left has to be adjusted by preorder index and position in tree to begin with
+                            left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x + 5 * (preorder[id].index - preorder[parentId].index)}vw` : `${-10 + -(25 - level * 10) + position.x + 5 * (preorder[id].index - preorder[parentId].index)}vw`,
+                            // left: isLeftChild === true ? `${10 + position.x + 25 - level * 10}vw` : `${-10 + position.x - 25 + level * 10}vw`
+                        })
+                    } else {
+                        await next({
+                            top: level === 0 ? `${position.y}vh` : `0vh`,
+                            // left has to be adjusted by preorder index and position in tree to begin with
+                            left: '10vw'
+                            // left: isLeftChild === true ? `${10 + position.x + 25 - level * 10}vw` : `${-10 + position.x - 25 + level * 10}vw`
+                        })
+                    }
 
-                    await next({
-                        top: `0vh`,
-                        left: `${preorder[id].index * 5}vw`,
-                        position: 'fixed'
-                    })
                 }
             } else {
                 if (level === 0) {
@@ -179,6 +190,8 @@ const Leaf: React.FC<Props> = ({
                                 numberOfNodes={numberOfNodes}
                                 animationOn={animationOn}
                                 setAllowInteraction={setAllowInteraction}
+                                isLeftChild={true}
+                                parentId={id}
                             />}
                         {(!node.leftId && level <= 2) && <Leaf
                             id={`left child of ${node.id}`}
@@ -197,6 +210,8 @@ const Leaf: React.FC<Props> = ({
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
                             setAllowInteraction={setAllowInteraction}
+                            isLeftChild={true}
+                            parentId={id}
                         />
                         }
                         {node.rightId &&
@@ -212,6 +227,8 @@ const Leaf: React.FC<Props> = ({
                                 numberOfNodes={numberOfNodes}
                                 animationOn={animationOn}
                                 setAllowInteraction={setAllowInteraction}
+                                isLeftChild={false}
+                                parentId={id}
                             />}
                         {(!node.rightId && level <= 2) && <Leaf
                             id={`right child of ${node.id}`}
@@ -230,6 +247,8 @@ const Leaf: React.FC<Props> = ({
                             numberOfNodes={numberOfNodes}
                             animationOn={animationOn}
                             setAllowInteraction={setAllowInteraction}
+                            isLeftChild={false}
+                            parentId={id}
                         />
                         }
                     </>
