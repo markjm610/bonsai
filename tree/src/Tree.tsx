@@ -13,9 +13,11 @@ type Props = {
     treeId: string;
     allowInteraction: boolean;
     setAllowInteraction: Function;
+    beginInsert: boolean;
+    setBeginInsert: Function;
 }
 
-const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction }) => {
+const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction, beginInsert, setBeginInsert }) => {
 
     const { rootId, setRootId, treeState, setTreeState } = useContext(Context)
 
@@ -28,7 +30,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
     // const [rootId, setRootId] = useState('')
     const [levelsOfTree, setLevelsOfTree] = useState(-1)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
-    const [beginInsert, setBeginInsert] = useState(false)
+    // const [beginInsert, setBeginInsert] = useState(false)
     const [animationOn, setAnimationOn] = useState(true)
 
     useEffect(() => {

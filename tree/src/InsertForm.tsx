@@ -116,7 +116,6 @@ const InsertForm: React.FC<Props> = ({
             traversedNodes.push(`right child of ${parentNode}`)
         }
 
-
         setTraversedNodeIds(traversedNodes)
 
         // Trigger the inserting node animation
@@ -125,12 +124,8 @@ const InsertForm: React.FC<Props> = ({
         // Turn off tree loading animation so it doesn't happen when the new node is added
         setAnimationOn(false)
 
-
         // Clear input
         setValue('')
-
-
-
     }
 
     const inputAnimated = useSpring({
@@ -157,7 +152,7 @@ const InsertForm: React.FC<Props> = ({
                             value={value}
                             className='value-input'
                             id='input'
-                            disabled={showPreorder || showInorder || showPostorder}
+                            disabled={showPreorder || showInorder || showPostorder || beginInsert || !allowInteraction}
                         />
                         {beginInsert &&
                             <FakeNode

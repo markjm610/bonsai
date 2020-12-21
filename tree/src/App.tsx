@@ -20,6 +20,7 @@ function App() {
   const [numberOfNodes, setNumberOfNodes] = useState(0)
   const [treeId, setTreeId] = useState('')
   const [allowInteraction, setAllowInteraction] = useState(false)
+  const [beginInsert, setBeginInsert] = useState(false)
 
   const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
 
@@ -49,13 +50,19 @@ function App() {
 
   return (
     <div className="App">
-      <FillTree numberOfNodes={numberOfNodes} treeId={treeId} allowInteraction={allowInteraction} />
-      {treeId && <Tree
+      <FillTree
+        numberOfNodes={numberOfNodes}
+        treeId={treeId}
+        allowInteraction={allowInteraction}
+        beginInsert={beginInsert} />
+      { treeId && <Tree
         numberOfNodes={numberOfNodes}
         setNumberOfNodes={setNumberOfNodes}
         treeId={treeId}
         allowInteraction={allowInteraction}
         setAllowInteraction={setAllowInteraction}
+        beginInsert={beginInsert}
+        setBeginInsert={setBeginInsert}
       />}
     </div>
   );

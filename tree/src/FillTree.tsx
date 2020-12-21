@@ -8,9 +8,10 @@ type Props = {
     numberOfNodes: number;
     treeId: string;
     allowInteraction: boolean;
+    beginInsert: boolean;
 }
 
-const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
+const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, beginInsert }) => {
     const {
         rootId,
         treeState,
@@ -30,7 +31,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
-        if (!allowInteraction) {
+        if (!allowInteraction || beginInsert) {
             return
         }
         clearTree({
@@ -52,7 +53,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     // }
 
     function preorderClick(): any {
-        if (!allowInteraction) {
+        if (!allowInteraction || beginInsert) {
             return
         }
         setShowPreorder(!showPreorder)
@@ -65,7 +66,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     }
 
     function inorderClick(): any {
-        if (!allowInteraction) {
+        if (!allowInteraction || beginInsert) {
             return
         }
         setShowInorder(!showInorder)
@@ -78,7 +79,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     }
 
     function postorderClick(): any {
-        if (!allowInteraction) {
+        if (!allowInteraction || beginInsert) {
             return
         }
         setShowPostorder(!showPostorder)
