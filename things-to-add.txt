@@ -1,5 +1,7 @@
 Don't allow interaction while node is inserting
 
+Don't allow node insertion unless tree is normal
+
 Animation when you click on start from root
 
 Fill tree with sample tree with animation
@@ -11,5 +13,3 @@ Make tree larger or smaller
 Edit numbers
 
 Delete parts of tree
-
-Center preorder and postorder

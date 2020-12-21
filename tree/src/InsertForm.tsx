@@ -3,6 +3,8 @@ import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
 import { useSpring, animated } from 'react-spring'
 import { insertNode } from './utils'
+import Context from './Context'
+
 
 type Props = {
     tree: TreeObject;
@@ -32,7 +34,7 @@ const InsertForm: React.FC<Props> = ({
     setAllowInteraction
 }) => {
 
-    // const { allowInteraction, setAllowInteraction } = useContext(Context)
+    const { showPreorder, showInorder, showPostorder } = useContext(Context)
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
@@ -155,7 +157,7 @@ const InsertForm: React.FC<Props> = ({
                             value={value}
                             className='value-input'
                             id='input'
-                        // disabled={!allowInteraction}
+                            disabled={showPreorder || showInorder || showPostorder}
                         />
                         {beginInsert &&
                             <FakeNode
