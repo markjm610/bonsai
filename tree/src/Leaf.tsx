@@ -110,7 +110,7 @@ const Leaf: React.FC<Props> = ({
                     } else {
                         await next({
                             top: level === 0 ? `${position.y}vh` : `0vh`,
-                            left: '10vw'
+                            left: `${position.x - numberOfNodes / 2 * 5}vw`
                         })
                     }
                 }
@@ -161,7 +161,7 @@ const Leaf: React.FC<Props> = ({
                     } else {
                         await next({
                             top: level === 0 ? `${position.y}vh` : `0vh`,
-                            left: '90vw'
+                            left: `${position.x + numberOfNodes / 2 * 5}vw`
                         })
                     }
                 }
