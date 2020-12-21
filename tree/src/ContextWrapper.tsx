@@ -11,8 +11,11 @@ const ContextWrapper: React.FC = () => {
     const [treeState, setTreeState] = useState({})
     const [rootId, setRootId] = useState('')
     const [preorder, setPreorder] = useState({})
+    const [inorder, setInorder] = useState({})
     const [showPreorder, setShowPreorder] = useState(false)
-
+    const [showInorder, setShowInorder] = useState(false)
+    const [startFromRoot, setStartFromRoot] = useState(false)
+    const [readyToClearTree, setReadyToClearTree] = useState(false)
     return (
         <Context.Provider value={{
             flattened, setFlattened,
@@ -22,7 +25,11 @@ const ContextWrapper: React.FC = () => {
             rootId, setRootId,
             treeState, setTreeState,
             preorder, setPreorder,
-            showPreorder, setShowPreorder
+            showPreorder, setShowPreorder,
+            startFromRoot, setStartFromRoot,
+            readyToClearTree, setReadyToClearTree,
+            showInorder, setShowInorder,
+            inorder, setInorder
         }}>
             <App />
         </Context.Provider>

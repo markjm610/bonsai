@@ -1,4 +1,4 @@
-import { TreeObject, TreeNode } from './types'
+import { TreeObject, TreeNode, TraversalObject } from './types'
 
 // insertNode will find the spot of the new node and keep track of the IDs of each node traversed so the
 // the FakeNode component can look up the locations of the nodes on the screen
@@ -26,17 +26,6 @@ export function insertNode(value: number, node: TreeNode, tree: TreeObject, leve
 
 }
 
-export function preorderTraversal(tree: TreeObject, node: TreeNode, positions: any = {}): number[] {
-    positions[node.id] = { index: Object.keys(positions).length, value: node.value }
-    if (node.leftId) {
-        preorderTraversal(tree, tree[node.leftId], positions)
-    }
-    if (node.rightId) {
-        preorderTraversal(tree, tree[node.rightId], positions)
-    }
-    return positions
-}
-
 export function countTreeLevels(tree: TreeObject, rootId: string): number {
     let maxLevel: number = 0
     function traverse(node: TreeNode, level: number = 0): void {
@@ -50,4 +39,46 @@ export function countTreeLevels(tree: TreeObject, rootId: string): number {
     }
     traverse(tree[rootId])
     return maxLevel
+}
+
+export function preorderTraversal(tree: TreeObject, node: TreeNode, positions: TraversalObject = {}): TraversalObject {
+    positions[node.id] = { index: Object.keys(positions).length, value: node.value }
+
+    if (node.leftId) {
+        preorderTraversal(tree, tree[node.leftId], positions)
+    }
+
+    if (node.rightId) {
+        preorderTraversal(tree, tree[node.rightId], positions)
+    }
+
+    return positions
+}
+
+export function inorderTraversal(tree: TreeObject, node: TreeNode, positions: TraversalObject = {}): TraversalObject {
+    if (node.leftId) {
+        inorderTraversal(tree, tree[node.leftId], positions)
+    }
+
+    positions[node.id] = { index: Object.keys(positions).length, value: node.value }
+
+    if (node.rightId) {
+        inorderTraversal(tree, tree[node.rightId], positions)
+    }
+
+    return positions
+}
+
+export function postorderTraversal(tree: TreeObject, node: TreeNode, positions: TraversalObject = {}): TraversalObject {
+    if (node.leftId) {
+        postorderTraversal(tree, tree[node.leftId], positions)
+    }
+
+    if (node.rightId) {
+        postorderTraversal(tree, tree[node.rightId], positions)
+    }
+
+    positions[node.id] = { index: Object.keys(positions).length, value: node.value }
+
+    return positions
 }

@@ -13,3 +13,10 @@ export type Position = {
 export type TreeObject = {
     [id: string]: TreeNode;
 }
+
+export type TraversalObject = {
+    [id: string]: {
+        index: number;
+        value: number;
+    }
+}

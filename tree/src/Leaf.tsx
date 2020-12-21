@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useMutation } from '@apollo/client'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
-
+import { CLEAR_TREE, GET_TREE } from './queries'
 
 type Props = {
     id: string;
@@ -18,6 +19,7 @@ type Props = {
     setAllowInteraction: Function;
     isLeftChild: boolean | null;
     parentId: string | null;
+    treeId: string;
 }
 
 const Leaf: React.FC<Props> = ({
@@ -33,14 +35,9 @@ const Leaf: React.FC<Props> = ({
     animationOn,
     setAllowInteraction,
     isLeftChild,
-    parentId
+    parentId,
+    treeId
 }) => {
-    // console.log(node.value, document.getElementById(id)?.getBoundingClientRect())
-
-    // left boundary: 3vw
-    // right boundary: 92vw
-    // Use traversalValues in context to figure out position to move node to
-    // Close to each other, spaced around the midpoint
 
     const {
         flattened,
@@ -51,8 +48,15 @@ const Leaf: React.FC<Props> = ({
         // allowInteraction,
         // setAllowInteraction
         showPreorder,
-        preorder
+        preorder,
+        startFromRoot,
+        setReadyToClearTree,
+        showInorder,
+        inorder
     } = useContext(Context)
+
+    const [clearTree, { data }] = useMutation(CLEAR_TREE)
+
 
     function determineOpacity() {
         return (node && node.value) === -1 ? 0 : 1
@@ -100,18 +104,51 @@ const Leaf: React.FC<Props> = ({
                             top: level === 0 ? `${position.y}vh` : `0vh`,
                             // left has to be adjusted by preorder index and position in tree to begin with
                             left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x + 5 * (preorder[id].index - preorder[parentId].index)}vw` : `${-10 + -(25 - level * 10) + position.x + 5 * (preorder[id].index - preorder[parentId].index)}vw`,
-                            // left: isLeftChild === true ? `${10 + position.x + 25 - level * 10}vw` : `${-10 + position.x - 25 + level * 10}vw`
                         })
                     } else {
                         await next({
                             top: level === 0 ? `${position.y}vh` : `0vh`,
-                            // left has to be adjusted by preorder index and position in tree to begin with
                             left: '10vw'
-                            // left: isLeftChild === true ? `${10 + position.x + 25 - level * 10}vw` : `${-10 + position.x - 25 + level * 10}vw`
+                        })
+                    }
+                }
+                // } else if (startFromRoot) {
+                //     if (level === 0) {
+                //         await next({
+                //             top: `${position.y}vh`,
+                //             left: `${position.x}vw`,
+                //             opacity: 1,
+                //         })
+                //     } else {
+                //         await next({
+                //             top: `0vh`,
+                //             left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x}vw` : `${-10 + -(25 - level * 10) + position.x}vw`,
+                //             opacity: 0,
+                //         })
+
+                //     }
+                //     setReadyToClearTree(true)
+                //     // clearTree({
+                //     //     variables: { id: treeId },
+                //     //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                //     // })
+            } else if (showInorder) {
+                if (!id.includes('right child') && !id.includes('left child')) {
+                    if (parentId) {
+                        await next({
+                            top: level === 0 ? `${position.y}vh` : `0vh`,
+                            // left has to be adjusted by preorder index and position in tree to begin with
+                            left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x + 5 * (inorder[id].index - inorder[parentId].index)}vw` : `${-10 + -(25 - level * 10) + position.x + 5 * (inorder[id].index - inorder[parentId].index)}vw`,
+                        })
+                    } else {
+                        await next({
+                            top: level === 0 ? `${position.y}` : `0vh`,
+                            left: '48vw'
                         })
                     }
 
                 }
+
             } else {
                 if (level === 0) {
                     await next({
@@ -192,6 +229,7 @@ const Leaf: React.FC<Props> = ({
                                 setAllowInteraction={setAllowInteraction}
                                 isLeftChild={true}
                                 parentId={id}
+                                treeId={treeId}
                             />}
                         {(!node.leftId && level <= 2) && <Leaf
                             id={`left child of ${node.id}`}
@@ -212,6 +250,7 @@ const Leaf: React.FC<Props> = ({
                             setAllowInteraction={setAllowInteraction}
                             isLeftChild={true}
                             parentId={id}
+                            treeId={treeId}
                         />
                         }
                         {node.rightId &&
@@ -229,6 +268,7 @@ const Leaf: React.FC<Props> = ({
                                 setAllowInteraction={setAllowInteraction}
                                 isLeftChild={false}
                                 parentId={id}
+                                treeId={treeId}
                             />}
                         {(!node.rightId && level <= 2) && <Leaf
                             id={`right child of ${node.id}`}
@@ -249,6 +289,7 @@ const Leaf: React.FC<Props> = ({
                             setAllowInteraction={setAllowInteraction}
                             isLeftChild={false}
                             parentId={id}
+                            treeId={treeId}
                         />
                         }
                     </>

@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
-import { preorderTraversal } from './utils'
+import { preorderTraversal, inorderTraversal } from './utils'
 
 type Props = {
     numberOfNodes: number;
@@ -11,7 +11,23 @@ type Props = {
 }
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
-    const { flattened, setFlattened, test, setTest, rootId, treeState, setPreorder, showPreorder, setShowPreorder } = useContext(Context)
+    const {
+        flattened,
+        setFlattened,
+        test,
+        setTest,
+        rootId,
+        treeState,
+        setPreorder,
+        showPreorder,
+        setShowPreorder,
+        setStartFromRoot,
+        readyToClearTree,
+        setReadyToClearTree,
+        showInorder,
+        setShowInorder,
+        setInorder
+    } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
@@ -22,6 +38,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
             variables: { id: treeId },
             refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
         })
+        setStartFromRoot(true)
     }
 
     function flatten(): any {
@@ -40,22 +57,43 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
             return
         }
         setShowPreorder(!showPreorder)
+    }
 
+    function inorderClick(): any {
+        if (!allowInteraction) {
+            return
+        }
+        setShowInorder(!showInorder)
     }
 
     useEffect(() => {
         if (Object.keys(treeState).length && rootId) {
             setPreorder(preorderTraversal(treeState, treeState[rootId]))
         }
-
     }, [treeState, rootId])
+
+    useEffect(() => {
+        if (Object.keys(treeState).length && rootId) {
+            setInorder(inorderTraversal(treeState, treeState[rootId]))
+        }
+    }, [treeState, rootId])
+
+    // useEffect(() => {
+    //     if (readyToClearTree) {
+    //         clearTree({
+    //             variables: { id: treeId },
+    //             refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+    //         })
+    //         setReadyToClearTree(false)
+    //     }
+    // }, [readyToClearTree])
 
     return (
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
-                <button onClick={flatten} className='start-over-button'>{!flattened ? 'Flatten' : 'Unflatten'}</button>
-                <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Show Tree'}</button>
+                <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
+                <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>
             </div>
             {
                 numberOfNodes < 15 &&

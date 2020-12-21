@@ -100,6 +100,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             setAllowInteraction={setAllowInteraction}
                             isLeftChild={null}
                             parentId={null}
+                            treeId={treeId}
                         />
                     </div>
                 </>

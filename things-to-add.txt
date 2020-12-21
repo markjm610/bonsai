@@ -12,4 +12,8 @@ Edit numbers
 
 Delete parts of tree
 
-Preorder, inorder, postorder
+Center preorder
+
+postorder
+
+Transition between animations
