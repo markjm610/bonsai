@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
-import { preorderTraversal, inorderTraversal } from './utils'
+import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils'
 
 type Props = {
     numberOfNodes: number;
@@ -12,10 +12,6 @@ type Props = {
 
 const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) => {
     const {
-        flattened,
-        setFlattened,
-        test,
-        setTest,
         rootId,
         treeState,
         setPreorder,
@@ -26,7 +22,10 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
         setReadyToClearTree,
         showInorder,
         setShowInorder,
-        setInorder
+        setInorder,
+        showPostorder,
+        setShowPostorder,
+        setPostorder
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
@@ -41,22 +40,28 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
         setStartFromRoot(true)
     }
 
-    function flatten(): any {
-        // console.log(allowInteraction)
-        if (!allowInteraction) {
-            return
-        }
-        setFlattened(!flattened)
-        if (test) {
-            setTest(false)
-        }
-    }
+    // function flatten(): any {
+    //     // console.log(allowInteraction)
+    //     if (!allowInteraction) {
+    //         return
+    //     }
+    //     setFlattened(!flattened)
+    //     if (test) {
+    //         setTest(false)
+    //     }
+    // }
 
     function preorderClick(): any {
         if (!allowInteraction) {
             return
         }
         setShowPreorder(!showPreorder)
+        if (showInorder) {
+            setShowInorder(false)
+        }
+        if (showPostorder) {
+            setShowPostorder(false)
+        }
     }
 
     function inorderClick(): any {
@@ -64,6 +69,25 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
             return
         }
         setShowInorder(!showInorder)
+        if (showPreorder) {
+            setShowPreorder(false)
+        }
+        if (showPostorder) {
+            setShowPostorder(false)
+        }
+    }
+
+    function postorderClick(): any {
+        if (!allowInteraction) {
+            return
+        }
+        setShowPostorder(!showPostorder)
+        if (showPreorder) {
+            setShowPreorder(false)
+        }
+        if (showInorder) {
+            setShowInorder(false)
+        }
     }
 
     useEffect(() => {
@@ -75,6 +99,12 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
     useEffect(() => {
         if (Object.keys(treeState).length && rootId) {
             setInorder(inorderTraversal(treeState, treeState[rootId]))
+        }
+    }, [treeState, rootId])
+
+    useEffect(() => {
+        if (Object.keys(treeState).length && rootId) {
+            setPostorder(postorderTraversal(treeState, treeState[rootId]))
         }
     }, [treeState, rootId])
 
@@ -94,6 +124,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction }) 
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
                 <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
                 <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>
+                <button onClick={postorderClick} className='start-over-button'>{!showPostorder ? 'Show Postorder' : 'Back to Tree'}</button>
             </div>
             {
                 numberOfNodes < 15 &&

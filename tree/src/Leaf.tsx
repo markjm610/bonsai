@@ -52,7 +52,9 @@ const Leaf: React.FC<Props> = ({
         startFromRoot,
         setReadyToClearTree,
         showInorder,
-        inorder
+        inorder,
+        showPostorder,
+        postorder
     } = useContext(Context)
 
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
@@ -137,7 +139,7 @@ const Leaf: React.FC<Props> = ({
                     if (parentId) {
                         await next({
                             top: level === 0 ? `${position.y}vh` : `0vh`,
-                            // left has to be adjusted by preorder index and position in tree to begin with
+                            // left has to be adjusted by inorder index and position in tree to begin with
                             left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x + 5 * (inorder[id].index - inorder[parentId].index)}vw` : `${-10 + -(25 - level * 10) + position.x + 5 * (inorder[id].index - inorder[parentId].index)}vw`,
                         })
                     } else {
@@ -146,7 +148,22 @@ const Leaf: React.FC<Props> = ({
                             left: '48vw'
                         })
                     }
+                }
+            } else if (showPostorder) {
 
+                if (!id.includes('right child') && !id.includes('left child')) {
+                    if (parentId) {
+                        await next({
+                            top: level === 0 ? `${position.y}vh` : `0vh`,
+                            // left has to be adjusted by postorder index and position in tree to begin with
+                            left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x + 5 * (postorder[id].index - postorder[parentId].index)}vw` : `${-10 + -(25 - level * 10) + position.x + 5 * (postorder[id].index - postorder[parentId].index)}vw`,
+                        })
+                    } else {
+                        await next({
+                            top: level === 0 ? `${position.y}vh` : `0vh`,
+                            left: '90vw'
+                        })
+                    }
                 }
 
             } else {

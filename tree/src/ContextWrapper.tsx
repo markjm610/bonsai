@@ -4,7 +4,6 @@ import App from './App';
 
 const ContextWrapper: React.FC = () => {
 
-    const [flattened, setFlattened] = useState(false)
     const [startLevel2, setStartLevel2] = useState(false)
     const [startLevel3, setStartLevel3] = useState(false)
     // const [allowInteraction, setAllowInteraction] = useState(false)
@@ -12,13 +11,14 @@ const ContextWrapper: React.FC = () => {
     const [rootId, setRootId] = useState('')
     const [preorder, setPreorder] = useState({})
     const [inorder, setInorder] = useState({})
+    const [postorder, setPostorder] = useState({})
     const [showPreorder, setShowPreorder] = useState(false)
     const [showInorder, setShowInorder] = useState(false)
+    const [showPostorder, setShowPostorder] = useState(false)
     const [startFromRoot, setStartFromRoot] = useState(false)
     const [readyToClearTree, setReadyToClearTree] = useState(false)
     return (
         <Context.Provider value={{
-            flattened, setFlattened,
             startLevel2, setStartLevel2,
             startLevel3, setStartLevel3,
             // allowInteraction, setAllowInteraction
@@ -29,7 +29,9 @@ const ContextWrapper: React.FC = () => {
             startFromRoot, setStartFromRoot,
             readyToClearTree, setReadyToClearTree,
             showInorder, setShowInorder,
-            inorder, setInorder
+            inorder, setInorder,
+            showPostorder, setShowPostorder,
+            postorder, setPostorder
         }}>
             <App />
         </Context.Provider>
