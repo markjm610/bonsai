@@ -212,11 +212,12 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
-    const click = () => {
-        // deleteNode({
-        //     variables: { id, parentId, isLeftChild },
-        //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-        // })
+    const click = (e: any) => {
+        e.stopPropagation()
+        deleteNode({
+            variables: { id, parentId, isLeftChild },
+            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+        })
     }
 
     if (node && node.value !== -1) {
@@ -227,7 +228,7 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={style}
-            // onClick={click}
+                onClick={click}
             >
                 {node &&
                     <>
