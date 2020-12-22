@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
 import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils'
+import TrashCan from './TrashCan'
 
 type Props = {
     numberOfNodes: number;
@@ -120,7 +121,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
         }
     }, [readyToClearTree])
 
-    return (
+    return (<>
         <div className='dialogue-container'>
             <div className='buttons-container'>
                 <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
@@ -132,8 +133,12 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
                 numberOfNodes < 15 &&
                 <div>Can you fill all 4 levels of the binary search tree?</div>
             }
-            { numberOfNodes === 15 && <div>Nice job! The tree is full!</div>}
+            {numberOfNodes === 15 && <div>Nice job! The tree is full!</div>}
         </div >
+        <div className='trash-can-container'>
+            <TrashCan />
+        </div>
+    </>
     )
 }
 

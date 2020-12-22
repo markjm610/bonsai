@@ -4,6 +4,7 @@ import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
 import { DELETE_NODE, GET_TREE } from './queries'
+import { useDrag } from 'react-dnd';
 
 type Props = {
     id: string;
@@ -212,13 +213,28 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
-    const click = (e: any) => {
-        e.stopPropagation()
-        deleteNode({
-            variables: { id, parentId, isLeftChild },
-            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-        })
+    const deleteClick = (e: any) => {
+        // e.stopPropagation()
+        // deleteNode({
+        //     variables: { id, parentId, isLeftChild },
+        //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+        // })
     }
+
+    const [, drag] = useDrag({
+        item: {
+            type: 'node',
+        },
+        // begin: () => {
+
+        // },
+        // end: (item) => {
+
+        // },
+        // collect: monitor => ({
+        //     isDragging: monitor.isDragging()
+        // })
+    })
 
     if (node && node.value !== -1) {
 
@@ -228,11 +244,12 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={style}
-                onClick={click}
+                ref={drag}
             >
                 {node &&
                     <>
                         {node.value}
+
                         {node.leftId &&
                             <Leaf
                                 id={node.leftId}
@@ -311,6 +328,7 @@ const Leaf: React.FC<Props> = ({
                             treeId={treeId}
                         />
                         }
+
                     </>
                 }
             </animated.div >

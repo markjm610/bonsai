@@ -6,6 +6,9 @@ import App from './App';
 import ContextWrapper from './ContextWrapper'
 import * as serviceWorker from './serviceWorker';
 import apolloUri from './config'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 
 const client = new ApolloClient({
   uri: apolloUri,
@@ -14,9 +17,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ContextWrapper />
-    </ApolloProvider>
+    <DndProvider backend={HTML5Backend}>
+      <ApolloProvider client={client}>
+        <ContextWrapper />
+      </ApolloProvider>
+    </DndProvider>
   </React.StrictMode>
   ,
   document.getElementById('root')
