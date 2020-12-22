@@ -6,6 +6,7 @@ import { GET_ROOT, GET_TREE } from './queries'
 import InsertForm from './InsertForm'
 import { countTreeLevels } from './utils'
 import Context from './Context'
+import CustomDragLayer from './CustomDragLayer'
 
 type Props = {
     numberOfNodes: number;
@@ -104,6 +105,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             parentId={null}
                             treeId={treeId}
                         />
+                        <CustomDragLayer />
                     </div>
                 </>
             }

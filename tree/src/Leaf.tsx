@@ -5,6 +5,9 @@ import { useSpring, animated } from 'react-spring'
 import Context from './Context'
 import { DELETE_NODE, GET_TREE } from './queries'
 import { useDrag } from 'react-dnd';
+import CustomDragLayer from './CustomDragLayer'
+import { getEmptyImage } from 'react-dnd-html5-backend';
+
 
 type Props = {
     id: string;
@@ -61,9 +64,27 @@ const Leaf: React.FC<Props> = ({
 
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
     const [deleteNode, { data }] = useMutation(DELETE_NODE)
+    const [{ isDragging }, drag, preview] = useDrag({
+        item: {
+            type: 'node',
+            id,
+            parentId,
+            treeId,
+            isLeftChild
+        },
+        // begin: () => {
 
+        // },
+        // end: (item) => {
+
+        // },
+        collect: monitor => ({
+            isDragging: monitor.isDragging()
+        })
+    })
 
     function determineOpacity() {
+
         return (node && node.value) === -1 ? 0 : 1
     }
 
@@ -213,6 +234,10 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
+    useEffect(() => {
+        preview(getEmptyImage());
+    }, [])
+
     const deleteClick = (e: any) => {
         // e.stopPropagation()
         // deleteNode({
@@ -221,24 +246,7 @@ const Leaf: React.FC<Props> = ({
         // })
     }
 
-    const [, drag] = useDrag({
-        item: {
-            type: 'node',
-            id,
-            parentId,
-            treeId,
-            isLeftChild
-        },
-        // begin: () => {
 
-        // },
-        // end: (item) => {
-
-        // },
-        // collect: monitor => ({
-        //     isDragging: monitor.isDragging()
-        // })
-    })
 
     if (node && node.value !== -1) {
 
@@ -247,7 +255,9 @@ const Leaf: React.FC<Props> = ({
             <animated.div
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={style}
+                style={!isDragging ? style : {
+                    opacity: 0,
+                }}
                 ref={drag}
             >
                 {node &&
