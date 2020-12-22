@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ADD_TREE_NODE, GET_TREE } from './queries'
 import { useSpring, animated } from 'react-spring'
-import Context from './Context'
 
 type Props = {
     value: string;
@@ -42,7 +41,6 @@ const FakeNode: React.FC<Props> = ({
                 let i = 0
 
                 while (i < traversedNodeIds.length) {
-
 
                     const nodeRef = document.getElementById(traversedNodeIds[i])
                     const nodeLocation = nodeRef?.getBoundingClientRect()

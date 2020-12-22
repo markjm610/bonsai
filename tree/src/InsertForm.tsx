@@ -15,7 +15,7 @@ type Props = {
     beginInsert: boolean;
     setBeginInsert: Function;
     treeId: string;
-    setAnimationOn: Function;
+    setLoadingAnimationOn: Function;
     allowInteraction: boolean;
     setAllowInteraction: Function;
 }
@@ -29,7 +29,7 @@ const InsertForm: React.FC<Props> = ({
     setTraversedNodeIds,
     beginInsert,
     setBeginInsert,
-    setAnimationOn,
+    setLoadingAnimationOn,
     allowInteraction,
     setAllowInteraction
 }) => {
@@ -122,7 +122,7 @@ const InsertForm: React.FC<Props> = ({
         setBeginInsert(true)
 
         // Turn off tree loading animation so it doesn't happen when the new node is added
-        setAnimationOn(false)
+        setLoadingAnimationOn(false)
 
         // Clear input
         setValue('')

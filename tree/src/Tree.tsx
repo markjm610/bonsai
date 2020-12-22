@@ -31,7 +31,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
     const [levelsOfTree, setLevelsOfTree] = useState(-1)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
     // const [beginInsert, setBeginInsert] = useState(false)
-    const [animationOn, setAnimationOn] = useState(true)
+    const [loadingAnimationOn, setLoadingAnimationOn] = useState(true)
 
     useEffect(() => {
 
@@ -82,7 +82,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             treeId={treeId}
-                            setAnimationOn={setAnimationOn}
+                            setLoadingAnimationOn={setLoadingAnimationOn}
                             allowInteraction={allowInteraction}
                             setAllowInteraction={setAllowInteraction}
                         />
@@ -98,7 +98,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             numberOfNodes={numberOfNodes}
-                            animationOn={animationOn}
+                            loadingAnimationOn={loadingAnimationOn}
                             setAllowInteraction={setAllowInteraction}
                             isLeftChild={null}
                             parentId={null}
