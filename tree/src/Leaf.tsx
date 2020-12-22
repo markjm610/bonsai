@@ -224,6 +224,10 @@ const Leaf: React.FC<Props> = ({
     const [, drag] = useDrag({
         item: {
             type: 'node',
+            id,
+            parentId,
+            treeId,
+            isLeftChild
         },
         // begin: () => {
 
