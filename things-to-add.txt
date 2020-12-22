@@ -9,3 +9,5 @@ Make tree larger or smaller
 Edit numbers
 
 Delete parts of tree
+
+Make it so you can't delete the root

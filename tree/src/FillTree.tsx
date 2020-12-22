@@ -34,10 +34,10 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
         if (!allowInteraction || beginInsert) {
             return
         }
-        clearTree({
-            variables: { id: treeId },
-            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-        })
+        // clearTree({
+        //     variables: { id: treeId },
+        //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+        // })
         setStartFromRoot(true)
     }
 
@@ -109,15 +109,16 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
         }
     }, [treeState, rootId])
 
-    // useEffect(() => {
-    //     if (readyToClearTree) {
-    //         clearTree({
-    //             variables: { id: treeId },
-    //             refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-    //         })
-    //         setReadyToClearTree(false)
-    //     }
-    // }, [readyToClearTree])
+    useEffect(() => {
+        if (readyToClearTree) {
+            clearTree({
+                variables: { id: treeId },
+                refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+            })
+            setStartFromRoot(false)
+            setReadyToClearTree(false)
+        }
+    }, [readyToClearTree])
 
     return (
         <div className='dialogue-container'>

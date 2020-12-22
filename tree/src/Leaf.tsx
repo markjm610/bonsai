@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
-import { CLEAR_TREE, GET_TREE } from './queries'
+import { DELETE_NODE, GET_TREE } from './queries'
 
 type Props = {
     id: string;
@@ -50,6 +50,7 @@ const Leaf: React.FC<Props> = ({
         showPreorder,
         preorder,
         startFromRoot,
+        setStartFromRoot,
         setReadyToClearTree,
         showInorder,
         inorder,
@@ -57,7 +58,8 @@ const Leaf: React.FC<Props> = ({
         postorder
     } = useContext(Context)
 
-    const [clearTree, { data }] = useMutation(CLEAR_TREE)
+    // const [clearTree, { data }] = useMutation(CLEAR_TREE)
+    const [deleteNode, { data }] = useMutation(DELETE_NODE)
 
 
     function determineOpacity() {
@@ -73,14 +75,6 @@ const Leaf: React.FC<Props> = ({
             }
         }
 
-        if (flattened) {
-            return {
-                top: level === 0 ? `${position.y}vh` : '0vh',
-                left: `${position.x}vw`,
-                opacity: determineOpacity(),
-            }
-        }
-
         return {
             top: `${position.y}vh`,
             left: `${position.x}vw`,
@@ -93,12 +87,7 @@ const Leaf: React.FC<Props> = ({
         from: determinePosition(),
         to: async (next: Function) => {
 
-            if (flattened) {
-                await next({
-                    top: level === 0 ? `${position.y}vh` : '0vh',
-                    left: `${position.x}vw`,
-                })
-            } else if (showPreorder) {
+            if (showPreorder) {
 
                 if (!id.includes('right child') && !id.includes('left child')) {
                     if (parentId) {
@@ -114,26 +103,27 @@ const Leaf: React.FC<Props> = ({
                         })
                     }
                 }
-                // } else if (startFromRoot) {
-                //     if (level === 0) {
-                //         await next({
-                //             top: `${position.y}vh`,
-                //             left: `${position.x}vw`,
-                //             opacity: 1,
-                //         })
-                //     } else {
-                //         await next({
-                //             top: `0vh`,
-                //             left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x}vw` : `${-10 + -(25 - level * 10) + position.x}vw`,
-                //             opacity: 0,
-                //         })
+            } else if (startFromRoot) {
+                // if (level === 0) {
 
-                //     }
-                //     setReadyToClearTree(true)
-                //     // clearTree({
-                //     //     variables: { id: treeId },
-                //     //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-                //     // })
+                //     await next({
+                //         top: `${position.y}vh`,
+                //         left: `${position.x}vw`,
+                //         opacity: 1,
+                //     })
+                // } else {
+
+                //     await next({
+                //         top: `0vh`,
+                //         left: isLeftChild === true ? `${10 + -(-25 + level * 10) + position.x}vw` : `${-10 + -(25 - level * 10) + position.x}vw`,
+                //         opacity: 0,
+                //     })
+                // }
+                setReadyToClearTree(true)
+                // clearTree({
+                //     variables: { id: treeId },
+                //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                // })
             } else if (showInorder) {
                 if (!id.includes('right child') && !id.includes('left child')) {
                     if (parentId) {
@@ -219,6 +209,13 @@ const Leaf: React.FC<Props> = ({
         }
     }, [])
 
+    const click = () => {
+        // deleteNode({
+        //     variables: { id, parentId, isLeftChild },
+        //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+        // })
+    }
+
     if (node && node.value !== -1) {
 
         return (
@@ -227,6 +224,7 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
                 style={style}
+            // onClick={click}
             >
                 {node &&
                     <>

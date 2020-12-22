@@ -61,3 +61,11 @@ export const CREATE_TREE = gql`
         }
     }
 `
+
+export const DELETE_NODE = gql`
+    mutation($id: ID!, $parentId: ID!, $isLeftChild: Boolean!){
+        deleteNode(id: $id, parentId: $parentId, isLeftChild: $isLeftChild){
+            id
+        }
+    }
+`

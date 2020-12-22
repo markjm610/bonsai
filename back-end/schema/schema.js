@@ -124,6 +124,43 @@ const Mutation = new GraphQLObjectType({
                 return root
             }
         },
+        deleteNode: {
+            type: TreeNodeType,
+            args: {
+                id: { type: GraphQLID },
+                parentId: { type: GraphQLID },
+                isLeftChild: { type: GraphQLBoolean },
+            },
+            async resolve(parent, args) {
+
+                const parentNode = await TreeNode.findById(args.parentId)
+
+                if (args.isLeftChild) {
+                    parentNode.leftId = null
+                } else {
+                    parentNode.rightId = null
+                }
+
+                await parentNode.save()
+
+                const queue = [args.id]
+
+                while (queue.length) {
+                    const idToDelete = queue.shift()
+                    const node = await TreeNode.deleteOne({ id: idToDelete })
+
+                    if (node.leftId) {
+                        queue.push(node.leftId)
+                    }
+                    if (node.rightId) {
+                        queue.push(node.rightId)
+                    }
+
+                }
+
+                return parentNode
+            }
+        },
         createTree: {
             type: TreeType,
             async resolve(parent, args) {
