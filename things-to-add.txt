@@ -10,3 +10,7 @@ Edit numbers
 Get rid of flickering green thing on drag
 
 Trim leading zeroes on input
+
+Maybe put border on focused input and fake node
+
+Remove editing and drag and drop when tree is complete

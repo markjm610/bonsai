@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 import { Position, TreeNode, TreeObject } from './types'
 import { useSpring, animated } from 'react-spring'
 import Context from './Context'
-import { DELETE_NODE, GET_TREE } from './queries'
+import { EDIT_NODE, GET_TREE } from './queries'
 import { useDrag } from 'react-dnd';
 import CustomDragLayer from './CustomDragLayer'
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -74,7 +74,8 @@ const Leaf: React.FC<Props> = ({
     const [decimalError, setDecimalError] = useState(false)
     const [numberError, setNumberError] = useState(false)
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
-    const [deleteNode, { data }] = useMutation(DELETE_NODE)
+    // const [deleteNode, { data }] = useMutation(DELETE_NODE)
+    const [editNode, { data }] = useMutation(EDIT_NODE)
     const [{ isDragging }, drag, preview] = useDrag({
         item: {
             type: 'node',
@@ -293,24 +294,31 @@ const Leaf: React.FC<Props> = ({
                 if (newValue >= leftChildValue && newValue < rightChildValue) {
                     const treeCopy = { ...treeState }
 
-                    treeCopy[id].value = editValue
+                    treeCopy[id].value = newValue
 
                     setTreeState(treeCopy)
 
-
                     setEdit(false);
+
+                    editNode({
+                        variables: { id, newValue: newValue },
+                        refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                    })
                 }
             } else if (isLeftChild) {
                 if (newValue <= treeState[parentId].value) {
                     if (newValue >= leftChildValue && newValue < rightChildValue) {
                         const treeCopy = { ...treeState }
 
-                        treeCopy[id].value = editValue
+                        treeCopy[id].value = newValue
 
                         setTreeState(treeCopy)
 
-
                         setEdit(false);
+                        editNode({
+                            variables: { id, newValue: newValue },
+                            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                        })
                     }
                 }
             } else {
@@ -318,16 +326,21 @@ const Leaf: React.FC<Props> = ({
                     if (newValue >= leftChildValue && newValue < rightChildValue) {
                         const treeCopy = { ...treeState }
 
-                        treeCopy[id].value = editValue
+                        treeCopy[id].value = newValue
 
                         setTreeState(treeCopy)
 
                         setEdit(false);
+                        editNode({
+                            variables: { id, newValue: newValue },
+                            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                        })
                     }
                 }
             }
 
             // tell user what the problem is
+
 
             // if (isLeftChild) {
             //     if (parentId && newValue <= treeState[parentId].value) {

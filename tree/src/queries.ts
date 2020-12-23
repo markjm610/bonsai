@@ -69,3 +69,12 @@ export const DELETE_NODE = gql`
         }
     }
 `
+
+export const EDIT_NODE = gql`
+    mutation($id: ID!, $newValue: Int!){
+        editNode(id: $id, newValue: $newValue){
+            id
+            value
+        }
+    }
+`

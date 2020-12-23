@@ -247,7 +247,20 @@ const Mutation = new GraphQLObjectType({
 
                 return tree
             }
-        }
+        },
+        editNode: {
+            type: TreeNodeType,
+            args: {
+                id: { type: GraphQLID },
+                newValue: { type: GraphQLInt },
+            },
+            async resolve(parent, args) {
+                const nodeToEdit = await TreeNode.findById(args.id)
+                nodeToEdit.value = args.newValue
+                await nodeToEdit.save()
+                return nodeToEdit
+            }
+        },
     }
 })
 
