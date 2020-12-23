@@ -7,13 +7,13 @@ import { DELETE_NODE, GET_TREE } from './queries'
 import { useDrag } from 'react-dnd';
 import CustomDragLayer from './CustomDragLayer'
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import useOnclickOutside from "react-cool-onclickoutside";
 
 
 type Props = {
     id: string;
     position: Position;
     node: TreeNode;
-    tree: TreeObject;
     levelsOfTree: number;
     level: number;
     beginInsert: boolean;
@@ -31,7 +31,6 @@ const Leaf: React.FC<Props> = ({
     id,
     position,
     node,
-    tree,
     levelsOfTree,
     level,
     beginInsert,
@@ -46,7 +45,8 @@ const Leaf: React.FC<Props> = ({
 }) => {
 
     const {
-        flattened,
+        treeState,
+        setTreeState,
         startLevel2,
         setStartLevel2,
         startLevel3,
@@ -69,6 +69,10 @@ const Leaf: React.FC<Props> = ({
         hideDeletedNodes
     } = useContext(Context)
 
+    const [edit, setEdit] = useState(false)
+    const [editValue, setEditValue] = useState(`${node.value}`)
+    const [decimalError, setDecimalError] = useState(false)
+    const [numberError, setNumberError] = useState(false)
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
     const [deleteNode, { data }] = useMutation(DELETE_NODE)
     const [{ isDragging }, drag, preview] = useDrag({
@@ -257,9 +261,44 @@ const Leaf: React.FC<Props> = ({
         setNodeToDrag({ ...node, level: level })
     }
 
+    const handleClick = (e: any) => {
+        e.stopPropagation()
+
+        setEdit(true)
+    }
+
+    const handleInputChange = (e: any) => {
+        if (e.target.value.includes('.')) {
+            setDecimalError(true)
+        } else if (decimalError && e.target.value) {
+            setDecimalError(false)
+        }
+
+        if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
+            setNumberError(true)
+        } else if (numberError && e.target.value) {
+            setNumberError(false)
+        }
+        setEditValue(e.target.value)
+    }
+
+    const ref = useOnclickOutside(() => {
+
+        const treeCopy = { ...treeState }
+
+        if (edit) {
+            setEdit(false);
+        }
+
+    });
+
+    useEffect(() => {
+        if (document.getElementById(`input-${id}`)) {
+            document.getElementById(`input-${id}`)?.focus()
+        }
+    }, [edit])
+
     if (node && node.value !== -1) {
-
-
         return (
             <>
                 <animated.div
@@ -269,7 +308,8 @@ const Leaf: React.FC<Props> = ({
                         opacity: 0,
                     } : style}
                     ref={level === 0 || showPreorder || showInorder || showPostorder || !allowInteraction ? null : drag}
-                    onMouseEnter={handleMouseEnter}
+                    onMouseEnter={beginInsert ? undefined : handleMouseEnter}
+                    onClick={handleClick}
                 >
                     <CustomDragLayer
                         id={id}
@@ -278,14 +318,24 @@ const Leaf: React.FC<Props> = ({
                     />
                     {node &&
                         <>
-                            {node.value}
-
+                            {edit
+                                ?
+                                <input
+                                    id={`input-${id}`}
+                                    className={`edit-node-input-${level}`}
+                                    type='number'
+                                    value={editValue}
+                                    onChange={handleInputChange}
+                                    ref={ref}
+                                />
+                                :
+                                node.value}
+                            {/* {(decimalError || numberError) && <div className='error-message'>Must be whole number between 0 and 100</div>} */}
                             {node.leftId &&
                                 <Leaf
                                     id={node.leftId}
                                     position={{ x: -25 + level * 10, y: 10 }}
-                                    node={tree[node.leftId]}
-                                    tree={tree}
+                                    node={treeState[node.leftId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
                                     beginInsert={beginInsert}
@@ -307,7 +357,6 @@ const Leaf: React.FC<Props> = ({
                                     leftId: null,
                                     rightId: null
                                 }}
-                                tree={tree}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
                                 beginInsert={beginInsert}
@@ -325,8 +374,7 @@ const Leaf: React.FC<Props> = ({
                                 <Leaf
                                     id={node.rightId}
                                     position={{ x: 25 - level * 10, y: 10 }}
-                                    node={tree[node.rightId]}
-                                    tree={tree}
+                                    node={treeState[node.rightId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
                                     beginInsert={beginInsert}
@@ -348,7 +396,6 @@ const Leaf: React.FC<Props> = ({
                                     leftId: null,
                                     rightId: null
                                 }}
-                                tree={tree}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
                                 beginInsert={beginInsert}

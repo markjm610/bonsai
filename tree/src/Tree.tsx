@@ -93,7 +93,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             id={treeNodesData.tree.root[0].id}
                             node={treeNodesData.tree.root[0]}
                             position={{ x: 48, y: 30 }}
-                            tree={treeState}
                             levelsOfTree={levelsOfTree}
                             level={0}
                             beginInsert={beginInsert}

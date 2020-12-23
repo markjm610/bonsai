@@ -200,3 +200,51 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 16px;
   width: 10vw;
 }
+
+.edit-node-input-0 {
+  background-color: whitesmoke;
+  height: 48px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border: 2px solid rgb(39, 39, 39);
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+}
+
+.edit-node-input-1 {
+  background-color: yellow;
+  height: 48px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border:  2px solid rgb(39, 39, 39);
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+}
+
+.edit-node-input-2 {
+  background-color: orange;
+  height: 48px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border:  2px solid rgb(39, 39, 39);
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+}
+
+.edit-node-input-3 {
+   background-color: rgb(255, 69, 0);
+  height: 48px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border:  2px solid rgb(39, 39, 39);
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+}
