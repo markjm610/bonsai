@@ -265,7 +265,7 @@ const Leaf: React.FC<Props> = ({
     const handleClick = (e: any) => {
         e.stopPropagation()
 
-        setEdit(true)
+        // setEdit(true)
     }
 
     const handleInputChange = (e: any) => {
@@ -274,6 +274,7 @@ const Leaf: React.FC<Props> = ({
         } else if (decimalError && e.target.value) {
             setDecimalError(false)
         }
+
 
         // if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
         //     setNumberError(true)
@@ -320,7 +321,9 @@ const Leaf: React.FC<Props> = ({
             }
         }
 
-
+        if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
+            setNumberError(true)
+        }
 
 
         setEditValue(e.target.value)
@@ -345,9 +348,6 @@ const Leaf: React.FC<Props> = ({
                     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
                 })
             }
-
-            // tell user what the problem is
-
 
         }
 
@@ -387,11 +387,11 @@ const Leaf: React.FC<Props> = ({
                                     type='number'
                                     value={editValue}
                                     onChange={handleInputChange}
-                                    ref={ref}
+                                // ref={ref}
                                 />
                                 :
                                 node.value}
-                            {/* {(decimalError || numberError) && <div className='error-message'>Must be whole number between 0 and 100</div>} */}
+                            {(decimalError || numberError) && <div className='edit-error-message'>Invalid value</div>}
                             {node.leftId &&
                                 <Leaf
                                     id={node.leftId}
