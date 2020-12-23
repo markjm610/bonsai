@@ -20,6 +20,7 @@ type Props = {
     setBeginInsert: Function;
     numberOfNodes: number;
     loadingAnimationOn: boolean;
+    allowInteraction: boolean;
     setAllowInteraction: Function;
     isLeftChild: boolean | null;
     parentId: string | null;
@@ -37,6 +38,7 @@ const Leaf: React.FC<Props> = ({
     setBeginInsert,
     numberOfNodes,
     loadingAnimationOn,
+    allowInteraction,
     setAllowInteraction,
     isLeftChild,
     parentId,
@@ -266,7 +268,7 @@ const Leaf: React.FC<Props> = ({
                     style={(isDragging || hideDeletedNodes.has(id)) ? {
                         opacity: 0,
                     } : style}
-                    ref={level !== 0 ? drag : null}
+                    ref={level === 0 || showPreorder || showInorder || showPostorder || !allowInteraction ? null : drag}
                     onMouseEnter={handleMouseEnter}
                 >
                     <CustomDragLayer
@@ -290,6 +292,7 @@ const Leaf: React.FC<Props> = ({
                                     setBeginInsert={setBeginInsert}
                                     numberOfNodes={numberOfNodes}
                                     loadingAnimationOn={loadingAnimationOn}
+                                    allowInteraction={allowInteraction}
                                     setAllowInteraction={setAllowInteraction}
                                     isLeftChild={true}
                                     parentId={id}
@@ -311,6 +314,7 @@ const Leaf: React.FC<Props> = ({
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
                                 loadingAnimationOn={loadingAnimationOn}
+                                allowInteraction={allowInteraction}
                                 setAllowInteraction={setAllowInteraction}
                                 isLeftChild={true}
                                 parentId={id}
@@ -329,6 +333,7 @@ const Leaf: React.FC<Props> = ({
                                     setBeginInsert={setBeginInsert}
                                     numberOfNodes={numberOfNodes}
                                     loadingAnimationOn={loadingAnimationOn}
+                                    allowInteraction={allowInteraction}
                                     setAllowInteraction={setAllowInteraction}
                                     isLeftChild={false}
                                     parentId={id}
@@ -350,6 +355,7 @@ const Leaf: React.FC<Props> = ({
                                 setBeginInsert={setBeginInsert}
                                 numberOfNodes={numberOfNodes}
                                 loadingAnimationOn={loadingAnimationOn}
+                                allowInteraction={allowInteraction}
                                 setAllowInteraction={setAllowInteraction}
                                 isLeftChild={false}
                                 parentId={id}
