@@ -26,7 +26,7 @@ function getItemStyles(initialOffset, currentOffset) {
     };
 }
 
-const CustomDragLayer = () => {
+const CustomDragLayer = ({ id, node, position }) => {
     const { itemType, isDragging, item, initialOffset, currentOffset, } = useDragLayer((monitor) => ({
         item: monitor.getItem(),
         itemType: monitor.getItemType(),
@@ -37,7 +37,7 @@ const CustomDragLayer = () => {
     function renderItem() {
         switch (itemType) {
             case 'node':
-                return <NodeDragPreview />
+                return <NodeDragPreview id={id} node={node} position={position} />
             default:
                 return null;
         }

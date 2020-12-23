@@ -59,7 +59,11 @@ const Leaf: React.FC<Props> = ({
         showInorder,
         inorder,
         showPostorder,
-        postorder
+        postorder,
+        nodeToDrag,
+        setNodeToDrag,
+        levelToDrag,
+        setLevelToDrag
     } = useContext(Context)
 
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
@@ -246,29 +250,59 @@ const Leaf: React.FC<Props> = ({
         // })
     }
 
-
+    const handleMouseEnter = () => {
+        setNodeToDrag({ ...node, level: level })
+    }
 
     if (node && node.value !== -1) {
 
+
         return (
+            <>
+                <animated.div
+                    id={id}
+                    className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
+                    style={!isDragging ? style : {
+                        opacity: 0,
+                    }}
+                    ref={drag}
+                    onMouseEnter={handleMouseEnter}
+                >
+                    <CustomDragLayer
+                        id={id}
+                        node={nodeToDrag}
+                        position={{ x: 0, y: 0 }}
+                    />
+                    {node &&
+                        <>
+                            {node.value}
 
-            <animated.div
-                id={id}
-                className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                style={!isDragging ? style : {
-                    opacity: 0,
-                }}
-                ref={drag}
-            >
-                {node &&
-                    <>
-                        {node.value}
-
-                        {node.leftId &&
-                            <Leaf
-                                id={node.leftId}
+                            {node.leftId &&
+                                <Leaf
+                                    id={node.leftId}
+                                    position={{ x: -25 + level * 10, y: 10 }}
+                                    node={tree[node.leftId]}
+                                    tree={tree}
+                                    levelsOfTree={levelsOfTree}
+                                    level={level + 1}
+                                    beginInsert={beginInsert}
+                                    setBeginInsert={setBeginInsert}
+                                    numberOfNodes={numberOfNodes}
+                                    loadingAnimationOn={loadingAnimationOn}
+                                    setAllowInteraction={setAllowInteraction}
+                                    isLeftChild={true}
+                                    parentId={id}
+                                    treeId={treeId}
+                                />}
+                            {(!node.leftId && level <= 2) && <Leaf
+                                id={`left child of ${node.id}`}
                                 position={{ x: -25 + level * 10, y: 10 }}
-                                node={tree[node.leftId]}
+                                node={{
+                                    id: `left child of ${node.id}`,
+                                    value: -1,
+                                    leftId: null,
+                                    rightId: null
+                                }}
                                 tree={tree}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
@@ -280,34 +314,34 @@ const Leaf: React.FC<Props> = ({
                                 isLeftChild={true}
                                 parentId={id}
                                 treeId={treeId}
-                            />}
-                        {(!node.leftId && level <= 2) && <Leaf
-                            id={`left child of ${node.id}`}
-                            position={{ x: -25 + level * 10, y: 10 }}
-                            node={{
-                                id: `left child of ${node.id}`,
-                                value: -1,
-                                leftId: null,
-                                rightId: null
-                            }}
-                            tree={tree}
-                            levelsOfTree={levelsOfTree}
-                            level={level + 1}
-                            beginInsert={beginInsert}
-                            setBeginInsert={setBeginInsert}
-                            numberOfNodes={numberOfNodes}
-                            loadingAnimationOn={loadingAnimationOn}
-                            setAllowInteraction={setAllowInteraction}
-                            isLeftChild={true}
-                            parentId={id}
-                            treeId={treeId}
-                        />
-                        }
-                        {node.rightId &&
-                            <Leaf
-                                id={node.rightId}
+                            />
+                            }
+                            {node.rightId &&
+                                <Leaf
+                                    id={node.rightId}
+                                    position={{ x: 25 - level * 10, y: 10 }}
+                                    node={tree[node.rightId]}
+                                    tree={tree}
+                                    levelsOfTree={levelsOfTree}
+                                    level={level + 1}
+                                    beginInsert={beginInsert}
+                                    setBeginInsert={setBeginInsert}
+                                    numberOfNodes={numberOfNodes}
+                                    loadingAnimationOn={loadingAnimationOn}
+                                    setAllowInteraction={setAllowInteraction}
+                                    isLeftChild={false}
+                                    parentId={id}
+                                    treeId={treeId}
+                                />}
+                            {(!node.rightId && level <= 2) && <Leaf
+                                id={`right child of ${node.id}`}
                                 position={{ x: 25 - level * 10, y: 10 }}
-                                node={tree[node.rightId]}
+                                node={{
+                                    id: `right child of ${node.id}`,
+                                    value: -1,
+                                    leftId: null,
+                                    rightId: null
+                                }}
                                 tree={tree}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
@@ -319,33 +353,18 @@ const Leaf: React.FC<Props> = ({
                                 isLeftChild={false}
                                 parentId={id}
                                 treeId={treeId}
-                            />}
-                        {(!node.rightId && level <= 2) && <Leaf
-                            id={`right child of ${node.id}`}
-                            position={{ x: 25 - level * 10, y: 10 }}
-                            node={{
-                                id: `right child of ${node.id}`,
-                                value: -1,
-                                leftId: null,
-                                rightId: null
-                            }}
-                            tree={tree}
-                            levelsOfTree={levelsOfTree}
-                            level={level + 1}
-                            beginInsert={beginInsert}
-                            setBeginInsert={setBeginInsert}
-                            numberOfNodes={numberOfNodes}
-                            loadingAnimationOn={loadingAnimationOn}
-                            setAllowInteraction={setAllowInteraction}
-                            isLeftChild={false}
-                            parentId={id}
-                            treeId={treeId}
-                        />
-                        }
+                            />
+                            }
 
-                    </>
-                }
-            </animated.div >
+                        </>
+                    }
+                </animated.div >
+                {/* <CustomDragLayer
+                    node={node}
+                    level={level}
+                    position={{ x: 0, y: 0 }}
+                /> */}
+            </>
         )
     } else {
         return (

@@ -105,7 +105,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             parentId={null}
                             treeId={treeId}
                         />
-                        <CustomDragLayer />
+                        {/* <CustomDragLayer /> */}
                     </div>
                 </>
             }
