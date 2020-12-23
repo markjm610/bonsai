@@ -91,7 +91,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                     <div className='leaves-container'>
                         <Leaf
                             id={treeNodesData.tree.root[0].id}
-                            node={treeNodesData.tree.root[0]}
+                            node={treeState[rootId]}
                             position={{ x: 48, y: 30 }}
                             levelsOfTree={levelsOfTree}
                             level={0}

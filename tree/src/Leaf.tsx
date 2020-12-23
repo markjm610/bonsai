@@ -283,11 +283,72 @@ const Leaf: React.FC<Props> = ({
     }
 
     const ref = useOnclickOutside(() => {
-
-        const treeCopy = { ...treeState }
-
         if (edit) {
-            setEdit(false);
+
+            const newValue = parseInt(editValue)
+            const leftChildValue = node.leftId ? treeState[node.leftId].value : -Infinity
+            const rightChildValue = node.rightId ? treeState[node.rightId].value : Infinity
+
+            if (!parentId) {
+                if (newValue >= leftChildValue && newValue < rightChildValue) {
+                    const treeCopy = { ...treeState }
+
+                    treeCopy[id].value = editValue
+
+                    setTreeState(treeCopy)
+
+
+                    setEdit(false);
+                }
+            } else if (isLeftChild) {
+                if (newValue <= treeState[parentId].value) {
+                    if (newValue >= leftChildValue && newValue < rightChildValue) {
+                        const treeCopy = { ...treeState }
+
+                        treeCopy[id].value = editValue
+
+                        setTreeState(treeCopy)
+
+
+                        setEdit(false);
+                    }
+                }
+            } else {
+                if (newValue > treeState[parentId].value) {
+                    if (newValue >= leftChildValue && newValue < rightChildValue) {
+                        const treeCopy = { ...treeState }
+
+                        treeCopy[id].value = editValue
+
+                        setTreeState(treeCopy)
+
+                        setEdit(false);
+                    }
+                }
+            }
+
+            // tell user what the problem is
+
+            // if (isLeftChild) {
+            //     if (parentId && newValue <= treeState[parentId].value) {
+            //         if (node.leftId) {
+            //             if (newValue >= treeState[node.leftId].value) {
+            //                 if (node.rightId) {
+            //                     if (newValue < treeState[node.rightId].value) {
+
+            //                     }
+            //                 }
+
+            //             }
+            //         }
+
+            //     }
+            // } else {
+            //     if (parentId && newValue > treeState[parentId].value) {
+
+            //     }
+            // }
+
         }
 
     });
