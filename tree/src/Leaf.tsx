@@ -265,7 +265,7 @@ const Leaf: React.FC<Props> = ({
                     style={!isDragging ? style : {
                         opacity: 0,
                     }}
-                    ref={drag}
+                    ref={level !== 0 ? drag : null}
                     onMouseEnter={handleMouseEnter}
                 >
                     <CustomDragLayer
