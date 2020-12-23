@@ -275,11 +275,54 @@ const Leaf: React.FC<Props> = ({
             setDecimalError(false)
         }
 
-        if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
-            setNumberError(true)
-        } else if (numberError && e.target.value) {
-            setNumberError(false)
+        // if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
+        //     setNumberError(true)
+        // } else if (numberError && e.target.value) {
+        //     setNumberError(false)
+        // }
+
+        const newValue = parseInt(e.target.value)
+        const leftChildValue = node.leftId ? treeState[node.leftId].value : -Infinity
+        const rightChildValue = node.rightId ? treeState[node.rightId].value : Infinity
+
+        if (!parentId) {
+            if (newValue >= leftChildValue && newValue < rightChildValue) {
+                setNumberError(false)
+            } else {
+
+                setNumberError(true)
+            }
+        } else if (isLeftChild) {
+            if (newValue <= treeState[parentId].value) {
+                if (newValue >= leftChildValue && newValue < rightChildValue) {
+                    setNumberError(false)
+
+                } else {
+
+                    setNumberError(true)
+                }
+            } else {
+
+                setNumberError(true)
+            }
+        } else {
+            if (newValue > treeState[parentId].value) {
+                if (newValue >= leftChildValue && newValue < rightChildValue) {
+                    setNumberError(false)
+
+                } else {
+
+                    setNumberError(true)
+                }
+            } else {
+
+                setNumberError(true)
+            }
         }
+
+
+
+
         setEditValue(e.target.value)
     }
 
@@ -287,80 +330,24 @@ const Leaf: React.FC<Props> = ({
         if (edit) {
 
             const newValue = parseInt(editValue)
-            const leftChildValue = node.leftId ? treeState[node.leftId].value : -Infinity
-            const rightChildValue = node.rightId ? treeState[node.rightId].value : Infinity
 
-            if (!parentId) {
-                if (newValue >= leftChildValue && newValue < rightChildValue) {
-                    const treeCopy = { ...treeState }
+            if (!numberError && !decimalError) {
+                const treeCopy = { ...treeState }
 
-                    treeCopy[id].value = newValue
+                treeCopy[id].value = newValue
 
-                    setTreeState(treeCopy)
+                setTreeState(treeCopy)
 
-                    setEdit(false);
+                setEdit(false);
 
-                    editNode({
-                        variables: { id, newValue: newValue },
-                        refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-                    })
-                }
-            } else if (isLeftChild) {
-                if (newValue <= treeState[parentId].value) {
-                    if (newValue >= leftChildValue && newValue < rightChildValue) {
-                        const treeCopy = { ...treeState }
-
-                        treeCopy[id].value = newValue
-
-                        setTreeState(treeCopy)
-
-                        setEdit(false);
-                        editNode({
-                            variables: { id, newValue: newValue },
-                            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-                        })
-                    }
-                }
-            } else {
-                if (newValue > treeState[parentId].value) {
-                    if (newValue >= leftChildValue && newValue < rightChildValue) {
-                        const treeCopy = { ...treeState }
-
-                        treeCopy[id].value = newValue
-
-                        setTreeState(treeCopy)
-
-                        setEdit(false);
-                        editNode({
-                            variables: { id, newValue: newValue },
-                            refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-                        })
-                    }
-                }
+                editNode({
+                    variables: { id, newValue: newValue },
+                    refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+                })
             }
 
             // tell user what the problem is
 
-
-            // if (isLeftChild) {
-            //     if (parentId && newValue <= treeState[parentId].value) {
-            //         if (node.leftId) {
-            //             if (newValue >= treeState[node.leftId].value) {
-            //                 if (node.rightId) {
-            //                     if (newValue < treeState[node.rightId].value) {
-
-            //                     }
-            //                 }
-
-            //             }
-            //         }
-
-            //     }
-            // } else {
-            //     if (parentId && newValue > treeState[parentId].value) {
-
-            //     }
-            // }
 
         }
 
