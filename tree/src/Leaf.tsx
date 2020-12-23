@@ -63,7 +63,8 @@ const Leaf: React.FC<Props> = ({
         nodeToDrag,
         setNodeToDrag,
         levelToDrag,
-        setLevelToDrag
+        setLevelToDrag,
+        hideDeletedNodes
     } = useContext(Context)
 
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
@@ -262,9 +263,9 @@ const Leaf: React.FC<Props> = ({
                 <animated.div
                     id={id}
                     className={numberOfNodes !== 15 ? `leaf-${level}` : 'leaf-complete'}
-                    style={!isDragging ? style : {
+                    style={(isDragging || hideDeletedNodes.has(id)) ? {
                         opacity: 0,
-                    }}
+                    } : style}
                     ref={level !== 0 ? drag : null}
                     onMouseEnter={handleMouseEnter}
                 >

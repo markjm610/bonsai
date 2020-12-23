@@ -16,13 +16,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
-      <ApolloProvider client={client}>
-        <ContextWrapper />
-      </ApolloProvider>
-    </DndProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <DndProvider backend={HTML5Backend}>
+    <ApolloProvider client={client}>
+      <ContextWrapper />
+    </ApolloProvider>
+  </DndProvider>
+  // </React.StrictMode> 
   ,
   document.getElementById('root')
 );

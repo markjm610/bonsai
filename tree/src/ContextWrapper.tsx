@@ -18,6 +18,7 @@ const ContextWrapper: React.FC = () => {
     const [startFromRoot, setStartFromRoot] = useState(false)
     const [readyToClearTree, setReadyToClearTree] = useState(false)
     const [nodeToDrag, setNodeToDrag] = useState({})
+    const [hideDeletedNodes, setHideDeletedNodes] = useState(new Set())
 
     return (
         <Context.Provider value={{
@@ -35,6 +36,7 @@ const ContextWrapper: React.FC = () => {
             showPostorder, setShowPostorder,
             postorder, setPostorder,
             nodeToDrag, setNodeToDrag,
+            hideDeletedNodes, setHideDeletedNodes
         }}>
             <App />
         </Context.Provider>
