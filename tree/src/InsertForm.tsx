@@ -52,6 +52,7 @@ const InsertForm: React.FC<Props> = ({
 
         // setAllowInteraction(false)
         // console.log(allowInteraction)
+
         if (!validMove) {
             setValidMove(true)
         }
@@ -60,8 +61,8 @@ const InsertForm: React.FC<Props> = ({
             setInputFade(false)
         }
 
-        setValue(e.currentTarget.value)
-        setFakeNodeValue(e.currentTarget.value)
+        setValue(parseInt(e.currentTarget.value).toString())
+        setFakeNodeValue(parseInt(e.currentTarget.value).toString())
 
         if (e.currentTarget.value.includes('.')) {
             setDecimalError(true)
