@@ -5,8 +5,6 @@ Fill tree with sample tree with animation
 Some kind of manipulation of the tree:
 Make tree larger or smaller
 
-Edit numbers
-
 Get rid of flickering green thing on drag
 
 Trim leading zeroes on input
@@ -14,3 +12,7 @@ Trim leading zeroes on input
 Maybe put border on focused input and fake node
 
 Remove editing and drag and drop when tree is complete
+
+Tell user about editing
+
+Tree is full not counting nodes correctly

@@ -55,7 +55,7 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
             setTreeState(treeNodesObj)
 
             setRootId(treeNodesData.tree.root[0].id)
-
+            console.log(treeNodesData)
             // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.tree.nodes.length)
         }
@@ -105,7 +105,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             parentId={null}
                             treeId={treeId}
                         />
-                        {/* <CustomDragLayer /> */}
                     </div>
                 </>
             }

@@ -9,6 +9,9 @@ import CustomDragLayer from './CustomDragLayer'
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import useOnclickOutside from "react-cool-onclickoutside";
 import { testNewValue } from './utils'
+import { Tooltip } from '@material-ui/core'
+import { useGesture } from 'react-with-gesture'
+
 
 type Props = {
     id: string;
@@ -77,6 +80,9 @@ const Leaf: React.FC<Props> = ({
     // const [clearTree, { data }] = useMutation(CLEAR_TREE)
     // const [deleteNode, { data }] = useMutation(DELETE_NODE)
     const [editNode, { data }] = useMutation(EDIT_NODE)
+
+    // const [bind, { delta, down }] = useGesture()
+
     const [{ isDragging }, drag, preview] = useDrag({
         item: {
             type: 'node',
@@ -112,7 +118,7 @@ const Leaf: React.FC<Props> = ({
                 }
             }
         }
-
+        // console.log(delta[0])
         return {
             top: `${position.y}vh`,
             left: `${position.x}vw`,
@@ -421,7 +427,7 @@ const Leaf: React.FC<Props> = ({
                                     id: `right child of ${node.id}`,
                                     value: -1,
                                     leftId: null,
-                                    rightId: null
+                                    rightId: null,
                                 }}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
@@ -439,12 +445,7 @@ const Leaf: React.FC<Props> = ({
 
                         </>
                     }
-                </animated.div >
-                {/* <CustomDragLayer
-                    node={node}
-                    level={level}
-                    position={{ x: 0, y: 0 }}
-                /> */}
+                </animated.div>
             </>
         )
     } else {
@@ -453,19 +454,6 @@ const Leaf: React.FC<Props> = ({
                 id={id}
                 className='leaf-0'
                 style={
-                    //     // !flattened
-                    //     // ?
-                    //     // {
-                    //     //     top: `${position.y}vh`,
-                    //     //     left: `${position.x}vw`,
-                    //     //     opacity: 0
-                    //     // }
-                    //     // :
-                    //     // {
-                    //     //     top: `0vh`,
-                    //     //     left: `${position.x}vw`,
-                    //     //     opacity: 0
-                    //     // }
                     determinePosition()
                 }
             >

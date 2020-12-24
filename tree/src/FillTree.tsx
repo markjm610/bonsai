@@ -42,16 +42,7 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
         setStartFromRoot(true)
     }
 
-    // function flatten(): any {
-    //     // console.log(allowInteraction)
-    //     if (!allowInteraction) {
-    //         return
-    //     }
-    //     setFlattened(!flattened)
-    //     if (test) {
-    //         setTest(false)
-    //     }
-    // }
+
 
     function preorderClick(): any {
         if (!allowInteraction || beginInsert) {

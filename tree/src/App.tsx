@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 // import ApolloClient from 'apollo-boost'
 // import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 // import apolloUri from './config'
@@ -6,12 +6,8 @@ import Tree from './Tree';
 import FillTree from './FillTree';
 import { useMutation } from '@apollo/client'
 import { CREATE_TREE } from './queries'
-
-// const client = new ApolloClient({
-//   uri: apolloUri,
-//   cache: new InMemoryCache()
-// })
-
+import { useGesture } from 'react-with-gesture'
+import Context from './Context'
 
 function App() {
 
@@ -22,6 +18,7 @@ function App() {
   const [beginInsert, setBeginInsert] = useState(false)
 
   const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
+
 
   useEffect(() => {
 
@@ -46,6 +43,8 @@ function App() {
       setTreeId(newTree.createTree.id)
     }
   }, [newTree])
+
+
 
   return (
     <div className="App">

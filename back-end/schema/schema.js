@@ -146,8 +146,9 @@ const Mutation = new GraphQLObjectType({
                 const queue = [args.id]
 
                 while (queue.length) {
+
                     const idToDelete = queue.shift()
-                    const node = await TreeNode.deleteOne({ id: idToDelete })
+                    const node = await TreeNode.findByIdAndDelete(idToDelete)
 
                     if (node.leftId) {
                         queue.push(node.leftId)
