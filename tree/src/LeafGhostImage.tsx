@@ -11,13 +11,13 @@ type Props = {
 
 const LeafGhostImage: React.FC<Props> = ({ id, node, level, position }) => {
 
-    const { treeState } = useContext(Context)
+    const { treeState, numberOfNodes } = useContext(Context)
     // console.log(nodeToDrag)
     return (
         <div style={{
             top: `${position.y}vh`,
             left: `${position.x}vw`,
-        }} className={`leaf-${level}`}>
+        }} className={numberOfNodes === 15 ? 'leaf-complete' : `leaf-${level}`}>
             {node.value}
             {node.leftId && <LeafGhostImage id={node.leftId} node={treeState[node.leftId]} level={level + 1} position={{ x: -25 + level * 10, y: 10 }} />}
             {node.rightId && <LeafGhostImage id={node.rightId} node={treeState[node.rightId]} level={level + 1} position={{ x: 25 - level * 10, y: 10 }} />}

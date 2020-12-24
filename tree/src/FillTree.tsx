@@ -6,13 +6,12 @@ import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils
 import TrashCan from './TrashCan'
 
 type Props = {
-    numberOfNodes: number;
     treeId: string;
     allowInteraction: boolean;
     beginInsert: boolean;
 }
 
-const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, beginInsert }) => {
+const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) => {
     const {
         rootId,
         treeState,
@@ -27,7 +26,8 @@ const FillTree: React.FC<Props> = ({ numberOfNodes, treeId, allowInteraction, be
         setInorder,
         showPostorder,
         setShowPostorder,
-        setPostorder
+        setPostorder,
+        numberOfNodes
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 

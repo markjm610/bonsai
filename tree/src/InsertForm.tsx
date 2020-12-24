@@ -9,7 +9,6 @@ import Context from './Context'
 type Props = {
     tree: TreeObject;
     root: TreeNode;
-    numberOfNodes: number;
     traversedNodeIds: string[];
     setTraversedNodeIds: Function;
     beginInsert: boolean;
@@ -24,7 +23,6 @@ const InsertForm: React.FC<Props> = ({
     treeId,
     tree,
     root,
-    numberOfNodes,
     traversedNodeIds,
     setTraversedNodeIds,
     beginInsert,
@@ -34,7 +32,7 @@ const InsertForm: React.FC<Props> = ({
     setAllowInteraction
 }) => {
 
-    const { showPreorder, showInorder, showPostorder } = useContext(Context)
+    const { showPreorder, showInorder, showPostorder, numberOfNodes } = useContext(Context)
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)

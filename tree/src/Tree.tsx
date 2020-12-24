@@ -9,8 +9,6 @@ import Context from './Context'
 import CustomDragLayer from './CustomDragLayer'
 
 type Props = {
-    numberOfNodes: number;
-    setNumberOfNodes: Function;
     treeId: string;
     allowInteraction: boolean;
     setAllowInteraction: Function;
@@ -18,9 +16,9 @@ type Props = {
     setBeginInsert: Function;
 }
 
-const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowInteraction, setAllowInteraction, beginInsert, setBeginInsert }) => {
+const Tree: React.FC<Props> = ({ treeId, allowInteraction, setAllowInteraction, beginInsert, setBeginInsert }) => {
 
-    const { rootId, setRootId, treeState, setTreeState } = useContext(Context)
+    const { rootId, setRootId, treeState, setTreeState, setNumberOfNodes } = useContext(Context)
 
     const { data: treeNodesData } = useQuery(GET_TREE, {
         variables: {
@@ -77,7 +75,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                         <InsertForm
                             root={treeNodesData.tree.root[0]}
                             tree={treeState}
-                            numberOfNodes={numberOfNodes}
                             traversedNodeIds={traversedNodeIds}
                             setTraversedNodeIds={setTraversedNodeIds}
                             beginInsert={beginInsert}
@@ -97,7 +94,6 @@ const Tree: React.FC<Props> = ({ numberOfNodes, setNumberOfNodes, treeId, allowI
                             level={0}
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
-                            numberOfNodes={numberOfNodes}
                             loadingAnimationOn={loadingAnimationOn}
                             allowInteraction={allowInteraction}
                             setAllowInteraction={setAllowInteraction}

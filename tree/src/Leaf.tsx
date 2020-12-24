@@ -9,7 +9,6 @@ import CustomDragLayer from './CustomDragLayer'
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import useOnclickOutside from "react-cool-onclickoutside";
 import { testNewValue } from './utils'
-import { Tooltip } from '@material-ui/core'
 import { useGesture } from 'react-with-gesture'
 
 
@@ -21,7 +20,6 @@ type Props = {
     level: number;
     beginInsert: boolean;
     setBeginInsert: Function;
-    numberOfNodes: number;
     loadingAnimationOn: boolean;
     allowInteraction: boolean;
     setAllowInteraction: Function;
@@ -38,7 +36,6 @@ const Leaf: React.FC<Props> = ({
     level,
     beginInsert,
     setBeginInsert,
-    numberOfNodes,
     loadingAnimationOn,
     allowInteraction,
     setAllowInteraction,
@@ -70,7 +67,8 @@ const Leaf: React.FC<Props> = ({
         levelToDrag,
         setLevelToDrag,
         hideDeletedNodes,
-        rootId
+        rootId,
+        numberOfNodes
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -272,6 +270,10 @@ const Leaf: React.FC<Props> = ({
     const handleClick = (e: any) => {
         e.stopPropagation()
 
+        if (numberOfNodes === 15) {
+            return
+        }
+
         setEdit(true)
     }
 
@@ -373,7 +375,6 @@ const Leaf: React.FC<Props> = ({
                                     level={level + 1}
                                     beginInsert={beginInsert}
                                     setBeginInsert={setBeginInsert}
-                                    numberOfNodes={numberOfNodes}
                                     loadingAnimationOn={loadingAnimationOn}
                                     allowInteraction={allowInteraction}
                                     setAllowInteraction={setAllowInteraction}
@@ -394,7 +395,6 @@ const Leaf: React.FC<Props> = ({
                                 level={level + 1}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
                                 loadingAnimationOn={loadingAnimationOn}
                                 allowInteraction={allowInteraction}
                                 setAllowInteraction={setAllowInteraction}
@@ -412,7 +412,6 @@ const Leaf: React.FC<Props> = ({
                                     level={level + 1}
                                     beginInsert={beginInsert}
                                     setBeginInsert={setBeginInsert}
-                                    numberOfNodes={numberOfNodes}
                                     loadingAnimationOn={loadingAnimationOn}
                                     allowInteraction={allowInteraction}
                                     setAllowInteraction={setAllowInteraction}
@@ -433,7 +432,6 @@ const Leaf: React.FC<Props> = ({
                                 level={level + 1}
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
-                                numberOfNodes={numberOfNodes}
                                 loadingAnimationOn={loadingAnimationOn}
                                 allowInteraction={allowInteraction}
                                 setAllowInteraction={setAllowInteraction}
