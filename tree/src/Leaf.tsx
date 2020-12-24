@@ -8,7 +8,7 @@ import { useDrag } from 'react-dnd';
 import CustomDragLayer from './CustomDragLayer'
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import useOnclickOutside from "react-cool-onclickoutside";
-
+import { testNewValue } from './utils'
 
 type Props = {
     id: string;
@@ -66,7 +66,8 @@ const Leaf: React.FC<Props> = ({
         setNodeToDrag,
         levelToDrag,
         setLevelToDrag,
-        hideDeletedNodes
+        hideDeletedNodes,
+        rootId
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -265,7 +266,7 @@ const Leaf: React.FC<Props> = ({
     const handleClick = (e: any) => {
         e.stopPropagation()
 
-        // setEdit(true)
+        setEdit(true)
     }
 
     const handleInputChange = (e: any) => {
@@ -275,56 +276,21 @@ const Leaf: React.FC<Props> = ({
             setDecimalError(false)
         }
 
-
-        // if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
-        //     setNumberError(true)
-        // } else if (numberError && e.target.value) {
-        //     setNumberError(false)
-        // }
-
         const newValue = parseInt(e.target.value)
         const leftChildValue = node.leftId ? treeState[node.leftId].value : -Infinity
         const rightChildValue = node.rightId ? treeState[node.rightId].value : Infinity
 
-        if (!parentId) {
-            if (newValue >= leftChildValue && newValue < rightChildValue) {
-                setNumberError(false)
-            } else {
-
-                setNumberError(true)
-            }
-        } else if (isLeftChild) {
-            if (newValue <= treeState[parentId].value) {
-                if (newValue >= leftChildValue && newValue < rightChildValue) {
-                    setNumberError(false)
-
-                } else {
-
-                    setNumberError(true)
-                }
-            } else {
-
-                setNumberError(true)
-            }
-        } else {
-            if (newValue > treeState[parentId].value) {
-                if (newValue >= leftChildValue && newValue < rightChildValue) {
-                    setNumberError(false)
-
-                } else {
-
-                    setNumberError(true)
-                }
-            } else {
-
-                setNumberError(true)
-            }
-        }
-
         if (parseInt(e.target.value) > 100 || parseInt(e.target.value) < 0) {
             setNumberError(true)
+        } else if (!(newValue >= leftChildValue && newValue < rightChildValue)) {
+            setNumberError(true)
+        } else if (!testNewValue(treeState, newValue, id, rootId)) {
+            setNumberError(true)
+        } else {
+            if (numberError) {
+                setNumberError(false)
+            }
         }
-
 
         setEditValue(e.target.value)
     }
@@ -387,7 +353,7 @@ const Leaf: React.FC<Props> = ({
                                     type='number'
                                     value={editValue}
                                     onChange={handleInputChange}
-                                // ref={ref}
+                                    ref={ref}
                                 />
                                 :
                                 node.value}

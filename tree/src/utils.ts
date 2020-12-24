@@ -82,3 +82,51 @@ export function postorderTraversal(tree: TreeObject, node: TreeNode, positions: 
 
     return positions
 }
+
+export function inorderCheck(tree: TreeObject, rootId: string): boolean {
+
+    // Need to check for equal to
+
+    // Maybe try inserting it and seeing if the IDs match instead of inorder?
+
+    const inorderArray: number[] = []
+    function buildArray(node: TreeNode) {
+        if (node.leftId) {
+            buildArray(tree[node.leftId])
+        }
+        inorderArray.push(node.value)
+        if (node.rightId) {
+            buildArray(tree[node.rightId])
+        }
+
+    }
+    buildArray(tree[rootId])
+    for (let i = 0; i < inorderArray.length; i++) {
+        if (inorderArray[i + 1] && inorderArray[i + 1] < inorderArray[i]) {
+            return false
+        }
+    }
+    return true
+}
+
+export function testNewValue(tree: TreeObject, newValue: number, id: string, rootId: string): boolean {
+    // insert new value on current tree, see if it ends up in the same spot as current value
+
+    function testInsert(node: TreeNode): boolean {
+        if (node.id === id) {
+            return true
+        }
+
+        if (node.leftId && newValue <= node.value) {
+            return testInsert(tree[node.leftId])
+        }
+
+        if (node.rightId && newValue > node.value) {
+            return testInsert(tree[node.rightId])
+        }
+
+        return false
+    }
+
+    return testInsert(tree[rootId])
+}
