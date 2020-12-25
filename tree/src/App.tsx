@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
-// import ApolloClient from 'apollo-boost'
-// import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-// import apolloUri from './config'
 import Tree from './Tree';
 import FillTree from './FillTree';
 import { useMutation } from '@apollo/client'
 import { CREATE_TREE } from './queries'
-import { useGesture } from 'react-with-gesture'
 import Context from './Context'
 
 function App() {
-
+  const { setNodeOffset } = useContext(Context)
 
   const [treeId, setTreeId] = useState('')
   const [allowInteraction, setAllowInteraction] = useState(false)

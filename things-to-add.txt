@@ -7,8 +7,6 @@ Make tree larger or smaller
 
 Get rid of flickering green thing on drag
 
-Trim leading zeroes on input
-
 Maybe put border on focused input and fake node
 
 Tell user about editing

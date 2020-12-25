@@ -4,6 +4,7 @@ import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
 import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils'
 import TrashCan from './TrashCan'
+import ControlArea from './ControlArea'
 
 type Props = {
     treeId: string;
@@ -129,6 +130,7 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         <div className='trash-can-container'>
             <TrashCan />
         </div>
+        <ControlArea />
     </>
     )
 }

@@ -68,7 +68,8 @@ const Leaf: React.FC<Props> = ({
         setLevelToDrag,
         hideDeletedNodes,
         rootId,
-        numberOfNodes
+        numberOfNodes,
+        nodeOffset
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -370,6 +371,7 @@ const Leaf: React.FC<Props> = ({
                                 <Leaf
                                     id={node.leftId}
                                     position={{ x: -25 + level * 10, y: 10 }}
+                                    // position={{ x: -nodeOffset.x + level * 10, y: 10 }}
                                     node={treeState[node.leftId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
