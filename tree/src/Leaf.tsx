@@ -370,8 +370,8 @@ const Leaf: React.FC<Props> = ({
                             {node.leftId &&
                                 <Leaf
                                     id={node.leftId}
-                                    position={{ x: -25 + level * 10, y: 10 }}
-                                    // position={{ x: -nodeOffset.x + level * 10, y: 10 }}
+                                    // position={{ x: -25 + level * 10, y: 10 }}
+                                    position={{ x: Math.abs(nodeOffset.x) - 25 + level * 10, y: 10 + nodeOffset.y }}
                                     node={treeState[node.leftId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
@@ -386,7 +386,7 @@ const Leaf: React.FC<Props> = ({
                                 />}
                             {(!node.leftId && level <= 2) && <Leaf
                                 id={`left child of ${node.id}`}
-                                position={{ x: -25 + level * 10, y: 10 }}
+                                position={{ x: Math.abs(nodeOffset.x) - 25 + level * 10, y: 10 + nodeOffset.y }}
                                 node={{
                                     id: `left child of ${node.id}`,
                                     value: -1,
@@ -408,7 +408,7 @@ const Leaf: React.FC<Props> = ({
                             {node.rightId &&
                                 <Leaf
                                     id={node.rightId}
-                                    position={{ x: 25 - level * 10, y: 10 }}
+                                    position={{ x: -Math.abs(nodeOffset.x) + 25 - level * 10, y: 10 + nodeOffset.y }}
                                     node={treeState[node.rightId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
@@ -423,7 +423,7 @@ const Leaf: React.FC<Props> = ({
                                 />}
                             {(!node.rightId && level <= 2) && <Leaf
                                 id={`right child of ${node.id}`}
-                                position={{ x: 25 - level * 10, y: 10 }}
+                                position={{ x: -Math.abs(nodeOffset.x) + 25 - level * 10, y: 10 + nodeOffset.y }}
                                 node={{
                                     id: `right child of ${node.id}`,
                                     value: -1,

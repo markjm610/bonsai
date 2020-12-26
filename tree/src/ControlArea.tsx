@@ -10,6 +10,7 @@ const ControlArea = () => {
     const [bind, { delta, down }] = useGesture()
 
     useEffect(() => {
+
         setNodeOffset({ x: delta[0], y: delta[1] })
     }, [delta])
 
