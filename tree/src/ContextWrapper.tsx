@@ -19,7 +19,7 @@ const ContextWrapper: React.FC = () => {
     const [readyToClearTree, setReadyToClearTree] = useState(false)
     const [nodeToDrag, setNodeToDrag] = useState({})
     const [hideDeletedNodes, setHideDeletedNodes] = useState(new Set())
-    const [nodeOffset, setNodeOffset] = useState({})
+    const [nodeOffset, setNodeOffset] = useState(0)
     const [numberOfNodes, setNumberOfNodes] = useState(0)
 
     return (

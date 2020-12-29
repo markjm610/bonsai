@@ -53,7 +53,7 @@ const Tree: React.FC<Props> = ({ treeId, allowInteraction, setAllowInteraction, 
             setTreeState(treeNodesObj)
 
             setRootId(treeNodesData.tree.root[0].id)
-            console.log(treeNodesData)
+
             // Need number of nodes to keep track of whether the tree is full or not
             setNumberOfNodes(treeNodesData.tree.nodes.length)
         }

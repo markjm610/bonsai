@@ -7,15 +7,15 @@ const ControlArea = () => {
 
     const { setNodeOffset } = useContext(Context)
 
-    const [bind, { delta, down }] = useGesture()
+    const [bind, { delta }] = useGesture()
 
     useEffect(() => {
-
-        setNodeOffset({ x: delta[0], y: delta[1] })
+        setNodeOffset(delta[1])
     }, [delta])
 
     return (
         <div {...bind()} className='control-area' />
+
     )
 }
 
