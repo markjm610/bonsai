@@ -339,17 +339,15 @@ const Leaf: React.FC<Props> = ({
     function determineOffset() {
 
         if (level === 0) {
-            return 0
+            return 15
         }
         if (level === 1) {
-            return 0
+            return 10
         }
         if (level === 2) {
-            return 0
+            return 3
         }
-        if (level === 3) {
-            return 4
-        }
+        return 0
     }
 
 
@@ -389,8 +387,8 @@ const Leaf: React.FC<Props> = ({
                             {node.leftId &&
                                 <Leaf
                                     id={node.leftId}
-                                    // position={{ x: -25 + level * 10, y: 10 }}
-                                    position={{ x: Math.min(-nodeOffset / 10, 1 * (level + 1)) - 25 + level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
+                                    // position={{ x: -25 + level * 10, y: 10 }} 1 * (level + 1)
+                                    position={{ x: Math.min(-nodeOffset / 10, determineOffset()) - 25 + level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
                                     node={treeState[node.leftId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
@@ -405,7 +403,7 @@ const Leaf: React.FC<Props> = ({
                                 />}
                             {(!node.leftId && level <= 2) && <Leaf
                                 id={`left child of ${node.id}`}
-                                position={{ x: Math.min(-nodeOffset / 10, 1 * (level + 1)) - 25 + level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
+                                position={{ x: Math.min(-nodeOffset / 10, determineOffset()) - 25 + level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
                                 node={{
                                     id: `left child of ${node.id}`,
                                     value: -1,
@@ -427,7 +425,7 @@ const Leaf: React.FC<Props> = ({
                             {node.rightId &&
                                 <Leaf
                                     id={node.rightId}
-                                    position={{ x: Math.max(nodeOffset / 10, -1 * (level + 1)) + 25 - level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
+                                    position={{ x: Math.max(nodeOffset / 10, -determineOffset()) + 25 - level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
                                     node={treeState[node.rightId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
@@ -442,7 +440,7 @@ const Leaf: React.FC<Props> = ({
                                 />}
                             {(!node.rightId && level <= 2) && <Leaf
                                 id={`right child of ${node.id}`}
-                                position={{ x: Math.max(nodeOffset / 10, -1 * (level + 1)) + 25 - level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
+                                position={{ x: Math.max(nodeOffset / 10, -determineOffset()) + 25 - level * 10, y: 10 + Math.max(nodeOffset / 10, -4) }}
                                 node={{
                                     id: `right child of ${node.id}`,
                                     value: -1,
