@@ -13,3 +13,5 @@ Tell user about editing
 
 Gesture needs to be disabled at certain points
 Drag and drop with current offset
+
+Have sidebar or topbar thing and move around screen

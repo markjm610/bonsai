@@ -130,3 +130,17 @@ export function testNewValue(tree: TreeObject, newValue: number, id: string, roo
 
     return testInsert(tree[rootId])
 }
+
+export function determineOffset(level: number): number {
+
+    if (level === 0) {
+        return 15
+    }
+    if (level === 1) {
+        return 10
+    }
+    if (level === 2) {
+        return 3
+    }
+    return 0
+}
