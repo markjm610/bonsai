@@ -12,6 +12,7 @@ Maybe put border on focused input and fake node
 Tell user about editing
 
 Gesture needs to be disabled at certain points
-Drag and drop with current offset
+
+Stop text from being highlighted during the gesture
 
 Have sidebar or topbar thing and move around screen

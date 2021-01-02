@@ -20,7 +20,10 @@ const ContextWrapper: React.FC = () => {
     const [nodeToDrag, setNodeToDrag] = useState({})
     const [hideDeletedNodes, setHideDeletedNodes] = useState(new Set())
     const [nodeOffset, setNodeOffset] = useState(0)
+    const [previousNodeOffset, setPreviousNodeOffset] = useState(0)
     const [numberOfNodes, setNumberOfNodes] = useState(0)
+
+
 
     return (
         <Context.Provider value={{
@@ -40,7 +43,8 @@ const ContextWrapper: React.FC = () => {
             nodeToDrag, setNodeToDrag,
             hideDeletedNodes, setHideDeletedNodes,
             nodeOffset, setNodeOffset,
-            numberOfNodes, setNumberOfNodes
+            numberOfNodes, setNumberOfNodes,
+            previousNodeOffset, setPreviousNodeOffset
         }}>
             <App />
         </Context.Provider>
