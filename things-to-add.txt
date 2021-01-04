@@ -13,8 +13,6 @@ Tell user about editing
 
 Gesture needs to be disabled at certain points
 
-Stop text from being highlighted during the gesture
-
 Make it so tree keeps its node offset 
 
 Have sidebar or topbar thing and move around screen
