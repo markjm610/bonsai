@@ -130,7 +130,7 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         <div className='trash-can-container'>
             <TrashCan />
         </div>
-        <ControlArea />
+        {/* <ControlArea /> */}
     </>
     )
 }
