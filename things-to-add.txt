@@ -11,8 +11,10 @@ Maybe put border on focused input and fake node
 
 Tell user about editing
 
+Have sidebar or topbar thing and move around screen
+
+Gesture should be easier to use
+
 Gesture needs to be disabled at certain points
 
-Make it so tree keeps its node offset 
-
-Have sidebar or topbar thing and move around screen
+Drag and drop is working from a blank child for some reason regardless of level

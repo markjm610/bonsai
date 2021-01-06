@@ -259,6 +259,6 @@ input[type=number]::-webkit-outer-spin-button {
 .control-area {
   position: fixed;
   width: 100%;
-  height: 30vh;
+  height: 75vh;
   bottom: 0vh;
 }
