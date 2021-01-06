@@ -28,7 +28,9 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         showPostorder,
         setShowPostorder,
         setPostorder,
-        numberOfNodes
+        numberOfNodes,
+        setNodeOffset,
+        previousNodeOffset
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
@@ -49,10 +51,19 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         if (!allowInteraction || beginInsert) {
             return
         }
+
+        if (showPreorder) {
+            setNodeOffset(previousNodeOffset)
+        } else {
+            setNodeOffset(0)
+        }
+
         setShowPreorder(!showPreorder)
+
         if (showInorder) {
             setShowInorder(false)
         }
+
         if (showPostorder) {
             setShowPostorder(false)
         }
@@ -62,6 +73,13 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         if (!allowInteraction || beginInsert) {
             return
         }
+
+        if (showInorder) {
+            setNodeOffset(previousNodeOffset)
+        } else {
+            setNodeOffset(0)
+        }
+
         setShowInorder(!showInorder)
         if (showPreorder) {
             setShowPreorder(false)
@@ -74,6 +92,11 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
     function postorderClick(): any {
         if (!allowInteraction || beginInsert) {
             return
+        }
+        if (showPostorder) {
+            setNodeOffset(previousNodeOffset)
+        } else {
+            setNodeOffset(0)
         }
         setShowPostorder(!showPostorder)
         if (showPreorder) {
@@ -130,7 +153,7 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         <div className='trash-can-container'>
             <TrashCan />
         </div>
-        {/* <ControlArea /> */}
+        <ControlArea />
     </>
     )
 }

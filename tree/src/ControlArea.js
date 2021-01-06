@@ -7,7 +7,7 @@ const ControlArea = () => {
 
     const { nodeOffset, setNodeOffset, previousNodeOffset, setPreviousNodeOffset } = useContext(Context)
 
-    const [currentNodeOffset, setCurrentNodeOffset] = useState(0)
+    // const [currentNodeOffset, setCurrentNodeOffset] = useState(0)
     const [up, setUp] = useState(false)
     const [bind, { delta }] = useGesture({
         onUp: () => {
