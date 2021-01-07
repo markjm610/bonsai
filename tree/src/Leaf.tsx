@@ -68,7 +68,9 @@ const Leaf: React.FC<Props> = ({
         hideDeletedNodes,
         rootId,
         numberOfNodes,
-        nodeOffset
+        nodeOffset,
+        dragDisabled,
+        setDragDisabled
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -255,16 +257,28 @@ const Leaf: React.FC<Props> = ({
         preview(getEmptyImage());
     }, [])
 
-    const deleteClick = (e: any) => {
-        // e.stopPropagation()
-        // deleteNode({
-        //     variables: { id, parentId, isLeftChild },
-        //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
-        // })
-    }
+    // const deleteClick = (e: any) => {
+    //     // e.stopPropagation()
+    //     // deleteNode({
+    //     //     variables: { id, parentId, isLeftChild },
+    //     //     refetchQueries: [{ query: GET_TREE, variables: { id: treeId } }]
+    //     // })
+    // }
 
     const handleMouseEnter = () => {
+        console.log(node)
         setNodeToDrag({ ...node, level: level })
+        console.log(id)
+        if (id.includes('left child') || id.includes('right child')) {
+            // console.log('id')
+            setDragDisabled(true)
+        }
+    }
+
+    const handleMouseLeave = () => {
+        if (dragDisabled) {
+            setDragDisabled(false)
+        }
     }
 
     const handleClick = (e: any) => {
@@ -351,6 +365,7 @@ const Leaf: React.FC<Props> = ({
     // }
 
 
+    // console.log(id)
     if (node && node.value !== -1) {
         return (
             <>
@@ -360,8 +375,9 @@ const Leaf: React.FC<Props> = ({
                     style={(isDragging || hideDeletedNodes.has(id)) ? {
                         opacity: 0,
                     } : style}
-                    ref={level === 0 || showPreorder || showInorder || showPostorder || !allowInteraction ? null : drag}
+                    ref={dragDisabled || level === 0 || showPreorder || showInorder || showPostorder || !allowInteraction ? null : drag}
                     onMouseEnter={beginInsert ? undefined : handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                     onClick={handleClick}
                 >
                     <CustomDragLayer
@@ -466,6 +482,7 @@ const Leaf: React.FC<Props> = ({
             </>
         )
     } else {
+        // blank nodes
         return (
             <animated.div
                 id={id}
@@ -473,6 +490,9 @@ const Leaf: React.FC<Props> = ({
                 style={
                     determinePosition()
                 }
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
             >
             </animated.div>
         )

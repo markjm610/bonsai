@@ -22,7 +22,7 @@ const ContextWrapper: React.FC = () => {
     const [nodeOffset, setNodeOffset] = useState(0)
     const [previousNodeOffset, setPreviousNodeOffset] = useState(0)
     const [numberOfNodes, setNumberOfNodes] = useState(0)
-
+    const [dragDisabled, setDragDisabled] = useState(false)
 
 
     return (
@@ -44,7 +44,8 @@ const ContextWrapper: React.FC = () => {
             hideDeletedNodes, setHideDeletedNodes,
             nodeOffset, setNodeOffset,
             numberOfNodes, setNumberOfNodes,
-            previousNodeOffset, setPreviousNodeOffset
+            previousNodeOffset, setPreviousNodeOffset,
+            dragDisabled, setDragDisabled
         }}>
             <App />
         </Context.Provider>
