@@ -20,8 +20,6 @@ type Props = {
     beginInsert: boolean;
     setBeginInsert: Function;
     loadingAnimationOn: boolean;
-    allowInteraction: boolean;
-    setAllowInteraction: Function;
     isLeftChild: boolean | null;
     parentId: string | null;
     treeId: string;
@@ -36,8 +34,6 @@ const Leaf: React.FC<Props> = ({
     beginInsert,
     setBeginInsert,
     loadingAnimationOn,
-    allowInteraction,
-    setAllowInteraction,
     isLeftChild,
     parentId,
     treeId
@@ -50,8 +46,8 @@ const Leaf: React.FC<Props> = ({
         setStartLevel2,
         startLevel3,
         setStartLevel3,
-        // allowInteraction,
-        // setAllowInteraction
+        allowInteraction,
+        setAllowInteraction,
         showPreorder,
         preorder,
         startFromRoot,
@@ -266,11 +262,11 @@ const Leaf: React.FC<Props> = ({
     // }
 
     const handleMouseEnter = () => {
-        console.log(node)
+
         setNodeToDrag({ ...node, level: level })
-        console.log(id)
+
         if (id.includes('left child') || id.includes('right child')) {
-            // console.log('id')
+
             setDragDisabled(true)
         }
     }
@@ -411,8 +407,6 @@ const Leaf: React.FC<Props> = ({
                                     beginInsert={beginInsert}
                                     setBeginInsert={setBeginInsert}
                                     loadingAnimationOn={loadingAnimationOn}
-                                    allowInteraction={allowInteraction}
-                                    setAllowInteraction={setAllowInteraction}
                                     isLeftChild={true}
                                     parentId={id}
                                     treeId={treeId}
@@ -431,8 +425,6 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 loadingAnimationOn={loadingAnimationOn}
-                                allowInteraction={allowInteraction}
-                                setAllowInteraction={setAllowInteraction}
                                 isLeftChild={true}
                                 parentId={id}
                                 treeId={treeId}
@@ -448,8 +440,6 @@ const Leaf: React.FC<Props> = ({
                                     beginInsert={beginInsert}
                                     setBeginInsert={setBeginInsert}
                                     loadingAnimationOn={loadingAnimationOn}
-                                    allowInteraction={allowInteraction}
-                                    setAllowInteraction={setAllowInteraction}
                                     isLeftChild={false}
                                     parentId={id}
                                     treeId={treeId}
@@ -468,8 +458,6 @@ const Leaf: React.FC<Props> = ({
                                 beginInsert={beginInsert}
                                 setBeginInsert={setBeginInsert}
                                 loadingAnimationOn={loadingAnimationOn}
-                                allowInteraction={allowInteraction}
-                                setAllowInteraction={setAllowInteraction}
                                 isLeftChild={false}
                                 parentId={id}
                                 treeId={treeId}

@@ -8,11 +8,10 @@ import ControlArea from './ControlArea'
 
 type Props = {
     treeId: string;
-    allowInteraction: boolean;
     beginInsert: boolean;
 }
 
-const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) => {
+const FillTree: React.FC<Props> = ({ treeId, beginInsert }) => {
     const {
         rootId,
         treeState,
@@ -30,7 +29,8 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         setPostorder,
         numberOfNodes,
         setNodeOffset,
-        previousNodeOffset
+        previousNodeOffset,
+        allowInteraction
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
@@ -153,7 +153,7 @@ const FillTree: React.FC<Props> = ({ treeId, allowInteraction, beginInsert }) =>
         <div className='trash-can-container'>
             <TrashCan />
         </div>
-        {/* <ControlArea /> */}
+        <ControlArea />
     </>
     )
 }

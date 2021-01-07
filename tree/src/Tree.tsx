@@ -10,13 +10,11 @@ import CustomDragLayer from './CustomDragLayer'
 
 type Props = {
     treeId: string;
-    allowInteraction: boolean;
-    setAllowInteraction: Function;
     beginInsert: boolean;
     setBeginInsert: Function;
 }
 
-const Tree: React.FC<Props> = ({ treeId, allowInteraction, setAllowInteraction, beginInsert, setBeginInsert }) => {
+const Tree: React.FC<Props> = ({ treeId, beginInsert, setBeginInsert }) => {
 
     const { rootId, setRootId, treeState, setTreeState, setNumberOfNodes } = useContext(Context)
 
@@ -81,8 +79,6 @@ const Tree: React.FC<Props> = ({ treeId, allowInteraction, setAllowInteraction, 
                             setBeginInsert={setBeginInsert}
                             treeId={treeId}
                             setLoadingAnimationOn={setLoadingAnimationOn}
-                            allowInteraction={allowInteraction}
-                            setAllowInteraction={setAllowInteraction}
                         />
                     </div>
                     <div className='leaves-container'>
@@ -95,8 +91,6 @@ const Tree: React.FC<Props> = ({ treeId, allowInteraction, setAllowInteraction, 
                             beginInsert={beginInsert}
                             setBeginInsert={setBeginInsert}
                             loadingAnimationOn={loadingAnimationOn}
-                            allowInteraction={allowInteraction}
-                            setAllowInteraction={setAllowInteraction}
                             isLeftChild={null}
                             parentId={null}
                             treeId={treeId}

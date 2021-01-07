@@ -16,5 +16,3 @@ Have sidebar or topbar thing and move around screen
 Gesture should be easier to use
 
 Gesture needs to be disabled at certain points
-
-Drag and drop is working from a blank child for some reason regardless of level

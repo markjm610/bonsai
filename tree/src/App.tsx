@@ -9,7 +9,6 @@ function App() {
   const { setNodeOffset } = useContext(Context)
 
   const [treeId, setTreeId] = useState('')
-  const [allowInteraction, setAllowInteraction] = useState(false)
   const [beginInsert, setBeginInsert] = useState(false)
 
   const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
@@ -45,12 +44,9 @@ function App() {
     <div className="App">
       <FillTree
         treeId={treeId}
-        allowInteraction={allowInteraction}
         beginInsert={beginInsert} />
       { treeId && <Tree
         treeId={treeId}
-        allowInteraction={allowInteraction}
-        setAllowInteraction={setAllowInteraction}
         beginInsert={beginInsert}
         setBeginInsert={setBeginInsert}
       />}

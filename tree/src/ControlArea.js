@@ -5,27 +5,35 @@ import Context from './Context'
 
 const ControlArea = () => {
 
-    const { nodeOffset, setNodeOffset, previousNodeOffset, setPreviousNodeOffset } = useContext(Context)
+    const {
+        nodeOffset,
+        setNodeOffset,
+        previousNodeOffset,
+        setPreviousNodeOffset,
+        showPreorder,
+        showInorder,
+        showPostorder,
+        allowInteraction,
+        beginInsert } = useContext(Context)
 
     // const [currentNodeOffset, setCurrentNodeOffset] = useState(0)
     const [up, setUp] = useState(false)
     const [bind, { delta }] = useGesture({
         onUp: () => {
-            // console.log(currentNodeOffset)
             setUp(true)
-            // setPreviousNodeOffset(currentNodeOffset)
-            // console.log(delta[1])
         }
     })
 
     useEffect(() => {
-        // if (delta[1] <= 0) {
-        // setCurrentNodeOffset(delta[1])
+
+        if (showPreorder || showInorder || showPostorder || !allowInteraction || beginInsert) {
+            return
+        }
+
         if (previousNodeOffset + delta[1] <= 0) {
             setNodeOffset(previousNodeOffset + delta[1])
         }
 
-        // }
     }, [delta])
 
     useEffect(() => {
@@ -35,9 +43,6 @@ const ControlArea = () => {
         }
     }, [up])
 
-    // const handleMouseUp = () => {
-    //     setPreviousNodeOffset(delta[1])
-    // }
 
     return (
         <div {...bind()} className='control-area' />
