@@ -14,5 +14,3 @@ Tell user about editing
 Have sidebar or topbar thing and move around screen
 
 Gesture should be easier to use
-
-Gesture needs to be disabled at certain points

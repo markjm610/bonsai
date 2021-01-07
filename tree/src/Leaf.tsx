@@ -474,7 +474,7 @@ const Leaf: React.FC<Props> = ({
         return (
             <animated.div
                 id={id}
-                className='leaf-0'
+                className='leaf-blank'
                 style={
                     determinePosition()
                 }
