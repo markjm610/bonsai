@@ -17,8 +17,6 @@ type Props = {
     node: TreeNode;
     levelsOfTree: number;
     level: number;
-    beginInsert: boolean;
-    setBeginInsert: Function;
     loadingAnimationOn: boolean;
     isLeftChild: boolean | null;
     parentId: string | null;
@@ -31,8 +29,6 @@ const Leaf: React.FC<Props> = ({
     node,
     levelsOfTree,
     level,
-    beginInsert,
-    setBeginInsert,
     loadingAnimationOn,
     isLeftChild,
     parentId,
@@ -66,7 +62,9 @@ const Leaf: React.FC<Props> = ({
         numberOfNodes,
         nodeOffset,
         dragDisabled,
-        setDragDisabled
+        setDragDisabled,
+        beginInsert,
+        setBeginInsert
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -404,8 +402,6 @@ const Leaf: React.FC<Props> = ({
                                     node={treeState[node.leftId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
-                                    beginInsert={beginInsert}
-                                    setBeginInsert={setBeginInsert}
                                     loadingAnimationOn={loadingAnimationOn}
                                     isLeftChild={true}
                                     parentId={id}
@@ -422,8 +418,6 @@ const Leaf: React.FC<Props> = ({
                                 }}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
                                 loadingAnimationOn={loadingAnimationOn}
                                 isLeftChild={true}
                                 parentId={id}
@@ -437,8 +431,6 @@ const Leaf: React.FC<Props> = ({
                                     node={treeState[node.rightId]}
                                     levelsOfTree={levelsOfTree}
                                     level={level + 1}
-                                    beginInsert={beginInsert}
-                                    setBeginInsert={setBeginInsert}
                                     loadingAnimationOn={loadingAnimationOn}
                                     isLeftChild={false}
                                     parentId={id}
@@ -455,8 +447,6 @@ const Leaf: React.FC<Props> = ({
                                 }}
                                 levelsOfTree={levelsOfTree}
                                 level={level + 1}
-                                beginInsert={beginInsert}
-                                setBeginInsert={setBeginInsert}
                                 loadingAnimationOn={loadingAnimationOn}
                                 isLeftChild={false}
                                 parentId={id}

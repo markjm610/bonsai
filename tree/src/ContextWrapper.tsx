@@ -7,6 +7,7 @@ const ContextWrapper: React.FC = () => {
     const [startLevel2, setStartLevel2] = useState(false)
     const [startLevel3, setStartLevel3] = useState(false)
     const [allowInteraction, setAllowInteraction] = useState(false)
+    const [beginInsert, setBeginInsert] = useState(false)
     const [treeState, setTreeState] = useState({})
     const [rootId, setRootId] = useState('')
     const [preorder, setPreorder] = useState({})
@@ -45,7 +46,8 @@ const ContextWrapper: React.FC = () => {
             nodeOffset, setNodeOffset,
             numberOfNodes, setNumberOfNodes,
             previousNodeOffset, setPreviousNodeOffset,
-            dragDisabled, setDragDisabled
+            dragDisabled, setDragDisabled,
+            beginInsert, setBeginInsert
         }}>
             <App />
         </Context.Provider>

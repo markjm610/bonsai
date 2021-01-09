@@ -14,3 +14,5 @@ Tell user about editing
 Have sidebar or topbar thing and move around screen
 
 Gesture should be easier to use
+
+Improve styling of buttons, maybe make them gray out when they can't be used

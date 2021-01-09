@@ -8,10 +8,9 @@ import ControlArea from './ControlArea'
 
 type Props = {
     treeId: string;
-    beginInsert: boolean;
 }
 
-const FillTree: React.FC<Props> = ({ treeId, beginInsert }) => {
+const FillTree: React.FC<Props> = ({ treeId }) => {
     const {
         rootId,
         treeState,
@@ -30,7 +29,8 @@ const FillTree: React.FC<Props> = ({ treeId, beginInsert }) => {
         numberOfNodes,
         setNodeOffset,
         previousNodeOffset,
-        allowInteraction
+        allowInteraction,
+        beginInsert
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 

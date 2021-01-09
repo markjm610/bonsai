@@ -10,11 +10,9 @@ import CustomDragLayer from './CustomDragLayer'
 
 type Props = {
     treeId: string;
-    beginInsert: boolean;
-    setBeginInsert: Function;
 }
 
-const Tree: React.FC<Props> = ({ treeId, beginInsert, setBeginInsert }) => {
+const Tree: React.FC<Props> = ({ treeId }) => {
 
     const { rootId, setRootId, treeState, setTreeState, setNumberOfNodes } = useContext(Context)
 
@@ -75,8 +73,6 @@ const Tree: React.FC<Props> = ({ treeId, beginInsert, setBeginInsert }) => {
                             tree={treeState}
                             traversedNodeIds={traversedNodeIds}
                             setTraversedNodeIds={setTraversedNodeIds}
-                            beginInsert={beginInsert}
-                            setBeginInsert={setBeginInsert}
                             treeId={treeId}
                             setLoadingAnimationOn={setLoadingAnimationOn}
                         />
@@ -88,8 +84,6 @@ const Tree: React.FC<Props> = ({ treeId, beginInsert, setBeginInsert }) => {
                             position={{ x: 48, y: 30 }}
                             levelsOfTree={levelsOfTree}
                             level={0}
-                            beginInsert={beginInsert}
-                            setBeginInsert={setBeginInsert}
                             loadingAnimationOn={loadingAnimationOn}
                             isLeftChild={null}
                             parentId={null}

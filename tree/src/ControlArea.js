@@ -14,7 +14,8 @@ const ControlArea = () => {
         showInorder,
         showPostorder,
         allowInteraction,
-        beginInsert } = useContext(Context)
+        beginInsert
+    } = useContext(Context)
 
     // const [currentNodeOffset, setCurrentNodeOffset] = useState(0)
     const [up, setUp] = useState(false)
@@ -25,6 +26,7 @@ const ControlArea = () => {
     })
 
     useEffect(() => {
+        console.log(beginInsert)
 
         if (showPreorder || showInorder || showPostorder || !allowInteraction || beginInsert) {
             return

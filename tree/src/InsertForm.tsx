@@ -11,8 +11,6 @@ type Props = {
     root: TreeNode;
     traversedNodeIds: string[];
     setTraversedNodeIds: Function;
-    beginInsert: boolean;
-    setBeginInsert: Function;
     treeId: string;
     setLoadingAnimationOn: Function;
 }
@@ -23,12 +21,18 @@ const InsertForm: React.FC<Props> = ({
     root,
     traversedNodeIds,
     setTraversedNodeIds,
-    beginInsert,
-    setBeginInsert,
     setLoadingAnimationOn,
 }) => {
 
-    const { showPreorder, showInorder, showPostorder, numberOfNodes, allowInteraction } = useContext(Context)
+    const {
+        showPreorder,
+        showInorder,
+        showPostorder,
+        numberOfNodes,
+        allowInteraction,
+        beginInsert,
+        setBeginInsert
+    } = useContext(Context)
 
     const [value, setValue] = useState('')
     const [decimalError, setDecimalError] = useState(false)
