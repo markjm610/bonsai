@@ -45,8 +45,6 @@ const FillTree: React.FC<Props> = ({ treeId, beginInsert }) => {
         setStartFromRoot(true)
     }
 
-
-
     function preorderClick(): any {
         if (!allowInteraction || beginInsert) {
             return
