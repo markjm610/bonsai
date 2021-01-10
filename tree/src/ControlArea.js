@@ -26,7 +26,6 @@ const ControlArea = () => {
     })
 
     useEffect(() => {
-        console.log(beginInsert)
 
         if (showPreorder || showInorder || showPostorder || !allowInteraction || beginInsert) {
             return
