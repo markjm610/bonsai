@@ -124,7 +124,8 @@ body {
   transition: opacity 1000ms;
 }
 
-.value-input {
+/* 1 */
+/* .value-input {
   background-color: whitesmoke;
   height: 48px;
   width: 46px;
@@ -135,6 +136,23 @@ body {
   text-align: center;
   padding: none;
   left: 48vw;
+  position: absolute;
+  top: 15vh;
+  margin-top: 1vh;
+} */
+
+/* 2 */
+.value-input {
+  background-color: whitesmoke;
+  height: 48px;
+  width: 46px;
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  padding: none;
+  left: 53vw;
   position: absolute;
   top: 15vh;
   margin-top: 1vh;
@@ -311,4 +329,9 @@ input[type=number]::-webkit-outer-spin-button {
   width: 10vw;
   height: 100vh;
   border: 1px solid black;
+}
+
+.rest-of-page {
+  width: 100%;
+  margin-top: 3vh;
 }

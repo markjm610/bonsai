@@ -41,7 +41,7 @@ function App() {
   return (
     <div className="layout">
       <ButtonBar treeId={treeId} />
-      <div>
+      <div className='rest-of-page'>
         <FillTree
           treeId={treeId}
         />
