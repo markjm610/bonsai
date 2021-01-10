@@ -35,7 +35,8 @@ const FillTree: React.FC<Props> = ({ treeId }) => {
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
     const startOver = () => {
-        if (!allowInteraction || beginInsert) {
+
+        if (!allowInteraction || beginInsert || showPreorder || showInorder || showPostorder) {
             return
         }
         // clearTree({
