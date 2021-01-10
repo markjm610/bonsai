@@ -64,7 +64,8 @@ const Leaf: React.FC<Props> = ({
         dragDisabled,
         setDragDisabled,
         beginInsert,
-        setBeginInsert
+        setBeginInsert,
+        barPosition
     } = useContext(Context)
 
     const [edit, setEdit] = useState(false)
@@ -193,7 +194,12 @@ const Leaf: React.FC<Props> = ({
                         })
                     }
                 }
-
+            } else if (barPosition === 'left') {
+                await next({
+                    top: `${position.y}vh`,
+                    left: level === 0 ? `${position.x + 5}vw` : `${position.x * 0.9}vw`,
+                    opacity: 1,
+                })
             } else {
                 if (level === 0) {
                     await next({
@@ -369,6 +375,12 @@ const Leaf: React.FC<Props> = ({
                     style={(isDragging || hideDeletedNodes.has(id)) ? {
                         opacity: 0,
                     } : style}
+                    // style={
+                    //     {
+                    //         top: `${position.y + 100}%`,
+                    //         left: `${position.x}%`
+                    //     }
+                    // }
                     ref={dragDisabled || level === 0 || showPreorder || showInorder || showPostorder || !allowInteraction ? null : drag}
                     onMouseEnter={beginInsert ? undefined : handleMouseEnter}
                     onMouseLeave={handleMouseLeave}

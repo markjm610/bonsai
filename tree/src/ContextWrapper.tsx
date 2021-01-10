@@ -24,7 +24,7 @@ const ContextWrapper: React.FC = () => {
     const [previousNodeOffset, setPreviousNodeOffset] = useState(0)
     const [numberOfNodes, setNumberOfNodes] = useState(0)
     const [dragDisabled, setDragDisabled] = useState(false)
-
+    const [barPosition, setBarPosition] = useState('top')
 
     return (
         <Context.Provider value={{
@@ -47,7 +47,8 @@ const ContextWrapper: React.FC = () => {
             numberOfNodes, setNumberOfNodes,
             previousNodeOffset, setPreviousNodeOffset,
             dragDisabled, setDragDisabled,
-            beginInsert, setBeginInsert
+            beginInsert, setBeginInsert,
+            barPosition, setBarPosition,
         }}>
             <App />
         </Context.Provider>
