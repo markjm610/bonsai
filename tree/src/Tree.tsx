@@ -21,11 +21,9 @@ const Tree: React.FC<Props> = ({ treeId }) => {
             id: treeId
         }
     })
-    // const [treeState, setTreeState] = useState({})
-    // const [rootId, setRootId] = useState('')
+
     const [levelsOfTree, setLevelsOfTree] = useState(-1)
     const [traversedNodeIds, setTraversedNodeIds] = useState([])
-    // const [beginInsert, setBeginInsert] = useState(false)
     const [loadingAnimationOn, setLoadingAnimationOn] = useState(true)
 
     useEffect(() => {

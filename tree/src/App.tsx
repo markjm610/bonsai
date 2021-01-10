@@ -3,10 +3,9 @@ import Tree from './Tree';
 import FillTree from './FillTree';
 import { useMutation } from '@apollo/client'
 import { CREATE_TREE } from './queries'
-import Context from './Context'
+import ButtonBar from './ButtonBar';
 
 function App() {
-  const { setNodeOffset } = useContext(Context)
 
   const [treeId, setTreeId] = useState('')
 
@@ -40,13 +39,16 @@ function App() {
 
 
   return (
-    <div className="App">
-      <FillTree
-        treeId={treeId}
-      />
-      { treeId && <Tree
-        treeId={treeId}
-      />}
+    <div className="layout">
+      <ButtonBar treeId={treeId} />
+      <div>
+        <FillTree
+          treeId={treeId}
+        />
+        {treeId && <Tree
+          treeId={treeId}
+        />}
+      </div>
     </div>
   );
 }
