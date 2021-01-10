@@ -136,16 +136,13 @@ const InsertForm: React.FC<Props> = ({
         <>
             {numberOfNodes < 15 &&
                 <form onSubmit={handleSubmit} className='insert-form'>
-
                     <label className='form-label'>Click the middle of the blank node to enter a number, then press enter.</label>
                     {/* <button className='add-node-button'>Add</button> */}
-                    <div className='input-container'
-                    >
+                    <div className='input-container'>
                         <animated.input
                             style={inputFade ? inputAnimated : {
                                 opacity: beginInsert ? 0 : 1
                             }}
-                            // style={inputStyle}
                             type='number'
                             onChange={handleInputChange}
                             value={value}

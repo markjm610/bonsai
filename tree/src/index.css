@@ -125,7 +125,7 @@ body {
 }
 
 /* 1 */
-/* .value-input {
+.value-input {
   background-color: whitesmoke;
   height: 48px;
   width: 46px;
@@ -139,10 +139,10 @@ body {
   position: absolute;
   top: 15vh;
   margin-top: 1vh;
-} */
+}
 
 /* 2 */
-.value-input {
+/* .value-input {
   background-color: whitesmoke;
   height: 48px;
   width: 46px;
@@ -156,7 +156,7 @@ body {
   position: absolute;
   top: 15vh;
   margin-top: 1vh;
-}
+} */
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -303,7 +303,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* 1 */
-/* .layout {
+.layout {
   display: flex;
   flex-direction: column;
 }
@@ -314,10 +314,14 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   border: 1px solid black;
 }
- */
+
+.rest-of-page {
+  width: 100%;
+}
+
 
  /* 2 */
- .layout {
+ /* .layout {
   display: flex;
   flex-direction: row;
 }
@@ -334,4 +338,29 @@ input[type=number]::-webkit-outer-spin-button {
 .rest-of-page {
   width: 100%;
   margin-top: 3vh;
+} */
+
+
+.drop-zone-left {
+  width: 10vw;
+  height: 90vh;
+  background-color: green;
+}
+
+
+.drop-zone-right {
+  width: 10vw;
+  height: 90vh;
+  background-color: royalblue;
+  left: 40px;
+}
+
+.drop-zones-and-dialogue {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialogue-and-instruction {
+  display: flex;
+  flex-direction: column;
 }
