@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
-import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils'
+import { preorderTraversal, inorderTraversal, postorderTraversal, determineClassName } from './utils'
 import { useDrag } from 'react-dnd';
 
 
@@ -29,7 +29,8 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
         setNodeOffset,
         previousNodeOffset,
         allowInteraction,
-        beginInsert
+        beginInsert,
+        barPosition
     } = useContext(Context)
     const [clearTree, { data }] = useMutation(CLEAR_TREE)
 
@@ -149,7 +150,13 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
     })
 
     return (
-        <div className='buttons-container' ref={(!allowInteraction || beginInsert) ? null : drag}>
+        <div
+            className={determineClassName('buttons-container', barPosition)}
+            ref={(!allowInteraction || beginInsert) ? null : drag}
+        // style={{
+        //     opacity: isDragging ? 0 : 1
+        // }}
+        >
             <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
             <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
             <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>

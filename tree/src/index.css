@@ -142,7 +142,7 @@ body {
 }
 
 /* 2 */
-/* .value-input {
+.value-input-left {
   background-color: whitesmoke;
   height: 48px;
   width: 46px;
@@ -156,7 +156,7 @@ body {
   position: absolute;
   top: 15vh;
   margin-top: 1vh;
-} */
+}
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -321,12 +321,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 
  /* 2 */
- /* .layout {
+ .layout-left {
   display: flex;
   flex-direction: row;
 }
 
-.buttons-container {
+.buttons-container-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -335,16 +335,16 @@ input[type=number]::-webkit-outer-spin-button {
   border: 1px solid black;
 }
 
-.rest-of-page {
+.rest-of-page-left {
   width: 100%;
   margin-top: 3vh;
-} */
+}
 
 
 .drop-zone-left {
   width: 10vw;
   height: 90vh;
-  background-color: green;
+  /* background-color: green; */
 }
 
 
@@ -352,7 +352,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 10vw;
   height: 90vh;
   background-color: royalblue;
-  left: 40px;
 }
 
 .drop-zones-and-dialogue {

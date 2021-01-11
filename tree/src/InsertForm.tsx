@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { TreeNode, TreeObject } from './types'
 import FakeNode from './FakeNode'
 import { useSpring, animated } from 'react-spring'
-import { insertNode } from './utils'
+import { insertNode, determineClassName } from './utils'
 import Context from './Context'
 
 
@@ -31,7 +31,8 @@ const InsertForm: React.FC<Props> = ({
         numberOfNodes,
         allowInteraction,
         beginInsert,
-        setBeginInsert
+        setBeginInsert,
+        barPosition
     } = useContext(Context)
 
     const [value, setValue] = useState('')
@@ -83,7 +84,7 @@ const InsertForm: React.FC<Props> = ({
         //     return
         // }
         // setAllowInteraction(false)
-        const input: any = document.querySelector('.value-input')
+        const input: any = document.querySelector(`.${determineClassName('value-input', barPosition)}`)
         if (input) {
             input.blur()
         }
@@ -146,7 +147,7 @@ const InsertForm: React.FC<Props> = ({
                             type='number'
                             onChange={handleInputChange}
                             value={value}
-                            className='value-input'
+                            className={determineClassName('value-input', barPosition)}
                             id='input'
                             disabled={showPreorder || showInorder || showPostorder || beginInsert || !allowInteraction}
                         />

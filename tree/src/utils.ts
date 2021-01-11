@@ -144,3 +144,15 @@ export function determineOffset(level: number): number {
     }
     return 0
 }
+
+export function determineClassName(name: string, barPosition: string): string {
+    if (barPosition === 'bottom') {
+        return name + '-bottom'
+    } else if (barPosition === 'left') {
+        return name + '-left'
+    } else if (barPosition === 'right') {
+        return name + '-right'
+    } else {
+        return name
+    }
+}

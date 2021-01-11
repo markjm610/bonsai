@@ -4,9 +4,11 @@ import FillTree from './FillTree';
 import { useMutation } from '@apollo/client'
 import { CREATE_TREE } from './queries'
 import ButtonBar from './ButtonBar';
+import { determineClassName } from './utils';
+import Context from './Context';
 
 function App() {
-
+  const { barPosition } = useContext(Context)
   const [treeId, setTreeId] = useState('')
 
   const [createTree, { data: newTree }] = useMutation(CREATE_TREE)
@@ -39,9 +41,9 @@ function App() {
 
 
   return (
-    <div className="layout">
+    <div className={determineClassName('layout', barPosition)}>
       <ButtonBar treeId={treeId} />
-      <div className='rest-of-page'>
+      <div className={determineClassName('rest-of-page', barPosition)}>
         <FillTree
           treeId={treeId}
         />

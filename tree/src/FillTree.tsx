@@ -14,6 +14,7 @@ type Props = {
 const FillTree: React.FC<Props> = ({ treeId }) => {
     const {
         numberOfNodes,
+        barPosition
     } = useContext(Context)
 
 

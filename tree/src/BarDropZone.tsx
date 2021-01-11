@@ -31,7 +31,6 @@ const BarDropZone: React.FC<Props> = ({ location }) => {
             if (barPosition === location) {
                 return
             }
-
             switchPosition(item)
         },
         collect: monitor => ({
@@ -40,7 +39,7 @@ const BarDropZone: React.FC<Props> = ({ location }) => {
     })
 
     return (
-        <div className={determineClassName(location)} ref={(!allowInteraction || beginInsert) ? null : drop}> { location}</div >
+        <div className={determineClassName(location)} ref={(!allowInteraction || beginInsert) ? null : drop} />
     )
 }
 

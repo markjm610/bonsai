@@ -98,7 +98,6 @@ const Leaf: React.FC<Props> = ({
     })
 
     function determineOpacity() {
-
         return (node && node.value) === -1 ? 0 : 1
     }
 
