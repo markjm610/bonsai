@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDragLayer } from 'react-dnd';
 import NodeDragPreview from './NodeDragPreview'
+import BarDragPreview from './BarDragPreview'
 
 const layerStyles = {
     position: 'fixed',
@@ -38,6 +39,8 @@ const CustomDragLayer = ({ id, node, position }) => {
         switch (itemType) {
             case 'node':
                 return <NodeDragPreview id={id} node={node} position={position} />
+            case 'bar':
+                return <BarDragPreview />
             default:
                 return null;
         }

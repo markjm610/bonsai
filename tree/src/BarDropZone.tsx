@@ -5,6 +5,10 @@ import { useDrop } from 'react-dnd';
 function determineClassName(location: string): string {
     if (location === 'left') {
         return 'drop-zone-left'
+    } else if (location === 'top') {
+        return 'drop-zone-top'
+    } else if (location === 'bottom') {
+        return 'drop-zone-bottom'
     } else {
         return 'drop-zone-right'
     }

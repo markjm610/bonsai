@@ -4,7 +4,7 @@ import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
 import { preorderTraversal, inorderTraversal, postorderTraversal, determineClassName } from './utils'
 import { useDrag } from 'react-dnd';
-
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
 type Props = {
     treeId: string;
@@ -149,13 +149,17 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
         })
     })
 
+    useEffect(() => {
+        preview(getEmptyImage());
+    }, [])
+
     return (
         <div
             className={determineClassName('buttons-container', barPosition)}
             ref={(!allowInteraction || beginInsert) ? null : drag}
-        // style={{
-        //     opacity: isDragging ? 0 : 1
-        // }}
+            style={{
+                opacity: isDragging ? 0 : 1
+            }}
         >
             <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
             <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>

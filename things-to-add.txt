@@ -13,6 +13,7 @@ Tell user about editing
 
 Have sidebar or topbar thing and move around screen
 
-Have a function that determines the right class for the components that change classes due to the layout
+Drop areas under control area
 
 Improve styling of buttons, maybe make them gray out when they can't be used
+
