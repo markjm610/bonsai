@@ -200,6 +200,12 @@ const Leaf: React.FC<Props> = ({
                     left: level === 0 ? `${position.x + 5}vw` : `${position.x * 0.9}vw`,
                     opacity: 1,
                 })
+            } else if (barPosition === 'right') {
+                await next({
+                    top: `${position.y}vh`,
+                    left: level === 0 ? `${position.x - 5}vw` : `${position.x * 0.9}vw`,
+                    opacity: 1,
+                })
             } else {
                 if (level === 0) {
                     await next({

@@ -149,7 +149,7 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
     })
 
     return (
-        <div className='buttons-container' ref={drag}>
+        <div className='buttons-container' ref={(!allowInteraction || beginInsert) ? null : drag}>
             <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
             <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
             <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>

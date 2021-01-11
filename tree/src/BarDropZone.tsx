@@ -16,14 +16,23 @@ type Props = {
 
 const BarDropZone: React.FC<Props> = ({ location }) => {
 
+    const { barPosition, setBarPosition, allowInteraction, beginInsert } = useContext(Context)
+
+    const switchPosition = (item: any): void => {
+        setBarPosition(location)
+    }
+
     const [{ isOver }, drop] = useDrop({
         accept: 'bar',
         // drop: (item) => {
         //     // handleDrop(item);
         // },
         hover: (item) => {
-            // handleHover(item)
-            console.log(item)
+            if (barPosition === location) {
+                return
+            }
+
+            switchPosition(item)
         },
         collect: monitor => ({
             isOver: !!monitor.isOver(),
@@ -31,7 +40,7 @@ const BarDropZone: React.FC<Props> = ({ location }) => {
     })
 
     return (
-        <div className={determineClassName(location)} ref={drop}>{location}</div>
+        <div className={determineClassName(location)} ref={(!allowInteraction || beginInsert) ? null : drop}> { location}</div >
     )
 }
 
