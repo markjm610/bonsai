@@ -3,8 +3,8 @@ import React, { useState, useContext, useEffect } from 'react'
 import { CLEAR_TREE, GET_TREE } from './queries'
 import Context from './Context'
 import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils'
-import TrashCan from './TrashCan'
-import ControlArea from './ControlArea'
+import { useDrag } from 'react-dnd';
+
 
 type Props = {
     treeId: string;
@@ -133,8 +133,23 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
         }
     }, [readyToClearTree])
 
+    const [{ isDragging }, drag, preview] = useDrag({
+        item: {
+            type: 'bar',
+        },
+        // begin: () => {
+
+        // },
+        // end: (item) => {
+
+        // },
+        collect: monitor => ({
+            isDragging: monitor.isDragging()
+        })
+    })
+
     return (
-        <div className='buttons-container'>
+        <div className='buttons-container' ref={drag}>
             <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
             <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
             <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>
