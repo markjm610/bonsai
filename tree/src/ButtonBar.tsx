@@ -5,6 +5,7 @@ import Context from './Context'
 import { preorderTraversal, inorderTraversal, postorderTraversal, determineClassName } from './utils'
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import BarDropZone from './BarDropZone'
 
 type Props = {
     treeId: string;
@@ -154,18 +155,20 @@ const ButtonBar: React.FC<Props> = ({ treeId }) => {
     }, [])
 
     return (
-        <div
-            className={determineClassName('buttons-container', barPosition)}
-            ref={(!allowInteraction || beginInsert) ? null : drag}
-            style={{
-                opacity: isDragging ? 0 : 1
-            }}
-        >
-            <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
-            <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
-            <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>
-            <button onClick={postorderClick} className='start-over-button'>{!showPostorder ? 'Show Postorder' : 'Back to Tree'}</button>
-        </div>
+        <>
+            <div
+                className={determineClassName('buttons-container', barPosition)}
+                ref={(!allowInteraction || beginInsert) ? null : drag}
+                style={{
+                    opacity: isDragging ? 0 : 1
+                }}
+            >
+                <button onClick={startOver} className='start-over-button'>Start From Root Only</button>
+                <button onClick={preorderClick} className='start-over-button'>{!showPreorder ? 'Show Preorder' : 'Back to Tree'}</button>
+                <button onClick={inorderClick} className='start-over-button'>{!showInorder ? 'Show Inorder' : 'Back to Tree'}</button>
+                <button onClick={postorderClick} className='start-over-button'>{!showPostorder ? 'Show Postorder' : 'Back to Tree'}</button>
+            </div>
+        </>
     )
 }
 

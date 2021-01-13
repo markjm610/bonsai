@@ -330,6 +330,7 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
   width: 100%;
   border: 1px solid black;
+  z-index: 3;
 }
 
 .rest-of-page {
@@ -362,7 +363,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: 90vh;
 }
 
- .layout-right {
+.layout-right {
   display: flex;
   flex-direction: row-reverse;
 }
@@ -394,4 +395,27 @@ input[type=number]::-webkit-outer-spin-button {
 .dialogue-and-instruction {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
+
+.drop-zone-top {
+  display: flex;
+  justify-content: center;
+  height: 10vh;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+/* .drop-zone-bottom {
+  display: flex;
+  justify-content: center;
+  height: 10vh;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+} */
