@@ -20,7 +20,7 @@ const FillTree: React.FC<Props> = ({ treeId }) => {
 
     return (
         <div className='drop-zones-and-dialogue'>
-            <BarDropZone location='left' />
+            {/* <BarDropZone location='left' /> */}
             <div className='dialogue-and-instruction'>
                 {
                     numberOfNodes < 15
@@ -31,9 +31,9 @@ const FillTree: React.FC<Props> = ({ treeId }) => {
                     && <div className='top-dialogue'>Nice job! The tree is full!</div>
                 }
                 {/* <div>Click the middle of the blank node to enter a number, then press enter.</div> */}
-                <BarDropZone location='top' />
+                {/* <BarDropZone location='top' /> */}
             </div>
-            <BarDropZone location='right' />
+            {/* <BarDropZone location='right' /> */}
             <div className='trash-can-container'>
                 <TrashCan />
             </div>

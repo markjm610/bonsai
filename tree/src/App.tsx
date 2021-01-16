@@ -6,6 +6,8 @@ import { CREATE_TREE } from './queries'
 import ButtonBar from './ButtonBar';
 import { determineClassName } from './utils';
 import Context from './Context';
+import Instructions from './Instructions';
+
 
 function App() {
   const { barPosition } = useContext(Context)
@@ -38,9 +40,7 @@ function App() {
     }
   }, [newTree])
 
-
-
-  return (
+  return (<>
     <div className={determineClassName('layout', barPosition)}>
       <ButtonBar treeId={treeId} />
       <div className={determineClassName('rest-of-page', barPosition)}>
@@ -52,6 +52,7 @@ function App() {
         />}
       </div>
     </div>
+    <Instructions /></>
   );
 }
 
