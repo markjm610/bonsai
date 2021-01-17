@@ -6,6 +6,8 @@ import { preorderTraversal, inorderTraversal, postorderTraversal } from './utils
 import TrashCan from './TrashCan'
 import ControlArea from './ControlArea'
 import BarDropZone from './BarDropZone'
+import Instructions from './Instructions'
+
 
 type Props = {
     treeId: string;
@@ -37,6 +39,7 @@ const FillTree: React.FC<Props> = ({ treeId }) => {
             <div className='trash-can-container'>
                 <TrashCan />
             </div>
+            <Instructions />
             <ControlArea />
         </div>
     )

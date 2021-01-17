@@ -40,7 +40,7 @@ function App() {
     }
   }, [newTree])
 
-  return (<>
+  return (
     <div className={determineClassName('layout', barPosition)}>
       <ButtonBar treeId={treeId} />
       <div className={determineClassName('rest-of-page', barPosition)}>
@@ -52,7 +52,6 @@ function App() {
         />}
       </div>
     </div>
-    <Instructions /></>
   );
 }
 
